@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Navbar";
-import Main from "./Main";
-import DataAnalyst from "./DataAnalyst/DataAnalyst";
-import DigitalMarketing from "./DigitalMarketing/DigitalMarketing";
-import ItSupport from "./Itsupport/ItSupport";
-import FrontEnd from "./Front-End Developer/FrontEnd";
-import Cybersecurity from "./Cybersecurity/Cybersecurity";
-import UiUx from "./Ui-Ux/UiUx";
+import Navbar from "../Navbar";
+import Main from "../Main";
+import DataAnalyst from "./StartNew Car/DataAnalyst/DataAnalyst";
+import DigitalMarketing from "./StartNew Car/DigitalMarketing/DigitalMarketing";
+import ItSupport from "./StartNew Car/Itsupport/ItSupport";
+import FrontEnd from "./StartNew Car/Front-End Developer/FrontEnd";
+import Cybersecurity from "./StartNew Car/Cybersecurity/Cybersecurity";
+import UiUx from "./StartNew Car/Ui-Ux/UiUx";
 import StartLearning from "./startLearning/StartLearning";
 import ExploreCources from './ExploreOurCources/ExploreCources';
-import Aurora from "../Components/aurora/Aurora";
+import Aurora from "./aurora/Aurora";
 import Footer1 from "./footer/Footer1";
 
 function Home() {

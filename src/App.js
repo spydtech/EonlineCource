@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 // import Navbar from './Components/Navbar';
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
-import Certificates from "./Components/Professional Certificates/Certificates";
+import Certificates from "./Components/Home/Professional Certificates/Certificates";
 import { Dropdown } from "flowbite-react";
+import Profile from "./Components/Profile"
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/Login" element={<Login />} />
          
           <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Profile" element={<Profile />} />
+          
         </Routes>
       </Router>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import Marquee from './Marquee/Marquee';
+import Marquee from './Home/Marquee/Marquee';
 
 function Main() {
   return (
