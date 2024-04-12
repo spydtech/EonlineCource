@@ -5,7 +5,8 @@ import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
 import Certificates from "./Components/Home/Professional Certificates/Certificates";
 import { Dropdown } from "flowbite-react";
-import Profile from "./Components/Profile"
+import Profile from "./Components/Profile/Profile"
+import Settings from "./Components/Profile/Settings";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
          
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/Settings" element={<Settings />} />
           
         </Routes>
       </Router>
