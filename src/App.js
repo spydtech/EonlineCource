@@ -1,10 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home/Home";
-// import Navbar from './Components/Navbar';
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
 import Certificates from "./Components/Home/Professional Certificates/Certificates";
-import { Dropdown } from "flowbite-react";
 import Profile from "./Components/Profile/Profile"
 import Settings from "./Components/Profile/Settings";
 import ForgotPassword from "./Components/Login/ForgotPassword";

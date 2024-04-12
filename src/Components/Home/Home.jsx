@@ -7,8 +7,8 @@ import ItSupport from "./StartNew Car/Itsupport/ItSupport";
 import FrontEnd from "./StartNew Car/Front-End Developer/FrontEnd";
 import Cybersecurity from "./StartNew Car/Cybersecurity/Cybersecurity";
 import UiUx from "./StartNew Car/Ui-Ux/UiUx";
-import StartLearning from "./startLearning/StartLearning";
-import ExploreCources from './ExploreOurCources/ExploreCources';
+
+import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
 import Footer1 from "./footer/Footer1";
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
@@ -141,24 +141,23 @@ function Home() {
             <UiUx />
           </div>
           <div class=" text-base font-semibold leading-7 text-center justify-center  ">
-          <p>
-            <a
-              href="/Certificates"
-              class="text-sky-500  transition-all duration-300 group-hover:text-white "
-            >
-              Explore all Certificates &rarr;
-            </a>
-          </p>
+            <p>
+              <a
+                href="/Certificates"
+                class="text-sky-500  transition-all duration-300 group-hover:text-white "
+              >
+                Explore all Certificates &rarr;
+              </a>
+            </p>
+          </div>
         </div>
-        </div>
-       
+
+        <EducationCarousel />
       </div>
 
-      <StartLearning />
-      <EducationCarousel />
-        <ExploreCources />
-        <Aurora />
-        <Footer1 />
+      <ExploreCources />
+      <Aurora />
+      <Footer1 />
     </>
   );
 }
