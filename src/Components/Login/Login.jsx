@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom'
 
@@ -11,23 +11,23 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate
 
-  const responseGoogle = (response) => {
-    console.log(response);
-    // Here, you can send the `response` object to your server for further authentication and authorization
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  //   // Here, you can send the `response` object to your server for further authentication and authorization
+  // };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      // Make a POST request to your server endpoint for Google authentication
-      const response = await axios.post('http://localhost:3000/api/google-authentication');
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     // Make a POST request to your server endpoint for Google authentication
+  //     const response = await axios.post('http://localhost:3000/api/google-authentication');
 
-      // Handle success response, e.g., redirect to Google authentication page
-      console.log('Google authentication response:', response.data);
-    } catch (error) {
-      // Handle error
-      console.error('Error during Google authentication:', error);
-    }
-  };
+  //     // Handle success response, e.g., redirect to Google authentication page
+  //     console.log('Google authentication response:', response.data);
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error('Error during Google authentication:', error);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,10 +75,10 @@ function Login() {
 
 
 
-              <form id="connect-google-button" onSubmit={handleGoogleSignIn} method="POST" action="">
-                <button className="w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="submit">
+              {/* <form id="connect-google-button" onSubmit={handleGoogleSignIn} method="POST" action="">
+                <button className="w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="submit"> */}
 
-                  <GoogleLogin
+              {/* <GoogleLogin
                     clientId="850516566993-compute@developer.gserviceaccount.com"
                     buttonText="Sign in with Google"
                     onSuccess={responseGoogle}
@@ -87,7 +87,7 @@ function Login() {
                   />
 
                 </button>
-              </form>
+              </form> */}
 
 
               <div class="flex items-center">

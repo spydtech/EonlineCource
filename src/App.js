@@ -7,6 +7,7 @@ import Profile from "./Components/Profile/Profile"
 import Settings from "./Components/Profile/Settings";
 import ForgotPassword from "./Components/Login/ForgotPassword";
 
+
 function App() {
   return (
     <div>
@@ -16,6 +17,7 @@ function App() {
           <Route path="/Certificates" element={<Certificates />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
+
 
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Profile" element={<Profile />} />
