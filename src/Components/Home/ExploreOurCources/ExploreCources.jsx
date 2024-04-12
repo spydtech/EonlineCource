@@ -49,7 +49,7 @@ const ExplorCouces = [
 
 const ExploreCources = () => {
   return (
-    <div className="bg-gray-100 p-8 mb-16 ">
+    <div className="bg-gray-100 p-8 mb-16 px-16">
     <div className=" font-bold text-5xl">Explore Courses</div>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4  py-8">
         {ExplorCouces.map((course, index) => (
