@@ -7,6 +7,7 @@ import Certificates from "./Components/Home/Professional Certificates/Certificat
 import { Dropdown } from "flowbite-react";
 import Profile from "./Components/Profile/Profile"
 import Settings from "./Components/Profile/Settings";
+import ForgotPassword from "./Components/Login/ForgotPassword";
 
 function App() {
   return (

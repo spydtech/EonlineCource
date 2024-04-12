@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
 import Navbar from '../Navbar';
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate
 
   const responseGoogle = (response) => {
     console.log(response);
@@ -31,10 +33,21 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/login', {
+      const response = await axios.post('http://localhost:3465/api/v1/employee/login', {
+        email: email,
+        password: password,
+      }).then((res) => {
+        console.log(res.data)
 
-        email,
-        password,
+        if (res.data.message === "Email not exits") {
+          alert("Email not exits");
+        } else if (res.data.message === "Login Success") {
+
+          navigate('/');
+        }
+        else {
+          alert("Incorrect Email or Password");
+        }
       });
 
       // Handle success response
@@ -104,7 +117,7 @@ function Login() {
                       <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
                     </div>
                   </div>
-                  <a href="" class="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500">Forgot password?</a>
+                  <a href="" class="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500"><Link to="/forgotPassword">Forgot password?</Link></a>
                 </div>
 
                 <button type="submit" class="text-white bg-teal-600 py-1.5 px-4 rounded font-bold w-full">
