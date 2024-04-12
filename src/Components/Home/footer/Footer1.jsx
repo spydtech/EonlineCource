@@ -1,74 +1,238 @@
 import React from "react";
 
-import {
-  Footer,
-  FooterCopyright,
-  FooterIcon,
-  FooterLink,
-  FooterLinkGroup,
-  FooterTitle,
-} from "flowbite-react";
-import {
-  BsDribbble,
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsTwitter,
-} from "react-icons/bs";
-
 function Footer1() {
   return (
-    <Footer className="bg-gray-100">
-      <div className="w-full">
-        <div className="grid w-full grid-cols-2 gap-8 px-6 py-16 md:grid-cols-4 ">
-          <div>
-            <FooterTitle title="Company" />
-            <FooterLinkGroup col>
-              <FooterLink href="#">About</FooterLink>
-              <FooterLink href="#">Careers</FooterLink>
-              <FooterLink href="#">Brand Center</FooterLink>
-              <FooterLink href="#">Blog</FooterLink>
-            </FooterLinkGroup>
-          </div>
-          <div>
-            <FooterTitle title="help center" />
-            <FooterLinkGroup col>
-              <FooterLink href="#">Discord Server</FooterLink>
-              <FooterLink href="#">Twitter</FooterLink>
-              <FooterLink href="#">Facebook</FooterLink>
-              <FooterLink href="#">Contact Us</FooterLink>
-            </FooterLinkGroup>
-          </div>
-          <div>
-            <FooterTitle title="legal" />
-            <FooterLinkGroup col>
-              <FooterLink href="#">Privacy Policy</FooterLink>
-              <FooterLink href="#">Licensing</FooterLink>
-              <FooterLink href="#">Terms &amp; Conditions</FooterLink>
-            </FooterLinkGroup>
-          </div>
-          <div>
-            <FooterTitle title="download" />
-            <FooterLinkGroup col>
-              <FooterLink href="#">iOS</FooterLink>
-              <FooterLink href="#">Android</FooterLink>
-              <FooterLink href="#">Windows</FooterLink>
-              <FooterLink href="#">MacOS</FooterLink>
-            </FooterLinkGroup>
+    <>
+      <footer className="w-full text-slate-500">
+        {/*      <!-- Main footer --> */}
+        <div className="border-t border-slate-200 bg-slate-100 pt-16 pb-12 text-sm">
+          <div className="container mx-auto px-6">
+            <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+              <div
+                className="col-span-4 md:col-span-8 lg:col-span-4"
+                aria-labelledby="footer-header"
+              >
+                <a
+                  id="WindUI-5-logo"
+                  aria-label="WindUI logo"
+                  aria-current="page"
+                  className="mb-6 flex items-center gap-2 whitespace-nowrap text-base font-medium leading-6 text-slate-700 focus:outline-none"
+                  href="javascript:void(0)"
+                >
+                  <img
+                    className="h-8 w-auto"
+                    src="https://static.vecteezy.com/system/resources/thumbnails/009/383/394/small/graduation-clipart-design-illustration-free-png.png"
+                    alt="Your Company"
+                  />
+                  CodeWithGenius
+                </a>
+                <p>
+                  Expertly made, responsive, accessible components in React and
+                  HTML ready to be used on your website or app. Just copy and
+                  paste them on your Tailwind CSS project.
+                </p>
+              </div>
+              <nav
+                className="col-span-2 md:col-span-4 lg:col-span-2"
+                aria-labelledby="footer-product-5-logo"
+              >
+                <h3
+                  className="mb-6 text-base font-medium text-slate-700"
+                  id="footer-product-5-logo"
+                >
+                  Product
+                </h3>
+                <ul>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Features
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Customers
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Why us?
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Pricing
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <nav
+                className="col-span-2 md:col-span-4 lg:col-span-2"
+                aria-labelledby="footer-docs-5-logo"
+              >
+                <h3
+                  className="mb-6 text-base font-medium text-slate-700"
+                  id="footer-docs-5-logo"
+                >
+                  Docs & Help
+                </h3>
+                <ul>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Documentation
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Training
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      System status
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      FAQ's
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Help Center
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <nav
+                className="col-span-2 md:col-span-4 lg:col-span-2"
+                aria-labelledby="footer-about-5-logo"
+              >
+                <h3
+                  className="mb-6 text-base font-medium text-slate-700"
+                  id="footer-about-5-logo"
+                >
+                  About us
+                </h3>
+                <ul>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      About us
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Careers
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Leadership
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Blog
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Events
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <nav
+                className="col-span-2 md:col-span-4 lg:col-span-2"
+                aria-labelledby="footer-get-in-touch-5-logo"
+              >
+                <h3
+                  className="mb-6 text-base font-medium text-slate-700"
+                  id="footer-get-in-touch-5-logo"
+                >
+                  Get in touch
+                </h3>
+                <ul>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Contact
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Support
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Partners
+                    </a>
+                  </li>
+                  <li className="mb-2 leading-6">
+                    <a
+                      href="javascript:void(0)"
+                      className="transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600"
+                    >
+                      Join research
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
-        <div className="w-full bg-gray-700 px-4 py-6 sm:flex sm:items-center sm:justify-between">
-          <FooterCopyright href="#" by="CodeWithGenius" year={2024} />
-          <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <FooterIcon href="#" icon={BsFacebook} />
-            <FooterIcon href="#" icon={BsInstagram} />
-            <FooterIcon href="#" icon={BsTwitter} />
-            <FooterIcon href="#" icon={BsGithub} />
-            <FooterIcon href="#" icon={BsDribbble} />
-          </div>
-        </div>
-      </div>
-    </Footer>
+      </footer>
+    </>
   );
 }
 export default Footer1;
