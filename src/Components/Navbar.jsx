@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Disclosure, Menu } from '@headlessui/react'
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+
 import { Link } from 'react-router-dom';
 const login = true;
 const navigation = [
   { name: 'Dashboard', href: '/', current: true },
-  { name: 'My Learning', href: `${login ? "/" : "/login" } `, current: false },
+  { name: 'My Learning', href: `${login ? "/" : "/login"} `, current: false },
   { name: 'Course', href: '#', current: false },
 ]
 
@@ -41,7 +42,7 @@ export default function Navbar() {
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <IoCloseSharp  className="block h-6 w-6" aria-hidden="true" />
+                    <IoCloseSharp className="block h-6 w-6" aria-hidden="true" />
                   ) : (
                     <FaBars className="block h-6 w-6" aria-hidden="true" />
                   )}
@@ -77,84 +78,82 @@ export default function Navbar() {
                 {
                   login ? (
                     <div className="relative inline-block">
-      <button
-        className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${
-          navigationMenu === 'getting-started' ? 'border-2 border-black' : ''
-        } ${navigationMenu !== 'getting-started' ? '' : ''}`}
-        onClick={() => toggleNavigationMenu('getting-started')}
-        
-      >
-        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>A</span>
-        <svg
-          className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${
-            navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
-          }`}
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <polyline points="6 9 12 15 18 9"></polyline>
-        </svg>
-      </button>
+                      <button
+                        className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${navigationMenu === 'getting-started' ? 'border-2 border-black' : ''
+                          } ${navigationMenu !== 'getting-started' ? '' : ''}`}
+                        onClick={() => toggleNavigationMenu('getting-started')}
 
-      {/* Dropdown menu */}
-      {navigationMenuOpen && navigationMenu === 'getting-started' && (
-        <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {/* Dropdown menu items */}
-          {/* Replace these links with your actual dropdown menu items */}
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            My Courses
-          </a>
-          <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Profile
-          </a>
-          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Settings
-          </a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Updates
-          </a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Accomplishments
-          </a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Help Center
-          </a>
-          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-            Logout
-          </a>
-        </div>
-      )}
-    </div>
-                    
+                      >
+                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>A</span>
+                        <svg
+                          className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
+                            }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+
+                      {/* Dropdown menu */}
+                      {navigationMenuOpen && navigationMenu === 'getting-started' && (
+                        <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          {/* Dropdown menu items */}
+                          {/* Replace these links with your actual dropdown menu items */}
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            My Courses
+                          </a>
+                          <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Profile
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Settings
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Updates
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Accomplishments
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Help Center
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Logout
+                          </a>
+                        </div>
+                      )}
+                    </div>
+
                   ) : (
                     <Menu as="div" className="relative ml-3">
-                    <Link to="/login">
-                      <div className='text-white'>
-                        Log In
-                      </div>
-                    </Link>
-                  </Menu>
+                      <Link to="/login">
+                        <div className='text-white'>
+                          Log In
+                        </div>
+                      </Link>
+                    </Menu>
                   )
                 }
-               {
-                login ? ("") : (
+                {
+                  login ? ("") : (
 
-                  <Menu as="div" className="relative ml-3 pl-8">
-                  <Link to = "/SignUp">
-                    <button className='py-3 px-6 bg-blue-800 text-white rounded'>
-                      Join Us
-                    </button>
-                  </Link>
-                </Menu>
-                ) 
-               }
-              
+                    <Menu as="div" className="relative ml-3 pl-8">
+                      <Link to="/SignUp">
+                        <button className='py-3 px-6 bg-blue-800 text-white rounded'>
+                          Join Us
+                        </button>
+                      </Link>
+                    </Menu>
+                  )
+                }
+
               </div>
             </div>
           </div>
