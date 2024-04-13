@@ -32,7 +32,7 @@ function Home() {
       <Main />
       <div class="w-full mt-28 px-16  ">
         <span class="text-4xl font-bold text-[#023047]  border-b border-[#023047]">
-          Start a new career with CodeWithGenius &#8594;
+          Start a new career with E-education &#8594;
         </span>
       </div>
       <div className="w-full mt-10 px-16">

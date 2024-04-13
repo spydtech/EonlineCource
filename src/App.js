@@ -8,6 +8,8 @@ import Profile from "./Components/Profile/Profile"
 import Settings from "./Components/Profile/Settings"
 import ForgotPassword from "./Components/Login/ForgotPassword"
 
+import MyCourse from "./Components/mycourse/MyCourse";
+
 function App() {
   return (
     <div>
@@ -22,6 +24,8 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Settings" element={<Settings />} />
+
+          <Route path="/mycourse" element={<MyCourse />} />
 
         </Routes>
       </Router>

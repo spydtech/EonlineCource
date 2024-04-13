@@ -28,7 +28,7 @@ function Footer1() {
                     alt="Your Company"
                   /></Link>
                  
-                  CodeWithGenius
+                
                 </a>
                 <p>
                   Expertly made, responsive, accessible components in React and

@@ -38,7 +38,7 @@ const Aurora = () => {
           Start Learning!
         </span>
         <h1 className="max-w-3xl bg-gradient-to-br from-white to-gray-400 bg-clip-text text-center text-3xl font-medium leading-tight text-transparent sm:text-5xl sm:leading-tight md:text-7xl md:leading-tight">
-          Unlock Your Potential with CodeWithGenius
+          Unlock Your Potential with E-education
         </h1>
         <p className="my-6 max-w-xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
           Are you ready to take your skills to the next level? Join us for an
