@@ -94,7 +94,7 @@ function Home() {
         <div className="border-2 rounded-lg border-blue-100  pb-5">
           <div
             id="tab1"
-            className={`p-4 tab-content bg-white shadow-md rounded-lg ${
+            className={`p-4 tab-content bg-white  rounded-lg ${
               activeTab === "tab1" ? "" : "hidden"
             }`}
           >
