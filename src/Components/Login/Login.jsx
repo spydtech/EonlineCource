@@ -8,25 +8,19 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const responseGoogle = (response) => {
-    console.log(response);
-    // Here, you can send the `response` object to your server for further authentication and authorization
-  };
-
-  const handleGoogleSignIn = async () => {
+  const responseGoogle = async (response) => {
     try {
-      // Make a POST request to your server endpoint for Google authentication
-      const response = await axios.post(
-        "http://localhost:3000/api/google-authentication"
-      );
-
-      // Handle success response, e.g., redirect to Google authentication page
-      console.log("Google authentication response:", response.data);
+      // Send the `response` object to your server for further authentication and authorization
+      const serverResponse = await axios.post("http://localhost:3000/api/google-authentication", {
+        tokenId: response.tokenId // Assuming your server expects a tokenId
+      });
+      
+      console.log("Server response:", serverResponse.data);
     } catch (error) {
-      // Handle error
       console.error("Error during Google authentication:", error);
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,28 +45,21 @@ function Login() {
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
 
-              <form
-                id="connect-google-button"
-                onSubmit={handleGoogleSignIn}
-                method="POST"
-                action=""
-              >
-                <button
-                  className="w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  type="submit"
-                >
+              <form className="space-y-4 md:space-y-6">
+                <div>
                   <GoogleLogin
-                    clientId="850516566993-compute@developer.gserviceaccount.com"
+                    clientId="your-client-id.apps.googleusercontent.com"
                     buttonText="Sign in with Google"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
+                    className="w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   />
-                </button>
+                  </div>
               </form>
 
               <div class="flex items-center">
