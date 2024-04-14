@@ -1,7 +1,7 @@
 import React from "react";
 const BenefitItem = ({ text }) => (
   <div className="flex justify-center items-center">
-    <div className="py-4 mt-8 w-[80%] text-white border border-white bg-[#262D3D] shadow-2xl hover:scale-105 transition-all duration-500 px-4 rounded-lg">
+    <div className="py-4 mt-8 w-[80%] text-white bg-[#262D3D] shadow-2xl hover:scale-105 transition-all duration-500 px-4 rounded-lg">
       <p className="text-center">{text}</p>
     </div>
   </div>
