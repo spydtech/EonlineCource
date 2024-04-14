@@ -8,9 +8,9 @@ const Counter = () => {
           <div class="p-4 border-r   flex flex-col items-center justify-center  dark:bg-gray-800">
             <div class="text-4xl font-bold flex justify-center items-center flex-row  ">
               <div>
-                <CountingAnimation start={0} end={30} K duration={3000} />
+                <CountingAnimation start={0} end={30}  duration={3000} />
               </div>
-              <div class="text-yellow-500">+</div>
+              <div class="text-yellow-500">K+</div>
             </div>
             <div class="text-300 text-uppercase">Student Joined</div>
           </div>
