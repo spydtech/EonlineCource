@@ -12,6 +12,7 @@ import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
 import Footer from "./footer/Footer";
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
+import FinalTestimonials from "./testimonials/FinalTestimonials";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -157,6 +158,7 @@ function Home() {
 
       <ExploreCources />
       <Aurora />
+      <FinalTestimonials />
       <Footer />
     </>
   );
