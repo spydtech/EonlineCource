@@ -119,7 +119,7 @@ const StartLearning = () => {
         </div>
         <div class=" text-base font-semibold flex justify-center items-center mt-12 pb-8">
           <button
-            className="border border-[#0F172A] text-white p-2 rounded-lg bg-[#0F172A] hover:bg-white hover:text-black transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300  hover:shadow-2xl"
+            className="border border-[#0F172A] text-white p-2 rounded-lg bg-[#0F172A] hover:bg-white hover:text-black transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300  hover:shadow-2xl shadow-lg shadow-[#0F172A]"
             onClick={() => setShowAllCourses(!showAllCourses)}
           >
             {showAllCourses ? "Show Less" : "Show More"}

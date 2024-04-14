@@ -4,7 +4,7 @@ const Counter = () => {
   return (
     <div className="">
       <div className=" lg:h-[200px] flex justify-center items-center lg:flex-row flex-col w-full gap-8 text-white ">
-        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] ">
+        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] shadow-lg shadow-[#522d5b]">
           <div class="p-4 border-r   flex flex-col items-center justify-center  dark:bg-gray-800">
             <div class="text-4xl font-bold flex justify-center items-center flex-row  ">
               <div>
@@ -16,7 +16,7 @@ const Counter = () => {
           </div>
           <div className="absolute m-[-20px] w-[40px] h-[40px] transform rotate-45 bg-black"></div>
         </div>
-        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] ">
+        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] shadow-lg shadow-[#522d5b]">
           <div class="p-4 border-r   flex flex-col items-center justify-center  dark:bg-gray-800">
             <div class="text-4xl font-bold flex justify-center items-center flex-row  ">
               <div>
@@ -28,7 +28,7 @@ const Counter = () => {
           </div>
           <div className="absolute m-[-20px] w-[40px] h-[40px] transform rotate-45 bg-black"></div>
         </div>
-        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] ">
+        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] shadow-lg shadow-[#522d5b]">
           <div class="p-4 border-r   flex flex-col items-center justify-center  dark:bg-gray-800">
             <div class="text-4xl font-bold flex justify-center items-center flex-row  ">
               <div>
@@ -41,7 +41,7 @@ const Counter = () => {
           <div className="absolute m-[-20px] w-[40px] h-[40px] transform rotate-45 bg-black"></div>
         </div>
 
-        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] ">
+        <div className="relative md:w-[300px] md:h-[120px] bg-[#522d5b] shadow-lg shadow-[#522d5b]">
           <div class="p-4 border-r   flex flex-col items-center justify-center  dark:bg-gray-800">
             <div class="text-4xl font-bold flex justify-center items-center flex-row  ">
               <div>

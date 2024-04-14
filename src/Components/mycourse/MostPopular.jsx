@@ -77,7 +77,7 @@ const MostPopularcourses = [
       </div>
       {/* Button */}
       <div className="flex justify-start items-start pl-4 mb-2">
-        <button className="border border-[#0F172A] p-2 font-bold rounded-lg bg-[#0F172A] hover:bg-white text-white hover:text-black">
+        <button className="border border-[#0F172A] p-2 font-bold rounded-lg bg-[#0F172A] hover:bg-white text-white hover:text-black ">
           {course.button}
         </button>
       </div>
@@ -108,7 +108,7 @@ const MostPopularcourses = [
         {/* Show More / Show Less Button */}
         <div className="text-base font-semibold flex justify-center items-center mt-12 pb-8">
           <button
-            className="border border-[#0F172A] text-white p-2 rounded-lg bg-[#0F172A] hover:bg-white hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 hover:shadow-2xl"
+            className="border border-[#0F172A] text-white p-2 rounded-lg bg-[#0F172A] hover:bg-white hover:text-black transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 hover:shadow-2xl  shadow-lg shadow-[#0F172A]"
             onClick={() => setShowAllMostPopularcourses(!showAllMostPopularcourses)}
           >
             {showAllMostPopularcourses ? "Show Less" : "Show More"}
