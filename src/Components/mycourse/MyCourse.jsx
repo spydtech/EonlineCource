@@ -2,18 +2,20 @@ import React from 'react'
 import Navbar from '../Navbar'
 import WaterDropGrid from './WaterDropGrid'
 import Counter from './Counter'
-import Benifit from './benifit'
+import Benefits from './Benefits'
 import StartLearning from './StartLearning';
 import MostPopular from './MostPopular'
+import Footer from '../Home/footer/Footer'
 const MyCourse = () => {
   return (
     <>
     <Navbar />
     <WaterDropGrid />
     <Counter />
-    <Benifit />
     <StartLearning />
     <MostPopular />
+    <Benefits />
+    <Footer />
    
     </>
   )

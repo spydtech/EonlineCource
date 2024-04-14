@@ -7,7 +7,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import Account from './Account/Account';
 import Payment from './Payment/Payment';
 import Navbar from '../Navbar';
-import Footer1 from '../Home/footer/Footer1';
+import Footer from '../Home/footer/Footer';
 import Calendar from './Calendar Sync/Calendar ';
 
 function Settings() {
@@ -81,7 +81,7 @@ function Settings() {
                     </div>
                 </div>
             </div>
-            <Footer1 />
+            <Footer />
         </div>
     );
 }

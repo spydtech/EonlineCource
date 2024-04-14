@@ -10,7 +10,7 @@ import UiUx from "./StartNew Car/Ui-Ux/UiUx";
 
 import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
-import Footer1 from "./footer/Footer1";
+import Footer from "./footer/Footer";
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
 
 function Home() {
@@ -157,7 +157,7 @@ function Home() {
 
       <ExploreCources />
       <Aurora />
-      <Footer1 />
+      <Footer />
     </>
   );
 }
