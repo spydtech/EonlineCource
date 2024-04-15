@@ -67,7 +67,7 @@ export default function Marquee() {
     <section>
      <ParallaxText baseVelocity={-1}>
  <div className="font-extrabold bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 text-transparent bg-clip-text pt-4">
- Embark on your career journey with CodeWithGenius
+ Embark on your career journey with E-education
  </div>
 </ParallaxText>
 <ParallaxText baseVelocity={1} >

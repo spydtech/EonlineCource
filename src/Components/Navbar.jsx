@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Disclosure, Menu } from '@headlessui/react'
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+import IMG from "../assets/E- education logo .png"
 
 import { Link } from 'react-router-dom';
 const login = true;
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
+  
   { name: 'My Learning', href: `${login ? "/" : "/login"} `, current: false },
   { name: 'Course', href: '#', current: false },
 ]
@@ -50,11 +51,16 @@ export default function Navbar() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
+                  <Link to="/">
                   <img
-                    className="h-8 w-auto"
-                    src="https://static.vecteezy.com/system/resources/thumbnails/009/383/394/small/graduation-clipart-design-illustration-free-png.png"
+                  
+                    className="h-14  cursor-pointer"
+                    
+                    src={IMG}
                     alt="Your Company"
                   />
+                  </Link>
+                 
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -64,7 +70,7 @@ export default function Navbar() {
                         href={item.href}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          'rounded-md px-3 py-2 mt-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
@@ -106,13 +112,13 @@ export default function Navbar() {
                         <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {/* Dropdown menu items */}
                           {/* Replace these links with your actual dropdown menu items */}
-                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                          <a href="/mycourse" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             My Courses
                           </a>
                           <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Profile
                           </a>
-                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Settings
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">

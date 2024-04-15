@@ -1,7 +1,7 @@
 import Navbar from "../Navbar";
 import React, { useState } from "react";
 import { CiEdit } from "react-icons/ci";
-import Footer from "../Home/footer/Footer1";
+import Footer from "../Home/footer/Footer";
 
 function Profile({ item }) {
   const [firstName, setFirstName] = useState("");

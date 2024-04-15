@@ -1,6 +1,8 @@
 import React from "react";
+import IMG from "../../../assets/E- education logo .png"
+import { Link } from "react-router-dom";
 
-function Footer1() {
+function Footer() {
   return (
     <>
       <footer className="w-full text-slate-500">
@@ -19,12 +21,14 @@ function Footer1() {
                   className="mb-6 flex items-center gap-2 whitespace-nowrap text-base font-medium leading-6 text-slate-700 focus:outline-none"
                   href="javascript:void(0)"
                 >
+                  <Link to="/">
                   <img
-                    className="h-8 w-auto"
-                    src="https://static.vecteezy.com/system/resources/thumbnails/009/383/394/small/graduation-clipart-design-illustration-free-png.png"
+                  src={IMG}
+                    className="h-14 w-auto"
                     alt="Your Company"
-                  />
-                  CodeWithGenius
+                  /></Link>
+                 
+                
                 </a>
                 <p>
                   Expertly made, responsive, accessible components in React and
@@ -235,4 +239,4 @@ function Footer1() {
     </>
   );
 }
-export default Footer1;
+export default Footer;
