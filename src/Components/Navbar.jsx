@@ -5,6 +5,7 @@ import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import IMG from "../assets/E- education logo .png";
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const login = true;
 const navigation = [
@@ -25,6 +26,7 @@ export default function Navbar() {
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
   const navigationRef = useRef(null); // Initialize navigationRef with useRef
   const navigate = useNavigate();
+
 
   const handleLogout = () => {
 
