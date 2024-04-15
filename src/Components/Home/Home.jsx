@@ -10,7 +10,7 @@ import UiUx from "./StartNew Car/Ui-Ux/UiUx";
 
 import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
-import Footer from "./footer/Footer";
+import Footer from "./footer/Footer"
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
 import FinalTestimonials from "./testimonials/FinalTestimonials";
 

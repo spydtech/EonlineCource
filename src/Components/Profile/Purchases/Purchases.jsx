@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer1 from '../../Home/footer/Footer1'
+import Footer from '../../Home/footer/Footer'
 import Navbar from '../../Navbar'
 import PaymentHistory from './PaymentHistory'
 
@@ -33,7 +33,7 @@ function Purchases() {
 
 </div>
        
-        <Footer1 />
+        <Footer />
     </div>
   )
 }

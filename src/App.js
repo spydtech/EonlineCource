@@ -10,7 +10,7 @@ import ForgotPassword from "./Components/Login/ForgotPassword"
 import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
 
-import MyCourse from "./Components/mycourse/MyCourse";
+import MyCourse from "./Components/mycourse/MyCourse"
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
 
-          <Route path="/mycourse" element={<MyCourse />} />
+          <Route path="/Mycourse" element={<MyCourse />} />
 
         </Routes>
       </Router>
