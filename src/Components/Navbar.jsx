@@ -4,7 +4,7 @@ import { Disclosure, Menu } from '@headlessui/react';
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import IMG from "../assets/E- education logo .png";
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const login = true;
 const navigation = [
@@ -56,8 +56,8 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
-  
-  
+
+
 
   return (
     <Disclosure as="nav" className="bg-[#0077b6] sticky top-0 z-50">
@@ -140,7 +140,7 @@ export default function Navbar() {
                             My Courses
                           </a>
                           <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                          Purchases
+                            Purchases
                           </a>
                           <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Profile
@@ -158,7 +158,7 @@ export default function Navbar() {
                             Help Center
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          onClick={handleLogout} >
+                            onClick={handleLogout} >
                             Logout
                           </a>
                         </div>

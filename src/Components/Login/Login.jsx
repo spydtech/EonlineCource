@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Navbar';
 import IMG from '../../assets/E- education logo .png'
@@ -8,30 +9,34 @@ import IMG from '../../assets/E- education logo .png'
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      // Make POST request to your backend endpoint for sign-up
-      const response = await axios.post('http://localhost:3000/api/login', {
-        email,
-        password,
+      const response = await axios.post('http://localhost:3465/api/v1/user/login', {
+        email: email,
+        password: password,
+      }).then((res) => {
+        console.log(res.data)
+
+        if (res.data.message === "Email not exits") {
+          alert("Email not exits");
+        } else if (res.data.message === "Login Success") {
+
+          navigate('/Home');
+        }
+        else {
+          alert("Incorrect Email or Password");
+        }
       });
-  
-      // Handle successful sign-up
-      console.log('Sign up successful:', response.data);
+
+      // Handle success response
+      console.log('Response:', response.data);
     } catch (error) {
-      // Handle sign-up error
-      console.error('Error signing up:', error);
+      // Handle error
+      console.error('Error:', error);
     }
   };
 
@@ -51,22 +56,24 @@ function Login() {
             </div>
             <div className="mt-12 flex flex-col items-center">
               <h1 className="text-2xl xl:text-3xl font-extrabold">
-               Welcome
+                Welcome
               </h1>
               <form onSubmit={handleSubmit} className="w-full flex-1 mt-8">
                 <div className="mx-auto max-w-xs">
                   <input
-                    type="email"
-                    placeholder="Email"
+                    type='email'
                     value={email}
-                    onChange={handleEmailChange}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }} placeholder='email'
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   />
                   <input
                     type="password"
-                    placeholder="Password"
                     value={password}
-                    onChange={handlePasswordChange}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                    }} placeholder='password'
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                   />
                   <h1 className='py-2 text-lg hover:underline  cursor-pointer'> Forgot Password ?<a href='/Signup' className='text-sm hover:underline text-blue-500 cursor-pointer'>Sign Up</a></h1>
@@ -115,7 +122,7 @@ function Login() {
     </div>
   );
 };
-  export default Login
+export default Login
 // import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
 // import axios from 'axios';
