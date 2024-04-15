@@ -7,6 +7,8 @@ import Certificates from "./Components/Home/Professional Certificates/Certificat
 import Profile from "./Components/Profile/Profile"
 import Settings from "./Components/Profile/Settings"
 import ForgotPassword from "./Components/Login/ForgotPassword"
+import Purchases from "./Components/Profile/Purchases/Purchases";
+import Payment from "./Components/Profile/Payment/Payment";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Settings" element={<Settings />} />
+          <Route path="/Payment" element={<Payment />} />
+          <Route path="/Purchases" element={<Purchases />} />
 
         </Routes>
       </Router>

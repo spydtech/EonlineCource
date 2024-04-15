@@ -9,6 +9,8 @@ import Payment from './Payment/Payment';
 import Navbar from '../Navbar';
 import Footer1 from '../Home/footer/Footer1';
 import Calendar from './Calendar Sync/Calendar ';
+import Notes from './Notes/Notes';
+import Communication from './Communication Preferences/Communication';
 
 function Settings() {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -66,14 +68,11 @@ function Settings() {
                         <Payment />
                     </div>
                     <div id="tab3" className={`tabcontent p-4 ${activeTab === 'tab3' ? '' : 'hidden'}`}>
-                        <h2 className="text-lg font-bold text-gray-800">Communication Preferences</h2>
-                        <p className="mt-2 text-gray-700">Duis lobortis velit tellus, eget luctus tellus facilisis eget. Maecenas non massa
-                            varius, molestie lorem eget, molestie nisi. Suspendisse potenti.</p>
+                    <Communication />
                     </div>
-                    <div id="tab4" className={`tabcontent p-4 ${activeTab === 'tab4' ? '' : 'hidden'}`}>
-                        <h2 className="text-lg font-bold text-gray-800">Notes & Highlights</h2>
-                        <p className="mt-2 text-gray-700">Duis lobortis velit tellus, eget luctus tellus facilisis eget. Maecenas non massa
-                            varius, molestie lorem eget, molestie nisi. Suspendisse potenti.</p>
+                    <div id="tab4" className={`tabcontent p-4  ${activeTab === 'tab4' ? '' : 'hidden'}`}>
+                       <Notes />
+                        
                     </div>
                     <div id="tab5" className={`tabcontent p-4 ${activeTab === 'tab5' ? '' : 'hidden'}`}>
                        <Calendar />

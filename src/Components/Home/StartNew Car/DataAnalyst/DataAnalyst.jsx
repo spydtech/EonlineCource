@@ -74,15 +74,15 @@ function DataAnalyst() {
       <div className="pt-5">
         <h1 className="text-xl font-semibold">Median Salary</h1>
         <div className="pt-5">
-          <a className="bg-gray-200 rounded-sm text-start   px-[50%] py-2">
-            <span className="-ml-[49%]">All occupations</span>
-          </a>
+        <a className="bg-gray-200 rounded-sm text-start md:px-[50%]  px-[10%] py-2">
+              <span className="-ml-[9%] md:ml-[-49%] md:text-lg text-sm"> All occupations</span>
+            </a>
           <span className="p-2">$37,960*</span>
         </div>
         <div className="pt-5 pb-10">
-          <a className="bg-blue-600 rounded-sm text-start text-white   px-[70%] py-2">
-            <span className="-ml-[68%]">All occupations</span>
-          </a>
+        <a className="bg-blue-600 rounded-sm text-start text-white  md:px-[70%] px-[25%] py-2">
+              <span className="md:-ml-[68%] -ml-[24%] md:text-lg text-sm">Data Analyst</span>
+            </a>
           <span className="p-2">$90,500**</span>
         </div>
         <hr />
@@ -127,13 +127,7 @@ function DataAnalyst() {
 
       </div>
 
-      <div className="text-base font-semibold leading-7 mt-8 text-center">
-        <p>
-          <a href="#" className="text-sky-500 hover:text-sky-700 transition-all duration-300">
-            Explore all Certificates &rarr;
-          </a>
-        </p>
-      </div>
+     
     </div>
   );
 }

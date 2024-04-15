@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome
 function ItSupport() {
   return (
     <>
-      <div>
+      <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-semibold mb-2 text-blue-700">IT Support Specialist</h2>
         <p>Evaluate and troubleshoot technology issues so equipment runs smoothly</p>
         <div className="pt-5">

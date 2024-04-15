@@ -5,20 +5,20 @@ import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome
 function DigitalMarketing() {
   return (
     <>
-      <div>
+      <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-semibold mb-2 text-blue-700">Digital Marketer</h2>
         <p>Define and develop digital strategies to deliver business growth through online channels</p>
         <div className="pt-5">
           <h1 className="text-xl font-semibold">Median Salary</h1>
           <div className="pt-5">
-            <a className="bg-gray-200 rounded-sm text-start   md:px-[50%]  px-[10%] py-2">
+          <a className="bg-gray-200 rounded-sm text-start   md:px-[50%]  px-[10%] py-2">
               <span className="-ml-[9%] md:ml-[-49%] md:text-lg text-sm">All occupations</span>
             </a>
             <span className="p-2">$37,960*</span>
           </div>
           <div className="pt-5 pb-10">
-            <a className="bg-blue-600 rounded-sm text-start text-white px-[25%]  md:px-[70%] py-2">
-              <span className="md:-ml-[69%] -ml-[24%] md:text-lg text-sm">Digital Marketer</span>
+          <a className="bg-blue-600 rounded-sm text-start text-white px-[20%]  md:px-[70%] py-2">
+              <span className="md:-ml-[69%] -ml-[19%] md:text-lg text-sm">Digital Marketer</span>
             </a>
             <span className="p-2">$61,300**</span>
           </div>
