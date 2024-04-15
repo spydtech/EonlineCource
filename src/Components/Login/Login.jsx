@@ -22,7 +22,7 @@ function Login() {
   
     try {
       // Make POST request to your backend endpoint for sign-up
-      const response = await axios.post('http://localhost:3000/api/login', {
+      const response = await axios.post('http://localhost:3465/api/v1/user/login', {
         email,
         password,
       });
