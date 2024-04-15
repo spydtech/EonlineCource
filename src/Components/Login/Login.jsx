@@ -15,14 +15,25 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Make POST request to your backend endpoint for sign-up
-      const response = await axios.post('http://localhost:3000/api/login', {
-        email,
-        password,
+      const response = await axios.post('http://localhost:3465/api/v1/user/login', {
+        email: email,
+        password: password,
+      }).then((res) => {
+        console.log(res.data)
+
+        if (res.data.message === "Email not exits") {
+          alert("Email not exits");
+        } else if (res.data.message === "Login Success") {
+
+          navigate('/');
+        }
+        else {
+          alert("Incorrect Email or Password");
+        }
       });
 
-      // Handle successful sign-up
-      console.log('Sign up successful:', response.data);
+      // Handle success response
+      console.log('Response:', response.data);
     } catch (error) {
       // Handle error
       console.error('Error:', error);
