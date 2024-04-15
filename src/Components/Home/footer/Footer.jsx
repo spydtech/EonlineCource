@@ -2,7 +2,7 @@ import React from "react";
 import IMG from "../../../assets/E- education logo .png"
 import { Link } from "react-router-dom";
 
-function Footer1() {
+function Footer() {
   return (
     <>
       <footer className="w-full text-slate-500">
@@ -28,7 +28,7 @@ function Footer1() {
                     alt="Your Company"
                   /></Link>
                  
-                  CodeWithGenius
+                
                 </a>
                 <p>
                   Expertly made, responsive, accessible components in React and
@@ -239,4 +239,4 @@ function Footer1() {
     </>
   );
 }
-export default Footer1;
+export default Footer;

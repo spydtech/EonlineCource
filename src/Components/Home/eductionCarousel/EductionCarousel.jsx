@@ -92,7 +92,7 @@ export default function EducationCarousel() {
                 </div>
                 <div className="pl-4 mb-4">
 
-                <button className="border border-blue-800 text-black font-bold p-2 rounded-lg hover:bg-blue-800 hover:text-white">Eroll Now</button>
+                <button className="border border-blue-800 hover:bg-white hover:text-black font-bold p-2 rounded-lg bg-blue-800 text-white">Eroll Now</button>
                 </div>
               </li>
               

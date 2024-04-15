@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css"; // Make sure you import Tailwind CSS
 import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome
+import axios from 'axios'
+import { NavLink } from "react-router-dom";
 
 
 
@@ -31,38 +33,56 @@ function DataAnalyst() {
     },
   ]
 
+  const [orderID, setOrderID] = useState(null);
+
+
+
   const handlePayment = (cert) => {
     const amountInPaise = cert.price * 100; // Convert price to paise (1 INR = 100 paise)
     if (amountInPaise < 100) {
       alert('Invalid amount. Minimum amount should be 1 rupee.');
       return;
     }
-    var options = {
-      key: "rzp_live_S2N6IhuEdjaL7s",
-      key_secret: "5MZ8EirthXhbDcbyNyKVSJX5",
-      amount: amountInPaise,
-      currency: "INR",
-      name: "E_ONLINE_EDU",
-      descrption: "for testing purpose",
-      handler: function (response) {
-        alert(response.razorpay_payment_id)
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-      },
-      prefill: {
-        name: "SPY D TECHNOLOGY",
-        email: "info@spydtech.com",
-        contact: "6305207832"
-      },
-      notes: {
-        address: "Razorpay Corporate office"
-      },
-      theme: {
-        color: "#3399cc"
-      },
-    };
-    var pay = new window.Razorpay(options);
-    pay.open()
+
+    axios.post('http://localhost:3465/create-order', {
+      amount: amountInPaise, // Send the amount in paise to the backend
+      currency: 'INR',
+      name: 'E_ONLINE_EDU',
+      description: 'Test Transaction',
+      email: "info@spydtech.com",
+      contact: "6305207832"
+    }).then((response) => {
+      setOrderID(response.data.order_id); // Set the order ID received from backend
+      const options = {
+        key: "rzp_test_pGk4bGkuLgOxKA",
+        key_secret: "yaZyNbbTW7aUjSeXuK0JM6sV",
+        amount: amountInPaise,
+        currency: "INR",
+        name: "E_ONLINE_EDU",
+        description: "for testing purpose",
+        order_id: response.data.order_id, // Pass the order ID to Razorpay
+        handler: function (response) {
+          alert(response.razorpay_payment_id)
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature);
+        },
+        prefill: {
+          name: "SPY D TECHNOLOGY",
+          email: "info@spydtech.com",
+          contact: "6305207832"
+        },
+        notes: {
+          address: "Razorpay Corporate office"
+        },
+        theme: {
+          color: "#3399cc"
+        },
+      };
+      var pay = new window.Razorpay(options);
+      pay.open()
+    }).catch((error) => {
+      console.error('Error creating order:', error);
+    });
   };
 
 
@@ -127,7 +147,13 @@ function DataAnalyst() {
 
       </div>
 
-     
+      <div className="text-base font-semibold leading-7 mt-8 text-center">
+        <p>
+          <a href="#" className="text-sky-500 hover:text-sky-700 transition-all duration-300">
+            Explore all Certificates &rarr;
+          </a>
+        </p>
+      </div>
     </div>
   );
 }

@@ -105,60 +105,85 @@ export default function Navbar() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {login ? (
-                  <div className="relative inline-block">
-                    <button
-                      className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${navigationMenu === 'getting-started' ? 'border-2 border-black' : ''} ${navigationMenu !== 'getting-started' ? '' : ''}`}
-                      onClick={() => toggleNavigationMenu('getting-started')}
-                    >
-                      <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
-                        {`${firstName.charAt(0)}${lastName.charAt(0)}`}
-                      </span>
-                      <svg
-                        className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
+                {
+                  login ? (
+                    <div className="relative inline-block">
+                      <button
+                        className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${navigationMenu === 'getting-started' ? 'border-2 border-black' : ''
+                          } ${navigationMenu !== 'getting-started' ? '' : ''}`}
+                        onClick={() => toggleNavigationMenu('getting-started')}
+
                       >
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                      </svg>
-                    </button>
-                    {navigationMenuOpen && navigationMenu === 'getting-started' && (
-                      <div ref={navigationRef}  className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">My Courses</a>
-                        <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Profile</a>
-                        <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">My Purchases</a>
-                        <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Settings</a>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Updates</a>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Accomplishments</a>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Help Center</a>
-                        <a href="" onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Logout</a>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Menu as="div" className="relative ml-3">
-                    <Link to="/login">
-                      <div className='text-white'>
-                        Log In
-                      </div>
-                    </Link>
-                  </Menu>
-                )}
-                {login ? ("") : (
-                  <Menu as="div" className="relative ml-3 pl-8">
-                    <Link to="/SignUp">
-                      <button className='py-3 px-6 bg-blue-800 text-white rounded'>
-                        Join Us
+                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>A</span>
+                        <svg
+                          className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
+                            }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                       </button>
-                    </Link>
-                  </Menu>
-                )}
+
+                      {/* Dropdown menu */}
+                      {navigationMenuOpen && navigationMenu === 'getting-started' && (
+                        <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          {/* Dropdown menu items */}
+                          {/* Replace these links with your actual dropdown menu items */}
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            My Courses
+                          </a>
+                          <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Profile
+                          </a>
+                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Settings
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Updates
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Accomplishments
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Help Center
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Logout
+                          </a>
+                        </div>
+                      )}
+                    </div>
+
+                  ) : (
+                    <Menu as="div" className="relative ml-3">
+                      <Link to="/login">
+                        <div className='text-white'>
+                          Log In
+                        </div>
+                      </Link>
+                    </Menu>
+                  )
+                }
+                {
+                  login ? ("") : (
+
+                    <Menu as="div" className="relative ml-3 pl-8">
+                      <Link to="/SignUp">
+                        <button className='py-3 px-6 bg-blue-800 text-white rounded'>
+                          Join Us
+                        </button>
+                      </Link>
+                    </Menu>
+                  )
+                }
+
               </div>
             </div>
           </div>

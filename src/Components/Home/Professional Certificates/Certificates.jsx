@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../../Navbar'
 import Professional from './Professional'
-import Footer1 from '../footer/Footer1'
+import Footer from '../footer/Footer'
 
 function Certificates() {
   return (
@@ -113,7 +113,7 @@ function Certificates() {
     </div>
 </div>
 <Professional />
-<Footer1 />
+<Footer />
 
     </div>
   )

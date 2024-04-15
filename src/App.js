@@ -10,6 +10,8 @@ import ForgotPassword from "./Components/Login/ForgotPassword"
 import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
 
+import MyCourse from "./Components/mycourse/MyCourse";
+
 function App() {
   return (
     <div>
@@ -20,12 +22,13 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
-
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
+
+          <Route path="/mycourse" element={<MyCourse />} />
 
         </Routes>
       </Router>
