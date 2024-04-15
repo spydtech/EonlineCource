@@ -12,7 +12,7 @@ function Professional() {
            Find the right Professional Certificate program for you
         </h1>
         <p class="text-sm md:max-w-xl md:mx-auto lg:mx-0 lg:max-w-full md:text-center lg:text-left dark:text-gray-300">
-        Professional Certificates on Coursera help you get job-ready for an in-demand career field in less than a year. Earn a career credential, apply your knowledge to hands-on projects that showcase your skills for employers, and get access to job search resources. 
+        Professional Certificates on E-education help you get job-ready for an in-demand career field in less than a year. Earn a career credential, apply your knowledge to hands-on projects that showcase your skills for employers, and get access to job search resources. 
         Many programs also provide a pathway to an industry-recognized certification.</p>
        
     </div>
@@ -22,7 +22,7 @@ function Professional() {
             alt="" />
     </div>
 </div>
-<h1 className='text-4xl  text-center p-5'>Why are Professional Certificates on Coursera unique?</h1>
+<h1 className='text-4xl  text-center p-5'>Why are Professional Certificates on E-education unique?</h1>
  
 <div
     class="px-7 lg:px-10 max-w-6xl mx-auto flex flex-col gap-y-10 lg:flex-row items-center gap-x-10 justify-center py-10 lg:py-14 dark:bg-gray-800">

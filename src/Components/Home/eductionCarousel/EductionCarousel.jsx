@@ -29,7 +29,7 @@ const courses = [
     tagText: "Artificial intelligence",
     title: "Artificial intelligence",
     skills:
-      "Artificial intelligence, in its broadest sense, is intelligence exhibited by machines, particularly computer systems and networks. ",
+"Artificial intelligence, in its broadest sense, is intelligence exhibited by machines, particularly computer systems and networks, that simulates human cognitive functions.",
     rating: "4.0",
     reviews: "34 reviews",
     button: "Start To Learn",
@@ -88,9 +88,14 @@ export default function EducationCarousel() {
                     <div className="font-bold">{course.title}</div>
                     <div>{course.skills}</div>
                   </div>
-                  <div>Eroll Now</div>
+                
+                </div>
+                <div className="pl-4 mb-4">
+
+                <button className="border border-blue-800 hover:bg-white hover:text-black font-bold p-2 rounded-lg bg-blue-800 text-white">Eroll Now</button>
                 </div>
               </li>
+              
             ))}
            
           </ul>

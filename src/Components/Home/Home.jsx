@@ -7,11 +7,12 @@ import ItSupport from "./StartNew Car/Itsupport/ItSupport";
 import FrontEnd from "./StartNew Car/Front-End Developer/FrontEnd";
 import Cybersecurity from "./StartNew Car/Cybersecurity/Cybersecurity";
 import UiUx from "./StartNew Car/Ui-Ux/UiUx";
-import StartLearning from "./startLearning/StartLearning";
-import ExploreCources from './ExploreOurCources/ExploreCources';
+
+import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
-import Footer1 from "./footer/Footer1";
+import Footer from "./footer/Footer"
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
+import FinalTestimonials from "./testimonials/FinalTestimonials";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -32,7 +33,7 @@ function Home() {
       <Main />
       <div class="w-full mt-28 px-16  ">
         <span class="text-4xl font-bold text-[#023047]  border-b border-[#023047]">
-          Start a new career with CodeWithGenius &#8594;
+          Start a new career with E-education &#8594;
         </span>
       </div>
       <div className="w-full mt-10 px-16">
@@ -94,7 +95,7 @@ function Home() {
         <div className="border-2 rounded-lg border-blue-100  pb-5">
           <div
             id="tab1"
-            className={`p-4 tab-content bg-white shadow-md rounded-lg ${
+            className={`p-4 tab-content bg-white  rounded-lg ${
               activeTab === "tab1" ? "" : "hidden"
             }`}
           >
@@ -141,24 +142,24 @@ function Home() {
             <UiUx />
           </div>
           <div class=" text-base font-semibold leading-7 text-center justify-center  ">
-          <p>
-            <a
-              href="/Certificates"
-              class="text-sky-500  transition-all duration-300 group-hover:text-white "
-            >
-              Explore all Certificates &rarr;
-            </a>
-          </p>
+            <p>
+              <a
+                href="/Certificates"
+                class="text-sky-500  transition-all duration-300 group-hover:text-white "
+              >
+                Explore all Certificates &rarr;
+              </a>
+            </p>
+          </div>
         </div>
-        </div>
-       
+
+        <EducationCarousel />
       </div>
 
-      <StartLearning />
-      <EducationCarousel />
-        <ExploreCources />
-        <Aurora />
-        <Footer1 />
+      <ExploreCources />
+      <Aurora />
+      <FinalTestimonials />
+      <Footer />
     </>
   );
 }

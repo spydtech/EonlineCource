@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome
 function FrontEnd() {
   return (
     <>
-      <div>
+      <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-semibold mb-2 text-blue-700">Front-End Developer</h2>
         <p>Design and develop the look, feel, function, and user experience of a website</p>
         <div className="pt-5">

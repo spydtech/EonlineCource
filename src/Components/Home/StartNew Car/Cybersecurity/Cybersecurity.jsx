@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome
 function Cybersecurity() {
   return (
     <>
-      <div>
+      <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-semibold mb-2 text-blue-700">Cybersecurity</h2>
         <p>Develop strategies to protect organizations from cyber-attacks and disruptions.</p>
         <div className="pt-5">
