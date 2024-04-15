@@ -19,20 +19,42 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [navigationMenu, setNavigationMenu] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [user, setUser] = useState(null);
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
   const navigationRef = useRef(null); // Initialize navigationRef with useRef
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform logout action here
-    // Example: Clear user session, remove tokens, etc.
-    // Then redirect the user to the login page
-    // Assuming '/login' is the route for login page
+
     navigate('/login');
   };
 
-  const firstName = "Chiluveru";
-  const lastName = "Shyam";
+  // const firstName = "Chiluveru";
+  // const lastName = "Shyam";
+
+  useEffect(() => {
+    if (user) {
+      const fetchUserDetails = async () => {
+        try {
+          const token = await user.getIdToken(); // Get the Firebase authentication token
+          const response = await axios.get('YOUR_API_ENDPOINT', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const { firstName, lastName } = response.data;
+          setFirstName(firstName);
+          setLastName(lastName);
+        } catch (error) {
+          console.error('Error fetching user details:', error.message);
+        }
+      };
+
+      fetchUserDetails();
+    }
+  }, [user]);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -114,7 +136,9 @@ export default function Navbar() {
                         onClick={() => toggleNavigationMenu('getting-started')}
 
                       >
-                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>A</span>
+                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
+                          {`${firstName.charAt(0)}${lastName.charAt(0)}`}
+                        </span>
                         <svg
                           className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
                             }`}
