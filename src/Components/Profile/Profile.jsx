@@ -8,6 +8,15 @@ function Profile({ item }) {
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   // Define function to handle image upload
   const handleImageUpload = (event) => {
@@ -28,8 +37,17 @@ function Profile({ item }) {
   const handleSave = () => {
     // Add logic to save profile changes here
   };
+  const generateYearOptions = (startYear, endYear) => {
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year.toString());
+    }
+    return years;
+  };
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // Generate an array of years (from 1990 to current year)
+  const years = generateYearOptions(1990, new Date().getFullYear());
+
   const profiles = [
     {
       id: 1,
@@ -260,9 +278,305 @@ function Profile({ item }) {
                       starting out, you can add internships or volunteer
                       experience instead.
                     </h2>
-                    <button className="px-5 h-10 border-2 border-blue-700">
+                    <button
+                      onClick={openModal}
+                      className="px-5 h-10 border-2 border-blue-700"
+                    >
                       + Add Experience
                     </button>
+
+                    {isOpen && (
+                      <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
+                        <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
+                          {/* Modal content */}
+                          <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
+                            {/* Close button */}
+                            <button
+                              className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
+                              onClick={closeModal}
+                            >
+                              <svg
+                                className="h-6 w-6 fill-current"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            </button>
+
+                            {/* Modal content */}
+                            <div className="text-start">
+                              <h2 className="text-xl font-bold mb-4">
+                                Work experience
+                              </h2>
+                              <p className="mb-4">
+                                Add your past work experience. If you're just
+                                starting out, you can add internships or
+                                volunteer experience instead.
+                              </p>
+                              <div>
+                                <form class="max-w-sm">
+                                  <label
+                                    for="countries"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                                  >
+                                    Name of institution
+                                  </label>
+                                  <select
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  >
+                                    <option selected>
+                                      Choose an institution
+                                    </option>
+                                    <option value="Harvard University">
+                                      Harvard University
+                                    </option>
+                                    <option value="Stanford University">
+                                      Stanford University
+                                    </option>
+                                    <option value="Massachusetts Institute of Technology (MIT)">
+                                      Massachusetts Institute of Technology
+                                      (MIT)
+                                    </option>
+                                    <option value="University of Oxford">
+                                      University of Oxford
+                                    </option>
+                                    <option value="University of Cambridge">
+                                      University of Cambridge
+                                    </option>
+                                  </select>
+                                </form>
+                              </div>
+
+                              <div>
+                                <form class="max-w-sm ">
+                                  <label
+                                    for="countries"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                                  >
+                                    Role/Job title
+                                  </label>
+                                  <select
+                                    id="countries"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  >
+                                    <option selected>
+                                      Choose a role/title
+                                    </option>
+                                    <option value="Software Engineer">
+                                      Software Engineer
+                                    </option>
+                                    <option value="Project Manager">
+                                      Project Manager
+                                    </option>
+                                    <option value="Graphic Designer">
+                                      Graphic Designer
+                                    </option>
+                                    <option value="Data Analyst">
+                                      Data Analyst
+                                    </option>
+                                    <option value="Marketing Specialist">
+                                      Marketing Specialist
+                                    </option>
+                                  </select>
+                                </form>
+                              </div>
+                              {/* start Month */}
+                              <label
+                                for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
+                              >
+                                Start date
+                              </label>
+                              <div className="flex justify-start items-start flex-rows gap-12">
+                                <div>
+                                  <form class="max-w-sm ">
+                                    <label
+                                      for="countries"
+                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                      Month
+                                    </label>
+                                    <select
+                                      id="countries"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                      <option value="">Choose a month</option>
+                                      <option value="January">January</option>
+                                      <option value="February">February</option>
+                                      <option value="March">March</option>
+                                      <option value="April">April</option>
+                                      <option value="May">May</option>
+                                      <option value="June">June</option>
+                                      <option value="July">July</option>
+                                      <option value="August">August</option>
+                                      <option value="September">
+                                        September
+                                      </option>
+                                      <option value="October">October</option>
+                                      <option value="November">November</option>
+                                      <option value="December">December</option>
+                                    </select>
+                                  </form>
+                                </div>
+                                <div>
+                                  <form class="max-w-sm ">
+                                    <label
+                                      for="countries"
+                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                      Year
+                                    </label>
+                                    <select
+                                      id="startYear"
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                      <option value="">Choose a year</option>
+                                      {/* List of year options */}
+                                      {years.map((year) => (
+                                        <option key={year} value={year}>
+                                          {year}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </form>
+                                </div>
+                              </div>
+
+                              {/* End month  */}
+                              <label
+                                for="countries"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                              >
+                                End month
+                              </label>
+
+                              <div className="flex justify-start items-start flex-rows gap-12">
+                                <div>
+                                  <form class="max-w-sm ">
+                                    <label
+                                      for="countries"
+                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                      Month
+                                    </label>
+                                    <select
+                                      id="countries"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                      <option value="">Choose a month</option>
+                                      <option value="January">January</option>
+                                      <option value="February">February</option>
+                                      <option value="March">March</option>
+                                      <option value="April">April</option>
+                                      <option value="May">May</option>
+                                      <option value="June">June</option>
+                                      <option value="July">July</option>
+                                      <option value="August">August</option>
+                                      <option value="September">
+                                        September
+                                      </option>
+                                      <option value="October">October</option>
+                                      <option value="November">November</option>
+                                      <option value="December">December</option>
+                                    </select>
+                                  </form>
+                                </div>
+                                <div>
+                                  <form class="max-w-sm ">
+                                    <label
+                                      for="countries"
+                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                    >
+                                     Year
+                                    </label>
+                                    <select
+                                      id="startYear"
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    >
+                                      <option value="">Choose a year</option>
+                                      {/* List of year options */}
+                                      {years.map((year) => (
+                                        <option key={year} value={year}>
+                                          {year}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  </form>
+                                </div>
+                              </div>
+
+                              {/* Currently work here */}
+
+                              <div class="flex items-center py-4">
+                                <input
+                                 
+                                  id="checked-checkbox"
+                                  type="checkbox"
+                                  value=""
+                                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                />
+                                <label
+                                  for="checked-checkbox"
+                                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >
+                                 I currently work here
+                                </label>
+                              </div>
+
+                              <hr className=""/>
+
+                              <div className="pt-4">
+                                <div className="font-bold text-sm">Description</div>
+                                <div className="pt-2 text-sm">
+                                  Add a simple description of your
+                                  responsibilities and achievements in this
+                                  role.
+                                </div>
+                              </div>
+
+                              {/* TextArea */}
+
+                              <label
+                                for="message"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                              >
+                                Your message
+                              </label>
+                              <textarea
+                                id="message"
+                                rows="4"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Include a few brief details about what you did in this role. Try to focus on your most meaningful accomplishments, and use numbers to quantify them where possible."
+                              ></textarea>
+                              <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
+                                <div>
+                                <button
+                                className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
+                                
+                              >
+                              Save
+                              </button>
+                                </div>
+                                <div>
+                                <button
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                onClick={closeModal}
+                              >
+                               Remove
+                              </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
