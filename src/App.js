@@ -17,9 +17,9 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Certificates" element={<Certificates />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           <Route path="/SignUp" element={<SignUp />} />
@@ -27,7 +27,6 @@ function App() {
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
-
           <Route path="/Mycourse" element={<MyCourse />} />
 
         </Routes>

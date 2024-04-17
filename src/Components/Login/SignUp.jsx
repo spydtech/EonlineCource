@@ -10,23 +10,24 @@ function SignUp() {
 
     const navigate = useNavigate(); 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        try {
-            const response = await axios.post('http://localhost:3000/SignUp', {
-                username,
-                email,
-                password,
-            });
-    
-            // Handle success response
-            console.log('Response:', response.data);
-            // Redirect to login page upon successful signup
-            navigate('/Login');
-        } catch (error) {
-            // Handle error
-            console.error('Error:', error);
-        }
+      e.preventDefault();
+
+      try {
+        const response = await axios.post('http://localhost:3465/api/v1/user/save', {
+          employeename: username,
+          email: email,
+          password: password
+        });
+        alert("Employee Registration Successfully");
+
+        // Handle success response
+        console.log('Response:', response.data);
+        // Redirect to login page upon successful signup
+        navigate('/Login');
+      } catch (error) {
+        // Handle error
+        console.error('Error:', error);
+      }
     };
   return (
     <>
