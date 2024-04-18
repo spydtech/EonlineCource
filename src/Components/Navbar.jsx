@@ -7,11 +7,13 @@ import IMG from "../assets/E- education logo .png";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
-const login = true;
+const login = true; // Change this value based on the user's login status
+
 const navigation = [
-  { name: 'My Learning', href: `${login ? "/" : "/login"}`, current: false },
-  { name: 'Course', href: '#', current: false },
+  { name: 'My Learning', href: login ? "/home" : "/", current: false, visible: login },
+  { name: 'Course', href: '#', current: false, visible: true }, // Always visible
 ];
+
 
 
 function classNames(...classes) {
@@ -24,7 +26,7 @@ export default function Navbar() {
   const [lastName, setLastName] = useState('');
   const [user, setUser] = useState(null);
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
-  const navigationRef = useRef(null); // Initialize navigationRef with useRef
+  const navigationRef = useRef(null); 
   const navigate = useNavigate();
 
 
@@ -33,30 +35,29 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  // const firstName = "Chiluveru";
-  // const lastName = "Shyam";
+
 
   useEffect(() => {
     if (user) {
-      const fetchUserDetails = async () => {
-        try {
-          const token = await user.getIdToken(); // Get the Firebase authentication token
-          const response = await axios.get('YOUR_API_ENDPOINT', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const { firstName, lastName } = response.data;
-          setFirstName(firstName);
-          setLastName(lastName);
-        } catch (error) {
-          console.error('Error fetching user details:', error.message);
-        }
-      };
-
-      fetchUserDetails();
+  const fetchUserDetails = async () => {
+    try {
+      const token = await user.getIdToken(); // Get the Firebase authentication token
+      const response = await axios.get('YOUR_API_ENDPOINT', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { firstName, lastName } = response.data;
+      setFirstName(firstName);
+      setLastName(lastName);
+    } catch (error) {
+      console.error('Error fetching user details:', error.message);
     }
-  }, [user]);
+  };
+
+  fetchUserDetails();
+}
+}, [user]);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -138,10 +139,10 @@ export default function Navbar() {
                         onClick={() => toggleNavigationMenu('getting-started')}
 
                       >
-                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
-                          {`${firstName.charAt(0)}${lastName.charAt(0)}`}
-                        </span>
-                        <svg
+                        <span className='p-3 h-12 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'> 
+                        {`${firstName.charAt(0)}${lastName.charAt(0)}`}
+                      </span>
+                       <svg
                           className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
                             }`}
                           xmlns="http://www.w3.org/2000/svg"
@@ -159,7 +160,7 @@ export default function Navbar() {
 
                       {/* Dropdown menu */}
                       {navigationMenuOpen && navigationMenu === 'getting-started' && (
-                        <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div onClick={handleOutsideClick} ref={navigationRef}  className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {/* Dropdown menu items */}
                           {/* Replace these links with your actual dropdown menu items */}
                           <a href="/MyCourse" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
@@ -179,6 +180,9 @@ export default function Navbar() {
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Accomplishments
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            WorkSpace
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Help Center

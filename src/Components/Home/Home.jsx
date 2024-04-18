@@ -31,7 +31,7 @@ function Home() {
     <>
       <Navbar />
       <Main />
-      <div class="w-full mt-28 px-16  ">
+      <div class="w-full px-16  ">
         <span class="text-4xl font-bold text-[#023047]  border-b border-[#023047]">
           Start a new career with E-education &#8594;
         </span>

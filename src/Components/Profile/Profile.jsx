@@ -67,7 +67,7 @@ function Profile({ item }) {
       {/* left cards */}
 
       {/* Map over the profiles and render each profile card */}
-      <div className="flex flex-col md:flex-row bg-blue-100">
+      <div className="flex flex-col md:flex-row">
         <div>
           {profiles.map((profile) => (
             <div key={profile.id} className="flex">
@@ -88,7 +88,7 @@ function Profile({ item }) {
                           <div className="bg-white p-8 rounded-lg">
                             <a
                               onClick={() => setIsPopupOpen(false)}
-                              className=" text-sm font-bold justify-end  ml-[80%] hover:underline hover:text-blue-600"
+                              className=" text-sm font-bold justify-end  ml-[80%] hover:underline hover:text-blue-600 cursor-pointer"
                             >
                               Close X
                             </a>
@@ -225,16 +225,34 @@ function Profile({ item }) {
                       Update Profile visibility
                     </p>
                   </div>
+
+         
                 </div>
               </div>
             </div>
           ))}
-          <div class="  p-12 ">
+          {/* <div class="  p-12 mt-0 ">
             <div className="p-10 w-[20rem]  bg-white border-2">
               <p>
                 Let recruiters know what role you’re looking for to make sure
                 you find opportunities that are right for you.
               </p>
+              <button className="px-5 h-10 border-2 border-blue-700">
+                + Add Work experience
+              </button>
+            </div>
+          </div> */}
+
+
+          <div class=" p-12">
+            <div className="p-10 w-[20rem]  bg-white border-2">
+              <p>
+                Let recruiters know what role you’re looking for to make sure
+                you find opportunities that are right for you.
+              </p>
+              <button className="px-5 h-10 border-2 border-blue-700">
+                + Add Work experience
+              </button>
             </div>
           </div>
         </div>
@@ -493,7 +511,7 @@ function Profile({ item }) {
                                       for="countries"
                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                     Year
+                                      Year
                                     </label>
                                     <select
                                       id="startYear"
@@ -515,7 +533,6 @@ function Profile({ item }) {
 
                               <div class="flex items-center py-4">
                                 <input
-                                 
                                   id="checked-checkbox"
                                   type="checkbox"
                                   value=""
@@ -525,14 +542,16 @@ function Profile({ item }) {
                                   for="checked-checkbox"
                                   class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                 >
-                                 I currently work here
+                                  I currently work here
                                 </label>
                               </div>
 
-                              <hr className=""/>
+                              <hr className="" />
 
                               <div className="pt-4">
-                                <div className="font-bold text-sm">Description</div>
+                                <div className="font-bold text-sm">
+                                  Description
+                                </div>
                                 <div className="pt-2 text-sm">
                                   Add a simple description of your
                                   responsibilities and achievements in this
@@ -542,34 +561,25 @@ function Profile({ item }) {
 
                               {/* TextArea */}
 
-                              <label
-                                for="message"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                Your message
-                              </label>
                               <textarea
                                 id="message"
                                 rows="4"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 pt-4"
                                 placeholder="Include a few brief details about what you did in this role. Try to focus on your most meaningful accomplishments, and use numbers to quantify them where possible."
                               ></textarea>
                               <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
                                 <div>
-                                <button
-                                className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
-                                
-                              >
-                              Save
-                              </button>
+                                  <button className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded">
+                                    Save
+                                  </button>
                                 </div>
                                 <div>
-                                <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={closeModal}
-                              >
-                               Remove
-                              </button>
+                                  <button
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    onClick={closeModal}
+                                  >
+                                    Remove
+                                  </button>
                                 </div>
                               </div>
                             </div>
