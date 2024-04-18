@@ -47,6 +47,11 @@ const ExplorCouces = [
 
 ];
 
+
+
+
+
+
 const ExploreCources = () => {
   return (
     <div className="bg-gray-100 p-8 mb-16 px-16">

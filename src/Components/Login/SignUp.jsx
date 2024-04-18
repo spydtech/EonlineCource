@@ -18,8 +18,6 @@ function SignUp({ onSignup }) {
                 email,
                 password,
             });
-            const user = response.data;
-            onSignup(user);
     
             // Handle success response
             console.log('Response:', response.data);

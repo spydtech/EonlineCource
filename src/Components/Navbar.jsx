@@ -4,8 +4,8 @@ import { Disclosure, Menu } from '@headlessui/react';
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import IMG from "../assets/E- education logo .png";
-import { Link, useNavigate  } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const login = true; // Change this value based on the user's login status
 
@@ -29,28 +29,35 @@ export default function Navbar() {
   const navigationRef = useRef(null); 
   const navigate = useNavigate();
 
+
   const handleLogout = () => {
-   
+
     navigate('/login');
   };
 
 
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        // Make an API call to fetch user details here
-        const response = await axios.get('http://localhost:3465/api/v1/user/details'); // Adjust the URL as per your backend
-        const { firstName, lastName } = response.data;
-        setFirstName(firstName);
-        setLastName(lastName);
-      } catch (error) {
-        console.error('Error fetching user details:', error.message);
-      }
-    };
+    if (user) {
+  const fetchUserDetails = async () => {
+    try {
+      const token = await user.getIdToken(); // Get the Firebase authentication token
+      const response = await axios.get('YOUR_API_ENDPOINT', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { firstName, lastName } = response.data;
+      setFirstName(firstName);
+      setLastName(lastName);
+    } catch (error) {
+      console.error('Error fetching user details:', error.message);
+    }
+  };
 
-    fetchUserDetails();
-  }, []);
+  fetchUserDetails();
+}
+}, [user]);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -74,8 +81,8 @@ export default function Navbar() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
-  
-  
+
+
 
   return (
     <Disclosure as="nav" className="bg-[#0077b6] sticky top-0 z-50">
@@ -132,7 +139,7 @@ export default function Navbar() {
                         onClick={() => toggleNavigationMenu('getting-started')}
 
                       >
-                        <span className='p-3 h-12 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
+                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
                         {`${firstName.charAt(0)}${lastName.charAt(0)}`}
                       </span>
                        <svg
@@ -160,7 +167,7 @@ export default function Navbar() {
                             My Courses
                           </a>
                           <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                          Purchases
+                            Purchases
                           </a>
                           <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Profile
@@ -178,7 +185,7 @@ export default function Navbar() {
                             Help Center
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          onClick={handleLogout} >
+                            onClick={handleLogout} >
                             Logout
                           </a>
                         </div>
