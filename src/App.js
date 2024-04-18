@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
@@ -15,7 +15,7 @@ import MyCourse from "./Components/mycourse/MyCourse"
 function App() {
   return (
     <div>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/Home" element={<Home />} />
           <Route path="/Certificates" element={<Certificates />} />
@@ -27,10 +27,10 @@ function App() {
           <Route path="/Settings" element={<Settings />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
-          <Route path="/Mycourse" element={<MyCourse />} />
+          <Route path="/MyCourse" element={<MyCourse />} />
 
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }

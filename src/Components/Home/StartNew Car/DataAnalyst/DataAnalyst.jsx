@@ -147,13 +147,7 @@ function DataAnalyst() {
 
       </div>
 
-      <div className="text-base font-semibold leading-7 mt-8 text-center">
-        <p>
-          <a href="#" className="text-sky-500 hover:text-sky-700 transition-all duration-300">
-            Explore all Certificates &rarr;
-          </a>
-        </p>
-      </div>
+      
     </div>
   );
 }
