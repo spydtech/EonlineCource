@@ -7,11 +7,13 @@ import IMG from "../assets/E- education logo .png";
 import { Link, useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 
-const login = true;
+const login = true; // Change this value based on the user's login status
+
 const navigation = [
-  { name: 'My Learning', href: `${login ? "/" : "/login"}`, current: false },
-  { name: 'Course', href: '#', current: false },
+  { name: 'My Learning', href: login ? "/" : "/login", current: false, visible: login },
+  { name: 'Course', href: '#', current: false, visible: true }, // Always visible
 ];
+
 
 
 function classNames(...classes) {
@@ -24,7 +26,7 @@ export default function Navbar() {
   const [lastName, setLastName] = useState('');
   const [user, setUser] = useState(null);
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
-  const navigationRef = useRef(null); // Initialize navigationRef with useRef
+  const navigationRef = useRef(null); 
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -32,30 +34,23 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  // const firstName = "Chiluveru";
-  // const lastName = "Shyam";
+
 
   useEffect(() => {
-    if (user) {
-  const fetchUserDetails = async () => {
-    try {
-      const token = await user.getIdToken(); // Get the Firebase authentication token
-      const response = await axios.get('YOUR_API_ENDPOINT', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { firstName, lastName } = response.data;
-      setFirstName(firstName);
-      setLastName(lastName);
-    } catch (error) {
-      console.error('Error fetching user details:', error.message);
-    }
-  };
+    const fetchUserDetails = async () => {
+      try {
+        // Make an API call to fetch user details here
+        const response = await axios.get('http://localhost:3465/api/v1/user/details'); // Adjust the URL as per your backend
+        const { firstName, lastName } = response.data;
+        setFirstName(firstName);
+        setLastName(lastName);
+      } catch (error) {
+        console.error('Error fetching user details:', error.message);
+      }
+    };
 
-  fetchUserDetails();
-}
-}, [user]);
+    fetchUserDetails();
+  }, []);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -137,7 +132,7 @@ export default function Navbar() {
                         onClick={() => toggleNavigationMenu('getting-started')}
 
                       >
-                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
+                        <span className='p-3 h-12 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
                         {`${firstName.charAt(0)}${lastName.charAt(0)}`}
                       </span>
                        <svg

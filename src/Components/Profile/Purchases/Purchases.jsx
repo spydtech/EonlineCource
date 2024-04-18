@@ -3,6 +3,10 @@ import Footer from '../../Home/footer/Footer'
 import Navbar from '../../Navbar'
 import PaymentHistory from './PaymentHistory'
 
+import Slides from './Slides'
+
+
+
 function Purchases() {
   return (
     <div>
@@ -32,6 +36,7 @@ function Purchases() {
     <PaymentHistory />
 
 </div>
+<Slides />
        
         <Footer />
     </div>

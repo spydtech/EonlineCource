@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 import Navbar from '../Navbar';
 
-function SignUp() {
+function SignUp({ onSignup }) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,6 +18,8 @@ function SignUp() {
                 email,
                 password,
             });
+            const user = response.data;
+            onSignup(user);
     
             // Handle success response
             console.log('Response:', response.data);
