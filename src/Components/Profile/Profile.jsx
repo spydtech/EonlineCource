@@ -68,12 +68,12 @@ function Profile({ item }) {
   const profiles = [
     {
       id: 1,
-      Email: "Jane Doe",
-      role: "ShareLink Profile",
+      Email: "Emily Wilson",
+      role: "Share Profile Link",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia Maiores et perferendis eaque.",
       imageUrl:
-        "https://gumlet-blog-content.gumlet.io/learn/content/images/2022/07/Elearning_platform.jpg?w=3840&q=70",
+        "https://static.vecteezy.com/system/resources/thumbnails/024/354/297/small_2x/business-woman-isolated-illustration-ai-generative-free-photo.jpg",
     },
   ];
 
@@ -100,32 +100,7 @@ function Profile({ item }) {
     }));
   };
 
-  const [formDataWorkHistory, setFormDataWorkHistory] = useState({
-    company: "",
-    profession: "",
-    startMonth: "",
-    startYear: "",
-    endMonth: "",
-    endYear: "",
-    currentlyWorking: false,
-    message: "",
-  });
-
-  const handleWorkExperienceSubmit = (e) => {
-    e.preventDefault();
-    localStorage.setItem(
-      "workExperienceData",
-      JSON.stringify(formDataWorkHistory)
-    );
-  };
-
-  const handleInputChangeWorkHistory = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormDataWorkHistory((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  
 
   return (
     <>
@@ -133,16 +108,16 @@ function Profile({ item }) {
       {/* left cards */}
 
       {/* Map over the profiles and render each profile card */}
-      <div className="flex flex-col md:flex-row bg-blue-100">
+      <div className="flex flex-col md:flex-row bg-blue-100 justify-center items-center">
         <div>
           {profiles.map((profile) => (
             <div key={profile.id} className="flex">
-              <div className="p-12 ">
+              <div className="m-20  border border-red-800 w-[300px]">
                 <div className="relative">
                   {/* Profile Image */}
                   <div className="py-5 p-10 px-20 bg-white border-2 rounded text-center text-gray-500 max-w-xl">
                     <div className="flex space-x-2 -mr-4 ">
-                      <h1 className="text-xl">Personal Details</h1>
+                      <h1 className="text-sm w-full">Personal Details</h1>
                       <div>
                         <CiEdit
                           className="text-2xl cursor-pointer"
@@ -285,7 +260,7 @@ function Profile({ item }) {
                     <h1 className="text-center font-bold p-2">
                       {profile.Email}
                     </h1>
-                    <button className="py-2 p-2 text-lg border-2 border-blue-600">
+                    <button className="py-1 p-2 text-sm border-2 border-blue-400 w-full">
                       {profile.role}
                     </button>
                     <p className="mt-2 text-sm text-gray-900 p-2">
@@ -296,19 +271,12 @@ function Profile({ item }) {
               </div>
             </div>
           ))}
-          <div class="  p-12 ">
-            <div className="p-10 w-[20rem]  bg-white border-2">
-              <p>
-                Let recruiters know what role you’re looking for to make sure
-                you find opportunities that are right for you.
-              </p>
-            </div>
-          </div>
+          
         </div>
 
         {/* right cards */}
-        <div className="pt-10 pl-10">
-          <h1 className="text-2xl font-bold py-2">Experience</h1>
+        <div className="pt-10 pl-10 pr-6 flex flex-col mb-8">
+          <h1 className="text-2xl font-bold py-2">WorkSpace</h1>
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
@@ -329,629 +297,24 @@ function Profile({ item }) {
             </div>
           </div>
 
-          <div className="py-10">
-            <div class="p-5   border bg-white rounded text-gray-500">
-              <div class="flex items-center">
-                <div class="">
-                  <a
-                    href="#"
-                    class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
-                  >
-                    Work history
-                  </a>
-                  <div className="flex flex-col md:flex-row gap-2 p-10 border bg-gray-100">
-                    <h2 className=" font-semibold w-2/3">
-                      Add your past work experience here. If you’re just
-                      starting out, you can add internships or volunteer
-                      experience instead.
-                    </h2>
-                    <button
-                      onClick={openModal}
-                      className="px-5 h-10 border-2 border-blue-700"
-                    >
-                      + Add Experience
-                    </button>
-                    {/* work history start */}
-                    {isOpen && (
-                      <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
-                        <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
-                          {/* Modal content */}
-                          <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
-                            {/* Close button */}
-                            <button
-                              className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
-                              onClick={closeModal}
-                            >
-                              <svg
-                                className="h-6 w-6 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-
-                            {/* Modal content */}
-                            <form
-                              className="text-start"
-                              onSubmit={handleWorkExperienceSubmit}
-                            >
-                              <h2 className="text-xl font-bold mb-4">
-                                Work experience
-                              </h2>
-                              <p className="mb-4">
-                                Add your past work experience. If you're just
-                                starting out, you can add internships or
-                                volunteer experience instead.
-                              </p>
-                              <div className="max-w-sm">
-                                <label
-                                  htmlFor="company"
-                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-                                >
-                                  Name of institution
-                                </label>
-                                <select
-                                  id="company"
-                                  value={formDataWorkHistory.company}
-                                  onChange={handleInputChangeWorkHistory}
-                                  name="company"
-                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                >
-                                  <option value="">
-                                    Choose an institution
-                                  </option>
-                                  <option value="Harvard University">
-                                    Harvard University
-                                  </option>
-                                  <option value="Stanford University">
-                                    Stanford University
-                                  </option>
-                                  <option value="Massachusetts Institute of Technology (MIT)">
-                                    Massachusetts Institute of Technology (MIT)
-                                  </option>
-                                  <option value="University of Oxford">
-                                    University of Oxford
-                                  </option>
-                                  <option value="University of Cambridge">
-                                    University of Cambridge
-                                  </option>
-                                </select>
-                              </div>
-
-                              <div className="max-w-sm">
-                                <label
-                                  htmlFor="profession"
-                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                                >
-                                  Role/Job title
-                                </label>
-                                <select
-                                  id="profession"
-                                  name="profession"
-                                  value={formDataWorkHistory.profession}
-                                  onChange={handleInputChangeWorkHistory}
-                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                >
-                                  <option value="">Choose a role/title</option>
-                                  <option value="Software Engineer">
-                                    Software Engineer
-                                  </option>
-                                  <option value="Project Manager">
-                                    Project Manager
-                                  </option>
-                                  <option value="Graphic Designer">
-                                    Graphic Designer
-                                  </option>
-                                  <option value="Data Analyst">
-                                    Data Analyst
-                                  </option>
-                                  <option value="Marketing Specialist">
-                                    Marketing Specialist
-                                  </option>
-                                </select>
-                              </div>
-                              {/* start Month */}
-                              <label
-                                htmlFor="start-date"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
-                              >
-                                Start date
-                              </label>
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="startMonth"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Month
-                                  </label>
-                                  <select
-                                    id="startMonth"
-                                    name="startMonth"
-                                    value={formDataWorkHistory.startMonth}
-                                    onChange={handleInputChangeWorkHistory}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                  </select>
-                                </div>
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="startYear"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Year
-                                  </label>
-                                  <select
-                                    id="startYear"
-                                    name="startYear"
-                                    value={formDataWorkHistory.startYear}
-                                    onChange={handleInputChangeWorkHistory}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a year</option>
-                                    {/* List of year options */}
-                                    {years.map((year) => (
-                                      <option key={year} value={year}>
-                                        {year}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-
-                              {/* End month  */}
-                              <label
-                                htmlFor="end-month"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                End month
-                              </label>
-
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="endMonth"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Month
-                                  </label>
-                                  <select
-                                    id="endMonth"
-                                    name="endMonth"
-                                    value={formDataWorkHistory.endMonth}
-                                    onChange={handleInputChangeWorkHistory}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                  </select>
-                                </div>
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="endYear"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Year
-                                  </label>
-                                  <select
-                                    id="endYear"
-                                    name="endYear"
-                                    value={formDataWorkHistory.endYear}
-                                    onChange={handleInputChangeWorkHistory}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a year</option>
-                                    {/* List of year options */}
-                                    {years.map((year) => (
-                                      <option key={year} value={year}>
-                                        {year}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-
-                              {/* Currently work here */}
-
-                              <div className="flex items-center py-4">
-                                <input
-                                  id="currentlyWorking"
-                                  name="currentlyWorking"
-                                  type="checkbox"
-                                  value={formDataWorkHistory.currentlyWorking}
-                                  onChange={handleInputChangeWorkHistory}
-                                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                  htmlFor="currentlyWorking"
-                                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                >
-                                  I currently work here
-                                </label>
-                              </div>
-
-                              <hr className="" />
-
-                              <div className="pt-4">
-                                <div className="font-bold text-sm">
-                                  Description
-                                </div>
-                                <div className="pt-2 text-sm">
-                                  Add a simple description of your
-                                  responsibilities and achievements in this
-                                  role.
-                                </div>
-                              </div>
-
-                              {/* TextArea */}
-
-                              <label
-                                htmlFor="message"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                Your message
-                              </label>
-                              <textarea
-                                id="message"
-                                name="message"
-                                value={formDataWorkHistory.message}
-                                onChange={handleInputChangeWorkHistory}
-                                rows="4"
-                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Include a few brief details about what you did in this role. Try to focus on your most meaningful accomplishments, and use numbers to quantify them where possible."
-                              ></textarea>
-                              <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
-                                <div>
-                                  <button
-                                    type="submit"
-                                    className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
-                                  >
-                                    Save
-                                  </button>
-                                </div>
-                                <div>
-                                  <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={closeModal}
-                                  >
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {/* work history close */}
-
-                    {/* education open */}
-                    {iseducationopen && (
-                      <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
-                        <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
-                          <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
-                            <button
-                              className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
-                              onClick={closeEducationModel}
-                            >
-                              <svg
-                                className="h-6 w-6 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-
-                            {/* Modal content */}
-                            <form
-                              className="text-start"
-                              onSubmit={handleEducationSubmit}
-                            >
-                              <h2 className="text-xl font-bold mb-4">
-                                Education
-                              </h2>
-                              <p className="mb-4">
-                                Add your educational background to let employers
-                                know where you studied or are currently
-                                studying. Even if you didn’t finish, it’s
-                                important to include it here. And if you’ve
-                                earned a college degree, you don’t need to add
-                                your high school/GED. All fields are optional.
-                              </p>
-                              <div className="max-w-sm">
-                                <label
-                                  htmlFor="educationInstitute"
-                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-                                >
-                                  Name of institution
-                                </label>
-                                <select
-                                  value={formData.educationInstitute}
-                                  onChange={handleInputChange}
-                                  id="educationInstitute"
-                                  name="educationInstitute"
-                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                >
-                                  <option value="">
-                                    Choose an institution
-                                  </option>
-                                  <option value="Harvard University">
-                                    Harvard University
-                                  </option>
-                                  <option value="Stanford University">
-                                    Stanford University
-                                  </option>
-                                  <option value="Massachusetts Institute of Technology (MIT)">
-                                    Massachusetts Institute of Technology (MIT)
-                                  </option>
-                                  <option value="University of Oxford">
-                                    University of Oxford
-                                  </option>
-                                  <option value="University of Cambridge">
-                                    University of Cambridge
-                                  </option>
-                                </select>
-                              </div>
-
-                              <div className="max-w-sm">
-                                <label
-                                  htmlFor="degree"
-                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                                >
-                                  Degree
-                                </label>
-                                <select
-                                  value={formData.degree}
-                                  onChange={handleInputChange}
-                                  name="degree"
-                                  id="degree"
-                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                >
-                                  <option value="">Choose a degree</option>
-                                  <option value="Less than high school diploma">
-                                    Less than high School diploma (or
-                                    equivalent)
-                                  </option>
-                                  <option value="High school diploma">
-                                    High school diploma (or equivalent)
-                                  </option>
-                                  <option value="Associate Degree">
-                                    Associate Degree (e.g.,AA,AS)
-                                  </option>
-                                  <option value="Bachelor's degree">
-                                    Bachelor's degree (e.g.,BA,BTECH)
-                                  </option>
-                                  <option value="Master's degree">
-                                    Master's degree (e.g.,MA,MS,MEd,MSW,MBA)
-                                  </option>
-                                  <option value="Professional school degree ">
-                                    Professional school degree
-                                    (e.g.,MD,DDS,DVM,LLB,JD)
-                                  </option>
-                                  <option value="Doctorate degree ">
-                                    Doctorate degree (e.g.,phD,EdD)
-                                  </option>
-                                </select>
-                              </div>
-                              {/* start Month */}
-                              <label
-                                htmlFor="EducationStartDate"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
-                              >
-                                Start date
-                              </label>
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="educationStartMonth"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Month
-                                  </label>
-                                  <select
-                                    value={formData.educationStartMonth}
-                                    onChange={handleInputChange}
-                                    name="educationStartMonth"
-                                    id="educationStartMonth"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                  </select>
-                                </div>
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="educationStartYear"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Year
-                                  </label>
-                                  <select
-                                    value={formData.educationStartYear}
-                                    onChange={handleInputChange}
-                                    name="educationStartYear"
-                                    id="educationStartYear"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a year</option>
-                                    {/* List of year options */}
-                                    {years2.map((year2) => (
-                                      <option key={year2} value={year2}>
-                                        {year2}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-
-                              {/* End month  */}
-                              <label
-                                htmlFor="graduationDate"
-                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                Graduation date or expected graduation date
-                              </label>
-
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="graduationMonth"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Month
-                                  </label>
-                                  <select
-                                    value={formData.graduationMonth}
-                                    onChange={handleInputChange}
-                                    name="graduationMonth"
-                                    id="graduationMonth"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a month</option>
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                  </select>
-                                </div>
-                                <div className="max-w-sm">
-                                  <label
-                                    htmlFor="graduation-Year"
-                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                  >
-                                    Year
-                                  </label>
-                                  <select
-                                    value={formData.graduationYear}
-                                    name="graduationYear"
-                                    onChange={handleInputChange}
-                                    id="graduationYear"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option value="">Choose a year</option>
-                                    {/* List of year options */}
-                                    {years2.map((year2) => (
-                                      <option key={year2} value={year2}>
-                                        {year2}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </div>
-
-                              {/* Currently work here */}
-
-                              <div className="flex items-center py-4">
-                                <input
-                                  value={formData.currentlyStudying}
-                                  onChange={handleInputChange}
-                                  name="currentlyStudying"
-                                  id="currentlyStudying"
-                                  type="checkbox"
-                                  // value="currently studying"
-                                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                  htmlFor="currentlyStudying"
-                                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                >
-                                  I currently studying here
-                                </label>
-                              </div>
-
-                              <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
-                                <div>
-                                  <button
-                                    type="submit"
-                                    className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
-                                  >
-                                    Save
-                                  </button>
-                                </div>
-                                <div>
-                                  <button
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={closeEducationModel}
-                                  >
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {/* education close */}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h1 className="text-2xl font-bold py-2">Education</h1>
+          <h1 className="text-2xl font-bold py-4">Education</h1>
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
-                <a
-                  href="#"
-                  class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
-                >
+                <div class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out">
                   Credentials
-                </a>
+                </div>
+                <div className="mb-4">
+                  Update your educational background to showcase where you are
+                  currently studying or have recently graduated. Including this
+                  information is essential for potential employers. Even if you
+                  are still in school or haven't completed your studies, it's
+                  beneficial to share your educational path. If you have
+                  obtained a college degree, you can exclude your high school or
+                  GED details. Remember, all fields are optional but can greatly
+                  enhance your profile.
+                </div>
+
                 <div className="py-2 gap-5 boder bg-gray-200 flex flex-col md:flex-row p-2">
                   <button
                     onClick={openEducationModel}
@@ -959,6 +322,285 @@ function Profile({ item }) {
                   >
                     + Add Education
                   </button>
+                  {/* education open */}
+                  {iseducationopen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
+                      <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
+                        <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
+                          <button
+                            className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
+                            onClick={closeEducationModel}
+                          >
+                            <svg
+                              className="h-6 w-6 fill-current"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </button>
+
+                          {/* Modal content */}
+                          <form
+                            className="text-start"
+                            onSubmit={handleEducationSubmit}
+                          >
+                            <h2 className="text-xl font-bold mb-4">
+                              Education
+                            </h2>
+                            <p className="mb-4">
+                              Add your educational background to let employers
+                              know where you studied or are currently studying.
+                              Even if you didn’t finish, it’s important to
+                              include it here. And if you’ve earned a college
+                              degree, you don’t need to add your high
+                              school/GED. All fields are optional.
+                            </p>
+                            <div className="max-w-sm">
+                              <label
+                                htmlFor="educationInstitute"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                              >
+                                Name of institution
+                              </label>
+                              <select
+                                value={formData.educationInstitute}
+                                onChange={handleInputChange}
+                                id="educationInstitute"
+                                name="educationInstitute"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              >
+                                <option value="">Choose an institution</option>
+                                <option value="Harvard University">
+                                  Harvard University
+                                </option>
+                                <option value="Stanford University">
+                                  Stanford University
+                                </option>
+                                <option value="Massachusetts Institute of Technology (MIT)">
+                                  Massachusetts Institute of Technology (MIT)
+                                </option>
+                                <option value="University of Oxford">
+                                  University of Oxford
+                                </option>
+                                <option value="University of Cambridge">
+                                  University of Cambridge
+                                </option>
+                              </select>
+                            </div>
+
+                            <div className="max-w-sm">
+                              <label
+                                htmlFor="degree"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                              >
+                                Degree
+                              </label>
+                              <select
+                                value={formData.degree}
+                                onChange={handleInputChange}
+                                name="degree"
+                                id="degree"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              >
+                                <option value="">Choose a degree</option>
+                                <option value="Less than high school diploma">
+                                  Less than high School diploma (or equivalent)
+                                </option>
+                                <option value="High school diploma">
+                                  High school diploma (or equivalent)
+                                </option>
+                                <option value="Associate Degree">
+                                  Associate Degree (e.g.,AA,AS)
+                                </option>
+                                <option value="Bachelor's degree">
+                                  Bachelor's degree (e.g.,BA,BTECH)
+                                </option>
+                                <option value="Master's degree">
+                                  Master's degree (e.g.,MA,MS,MEd,MSW,MBA)
+                                </option>
+                                <option value="Professional school degree ">
+                                  Professional school degree
+                                  (e.g.,MD,DDS,DVM,LLB,JD)
+                                </option>
+                                <option value="Doctorate degree ">
+                                  Doctorate degree (e.g.,phD,EdD)
+                                </option>
+                              </select>
+                            </div>
+                            {/* start Month */}
+                            <label
+                              htmlFor="EducationStartDate"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
+                            >
+                              Start date
+                            </label>
+                            <div className="flex justify-start items-start flex-rows gap-12">
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="educationStartMonth"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Month
+                                </label>
+                                <select
+                                  value={formData.educationStartMonth}
+                                  onChange={handleInputChange}
+                                  name="educationStartMonth"
+                                  id="educationStartMonth"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a month</option>
+                                  <option value="January">January</option>
+                                  <option value="February">February</option>
+                                  <option value="March">March</option>
+                                  <option value="April">April</option>
+                                  <option value="May">May</option>
+                                  <option value="June">June</option>
+                                  <option value="July">July</option>
+                                  <option value="August">August</option>
+                                  <option value="September">September</option>
+                                  <option value="October">October</option>
+                                  <option value="November">November</option>
+                                  <option value="December">December</option>
+                                </select>
+                              </div>
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="educationStartYear"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Year
+                                </label>
+                                <select
+                                  value={formData.educationStartYear}
+                                  onChange={handleInputChange}
+                                  name="educationStartYear"
+                                  id="educationStartYear"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a year</option>
+                                  {/* List of year options */}
+                                  {years2.map((year2) => (
+                                    <option key={year2} value={year2}>
+                                      {year2}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* End month  */}
+                            <label
+                              htmlFor="graduationDate"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                            >
+                              Graduation date or expected graduation date
+                            </label>
+
+                            <div className="flex justify-start items-start flex-rows gap-12">
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="graduationMonth"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Month
+                                </label>
+                                <select
+                                  value={formData.graduationMonth}
+                                  onChange={handleInputChange}
+                                  name="graduationMonth"
+                                  id="graduationMonth"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a month</option>
+                                  <option value="January">January</option>
+                                  <option value="February">February</option>
+                                  <option value="March">March</option>
+                                  <option value="April">April</option>
+                                  <option value="May">May</option>
+                                  <option value="June">June</option>
+                                  <option value="July">July</option>
+                                  <option value="August">August</option>
+                                  <option value="September">September</option>
+                                  <option value="October">October</option>
+                                  <option value="November">November</option>
+                                  <option value="December">December</option>
+                                </select>
+                              </div>
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="graduation-Year"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Year
+                                </label>
+                                <select
+                                  value={formData.graduationYear}
+                                  name="graduationYear"
+                                  onChange={handleInputChange}
+                                  id="graduationYear"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a year</option>
+                                  {/* List of year options */}
+                                  {years2.map((year2) => (
+                                    <option key={year2} value={year2}>
+                                      {year2}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* Currently work here */}
+
+                            <div className="flex items-center py-4">
+                              <input
+                                value={formData.currentlyStudying}
+                                onChange={handleInputChange}
+                                name="currentlyStudying"
+                                id="currentlyStudying"
+                                type="checkbox"
+                                // value="currently studying"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label
+                                htmlFor="currentlyStudying"
+                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                              >
+                                I currently studying here
+                              </label>
+                            </div>
+
+                            <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
+                              <div>
+                                <button
+                                  type="submit"
+                                  className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div>
+                                <button
+                                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                  onClick={closeEducationModel}
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* education close */}
                   <p className="font-bold hover:underline hover:text-blue-600 py-2">
                     Browse your Certificate
                   </p>
@@ -974,4 +616,4 @@ function Profile({ item }) {
   );
 }
 
-export default Profile;
+export default Profile;
