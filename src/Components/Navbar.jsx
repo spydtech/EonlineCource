@@ -11,8 +11,8 @@ const login = true; // Change this value based on the user's login status
 
 const navigation = [
   { name: 'Deshboard', href: "/home", current: false, visible: true },
-  { name: 'My Learning', href: login ? "/" : "/home", current: false, visible: login },
-  { name: 'Course', href: '/MyCourse', current: false, visible: true }, // Always visible
+  { name: 'My Education', href: login ? "/" : "/home", current: false, visible: login },
+  { name: 'Courses', href: '/MyCourse', current: false, visible: true }, // Always visible
 ];
 
 
@@ -165,16 +165,13 @@ export default function Navbar() {
                           {/* Dropdown menu items */}
                           {/* Replace these links with your actual dropdown menu items */}
                           <a href="/MyCourse" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            My Courses
-                          </a>
-                          <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            Purchases
+                          Courses
                           </a>
                           <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Profile
                           </a>
-                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            Settings
+                          <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Purchases
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Updates
@@ -184,6 +181,9 @@ export default function Navbar() {
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             WorkSpace
+                          </a>
+                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Settings
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Help Center

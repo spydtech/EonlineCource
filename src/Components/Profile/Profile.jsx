@@ -112,10 +112,10 @@ function Profile({ item }) {
         <div>
           {profiles.map((profile) => (
             <div key={profile.id} className="flex">
-              <div className="m-20  border border-red-800 w-[300px]">
+              <div className="m-20 shadow-xl w-[300px] ">
                 <div className="relative">
                   {/* Profile Image */}
-                  <div className="py-5 p-10 px-20 bg-white border-2 rounded text-center text-gray-500 max-w-xl">
+                  <div className="py-5 p-10 px-20 bg-white rounded text-center text-gray-500 max-w-2xl">
                     <div className="flex space-x-2 -mr-4 ">
                       <h1 className="text-sm w-full">Personal Details</h1>
                       <div>
@@ -282,7 +282,7 @@ function Profile({ item }) {
               <div class="">
                 <a
                   href="#"
-                  class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
+                  class=" font-bold text-lg leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
                 >
                   Browse your Projects
                 </a>
@@ -301,7 +301,7 @@ function Profile({ item }) {
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
-                <div class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out">
+                <div class="font-bold text-lg py-2 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out">
                   Credentials
                 </div>
                 <div className="mb-4">
