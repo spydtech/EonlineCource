@@ -1,66 +1,66 @@
 export const newdata = [
-    {
-      name: "Alice Johnson",
-      rating: 4.5,
-      occupation: "Software Developer",
-      comment:
-        "I am amazed by the app's user-friendly interface and powerful features. It has greatly improved my productivity and made my work more efficient. Kudos to the development team!",
-      image_url: "https://randomuser.me/api/portraits/women/1.jpg",
-    },
-    {
-      name: "Bob Smith",
-      rating: 5,
-      occupation: "Graphic Designer",
-      comment:
-        "As a graphic designer, I appreciate the app's sleek design and smooth performance. It's a valuable tool that enhances my creative process. Highly recommended!",
-      image_url: "https://randomuser.me/api/portraits/men/2.jpg",
-    },
-    {
-      name: "Charlie Brown",
-      rating: 4,
-      occupation: "Marketing Specialist",
-      comment:
-        "The app has proven to be an invaluable asset for our marketing campaigns. It provides insightful analytics and simplifies our promotional efforts. Great work!",
-      image_url: "https://randomuser.me/api/portraits/men/3.jpg",
-    },
-    {
-      name: "Diana Martinez",
-      rating: 4.8,
-      occupation: "Fitness Instructor",
-      comment:
-        "Being a fitness instructor, I find the app's tracking features incredibly useful. It helps me monitor progress and tailor workouts for my clients. Excellent app for health and wellness!",
-      image_url: "https://randomuser.me/api/portraits/women/4.jpg",
-    },
-    {
-      name: "Emily Wilson",
-      rating: 4.2,
-      occupation: "Data Scientist",
-      comment:
-        "The app simplifies complex data analysis tasks. It's a must-have for data scientists and analysts. The user-friendly interface is a big plus!",
-      image_url: "https://randomuser.me/api/portraits/women/5.jpg",
-    },
-    {
-      name: "George Turner",
-      rating: 3.7,
-      occupation: "Product Manager",
-      comment:
-        "As a product manager, I appreciate the app's versatility. It caters to a wide range of needs and streamlines project management. Great job!",
-      image_url: "https://randomuser.me/api/portraits/men/6.jpg",
-    },
-    {
-      name: "Isabel Garcia",
-      rating: 4.9,
-      occupation: "UX Designer",
-      comment:
-        "The app's user experience is outstanding. It reflects a deep understanding of design principles. It's a joy to use!",
-      image_url: "https://randomuser.me/api/portraits/women/7.jpg",
-    },
-    {
-      name: "Jake Miller",
-      rating: 4.1,
-      occupation: "Entrepreneur",
-      comment:
-        "As an entrepreneur, I rely on the app for efficient project management. It's a valuable asset in my business toolkit. Highly recommended!",
-      image_url: "https://randomuser.me/api/portraits/men/8.jpg",
-    },
-  ];
+  {
+    name: "Alice Johnson",
+    rating: 4.5,
+    occupation: "Software Developer",
+    comment:
+      "The E-education platform offers an extensive range of programming courses. It's transformed my learning experience, enhancing my skills and productivity. Well done to the E-education team!",
+    image_url: "https://randomuser.me/api/portraits/women/1.jpg",
+  },
+  {
+    name: "Bob Smith",
+    rating: 5,
+    occupation: "Graphic Designer",
+    comment:
+      "I'm impressed with the E-education courses in graphic design. The content is engaging and practical, fueling my creativity. I highly recommend this platform for designers!",
+    image_url: "https://randomuser.me/api/portraits/men/2.jpg",
+  },
+  {
+    name: "Charlie Brown",
+    rating: 4,
+    occupation: "Marketing Specialist",
+    comment:
+      "E-education's marketing courses are invaluable for our campaigns. The insights gained have simplified our strategies and boosted our results. Keep up the great work!",
+    image_url: "https://randomuser.me/api/portraits/men/3.jpg",
+  },
+  {
+    name: "Diana Martinez",
+    rating: 4.8,
+    occupation: "Fitness Instructor",
+    comment:
+      "As a fitness instructor, I rely on E-education's courses for tailored fitness programs. The platform helps me track progress and offer personalized workouts to my clients. A fantastic resource for health and wellness!",
+    image_url: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    name: "Emily Wilson",
+    rating: 4.2,
+    occupation: "Data Scientist",
+    comment:
+      "E-education simplifies complex data analysis with its comprehensive courses. It's indispensable for data scientists and analysts. The intuitive learning interface is a huge plus!",
+    image_url: "https://randomuser.me/api/portraits/women/5.jpg",
+  },
+  {
+    name: "George Turner",
+    rating: 3.7,
+    occupation: "Product Manager",
+    comment:
+      "The versatility of E-education's courses caters perfectly to my project management needs. It's an essential asset for streamlining workflows and enhancing productivity. Excellent job!",
+    image_url: "https://randomuser.me/api/portraits/men/6.jpg",
+  },
+  {
+    name: "Isabel Garcia",
+    rating: 4.9,
+    occupation: "UX Designer",
+    comment:
+      "The E-education platform embodies outstanding user experience principles. It's evident that the courses are crafted with a deep understanding of design principles. A pleasure to learn from!",
+    image_url: "https://randomuser.me/api/portraits/women/7.jpg",
+  },
+  {
+    name: "Jake Miller",
+    rating: 4.1,
+    occupation: "Entrepreneur",
+    comment:
+      "E-education's courses are indispensable for efficient project management in my business. It's a valuable addition to my entrepreneurial toolkit. Highly recommended!",
+    image_url: "https://randomuser.me/api/portraits/men/8.jpg",
+  },
+];
