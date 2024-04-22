@@ -10,7 +10,7 @@ import axios from 'axios'
 const login = true; // Change this value based on the user's login status
 
 const navigation = [
-  { name: 'Deshboard', href: "/home", current: false, visible: true },
+  { name: 'Explore', href: "/home", current: false, visible: true },
   { name: 'My Education', href: login ? "/" : "/home", current: false, visible: login },
   { name: 'Courses', href: '/MyCourse', current: false, visible: true }, // Always visible
 ];
