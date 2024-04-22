@@ -12,7 +12,7 @@ const login = true
 
 
 const navigation = [
-  { name: 'Dashboard', href: "/home", current: false, visible: true },
+  { name: 'Deshboard', href: "/home", current: false, visible: true },
   { name: 'My Education', href: login ? "/" : "/home", current: false, visible: login },
   { name: 'Courses', href: '/MyCourse', current: false, visible: true }, // Always visible
 ];

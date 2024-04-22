@@ -11,6 +11,7 @@ function Profile({ usernameFirstLetter }) {
   const [isOpen, setIsOpen] = useState(false);
   const [iseducationopen, setIsEducationOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isBrowseProjectOpen, setIsBrowseProjectOpen] = useState(false);
 
   const openEducationModel = () => {
     setIsEducationOpen(true);
@@ -25,6 +26,59 @@ function Profile({ usernameFirstLetter }) {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const openBrowseProject = () => {
+    setIsBrowseProjectOpen(true);
+  };
+
+  const closeBrowseProject = () => {
+    setIsBrowseProjectOpen(false)
+  }
+
+  const ExplorBrowseProject = [
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9UWky_Q26s8mob8oTWgxi7-gB5pMD3DDciFZHC8RO4Q&s",
+      title: "Data Science",
+      totle: "425 courses",
+    },
+    {
+      image:
+        "https://img.freepik.com/premium-photo/cardano-blockchain-platform_23-2150411956.jpg",
+      title: "Business",
+      totle: "4244 courses",
+    },
+    {
+      image:
+        "https://imageio.forbes.com/specials-images/imageserve/61d52d4e3a76ed81ac034ea8/The-10-Tech-Trends-That-Will-Transform-Our-World/960x0.jpg?height=399&width=711&fit=bounds",
+      title: "Computer Science",
+      totle: "628 courses ",
+    },
+    {
+      image:
+        "https://img.etimg.com/thumb/msid-88634316,width-1200,height-900,imgsize-65126,resizemode-8,quality-100/tech/technology/tracking-the-buzz-in-tech.jpg",
+      title: "Health",
+      totle: "471 courses",
+    },
+    {
+      image:
+        "https://img.freepik.com/free-vector/realistic-background-futuristic-style_23-2149129125.jpg",
+      title: "SOcial Science",
+      totle: "555 courses",
+    },
+    {
+      image:
+        "https://industrywired.com/wp-content/uploads/2021/02/Smart-Tech.jpg",
+      title: "Personal Development",
+      totle: "425 courses",
+    },
+    {
+      image:
+        "https://ats.org/wp-content/uploads/2020/04/Index-High-Tech-Future-2400x1374.jpg",
+      title: "Arts and Humanities",
+      totle: "338 courses",
+    },
+  ];
 
   // Define function to handle image upload
   const handleImageUpload = (event) => {
@@ -99,8 +153,6 @@ function Profile({ usernameFirstLetter }) {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
-
-  
 
   return (
     <>
@@ -271,7 +323,6 @@ function Profile({ usernameFirstLetter }) {
               </div>
             </div>
           ))}
-          
         </div>
 
         {/* right cards */}
@@ -280,12 +331,67 @@ function Profile({ usernameFirstLetter }) {
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
-                <a
+                <button
+                  onClick={openBrowseProject}
                   href="#"
                   class=" font-bold text-lg leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
                 >
                   Browse your Projects
-                </a>
+                </button>
+             
+
+                {isBrowseProjectOpen && (
+                  <div className=" fixed rounded-md inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center ">
+                    <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
+                      <div className="bg-[#023047] rounded-lgs">
+                        <div className="text-white text-2xl p-2">
+                          Browse Projects
+                        </div>
+                        <div className="text-white p-2">
+                          Projects give you real-world challenges to solve with
+                          industry tools, and produce work samples that help you
+                          demonstrate your capabilities and stand out.
+                        </div>
+                      </div>
+                      <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
+                        <div className="grid  grid-cols-1 gap-4">
+                          {ExplorBrowseProject.map((course, index) => (
+                            <div
+                              key={index}
+                              className=" hover:shadow-2xl border h-[85px]  w-[400px]"
+                            >
+                              <div className="flex justify-start items-start flex-row gap-8">
+                                <div>
+                                  {" "}
+                                  <img
+                                    src={course.image}
+                                    alt={course.title}
+                                    className="md:w-32 h-[85px] rounded-lg w-28 "
+                                  />
+                                </div>
+                                <div className="flex justify-center items-start flex-col pt-3 font-semibold text-gray-600 text-sm">
+                                  {" "}
+                                  <div>{course.title}</div>
+                                  <div>{course.totle}</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      
+                    <div className = "w-[400px] mt-4 text-white">
+                    <button
+                            className="bg-blue-800 p-2 w-[400px]  text-white  hover:bg-black "
+                            onClick={closeBrowseProject}
+                          >
+                           Close
+                          </button>
+                    </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                )}
                 <h2 className="text-lg font-semibold">
                   Showcase your skills to recruiters with job-relevant projects
                 </h2>
