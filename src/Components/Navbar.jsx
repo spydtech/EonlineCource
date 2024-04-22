@@ -8,11 +8,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 // import { auth } from './firebase'
 
-const login = true
+const login = true;
 const navigation = [
-  { name: 'My Learning', href: `${login ? "/" : "/login"}`, current: false },
-  { name: 'Course', href: '#', current: false },
+  { name: 'Deshboard', href: "/home", current: false, visible: true },
+  { name: 'My Education', href: login ? "/" : "/home", current: false, visible: login },
+  { name: 'Courses', href: '/MyCourse', current: false, visible: true }, // Always visible
 ];
+
 
 
 function classNames(...classes) {
@@ -23,7 +25,7 @@ export default function Navbar({ usernameFirstLetter }) {
   const [navigationMenu, setNavigationMenu] = useState(null);
   const [username, setuserName] = useState('');
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
-  const navigationRef = useRef(null); // Initialize navigationRef with useRef
+  const navigationRef = useRef(null); 
   const navigate = useNavigate();
   // const [userInitial, setUserInitial] = useState();
 
@@ -34,73 +36,30 @@ export default function Navbar({ usernameFirstLetter }) {
   };
 
 
-  // useEffect(() => {
-  //   const fetchUserDetails = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3465/api/v1/user/response?username=${username}`);
-  //       if (response.data && response.data.username) {
-  //         setuserName(response.data.username.charAt(0));
-  //       } else {
-  //         console.error('Error fetching user details: Invalid response format');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching user details:', error.message);
-  //     }
-  //   };
+  // const firstName = "Chiluveru";
+  // const lastName = "Shyam";
 
-  //   fetchUserDetails();
+  useEffect(() => {
+    if (user) {
+      const fetchUserDetails = async () => {
+        try {
+          const token = await user.getIdToken(); // Get the Firebase authentication token
+          const response = await axios.get('YOUR_API_ENDPOINT', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const { firstName, lastName } = response.data;
+          setFirstName(firstName);
+          setLastName(lastName);
+        } catch (error) {
+          console.error('Error fetching user details:', error.message);
+        }
+      };
 
-  // }, [username]);
-
-
-
-  // useEffect(() => {
-
-  //   const fetchUserDetails = async () => {
-  //     try {
-  //       // const token = await user.getIdToken(); // Get the Firebase authentication token
-  //       const response = await axios.get('http://localhost:3465/api/v1/user/response');
-  //       if (response.data && response.data.username) {
-  //         const { user } = response.data;
-  //         setUser(response.data.username.charAt(0));
-  //       } else {
-  //         console.error('Error fetching user details: Invalid response format');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching user details:', error.message);
-  //     }
-  //   };
-  //   fetchUserDetails();
-  // }, [user]);
-
-
-
-  // useEffect(() => {
-  //   // Assume you have a function to check if the user is logged in and fetch their data
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:3465/api/v1/user/allusers', {
-  //         method: 'GET',
-  //         headers: {
-  //           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Assuming you store the access token in localStorage
-  //           'Content-Type': 'application/json'
-  //         }
-  //       });
-  //       if (response.ok) {
-  //         const userData = await response.json();
-  //         // Extract first letter of username or name
-  //         const firstLetter = userData.username.charAt(0).toUpperCase(); // Assuming username is available in userData
-  //         setUserInitial(firstLetter);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-
+      fetchUserDetails();
+    }
+  }, [user]);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -183,7 +142,7 @@ export default function Navbar({ usernameFirstLetter }) {
 
                       >
                         <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
-                          {usernameFirstLetter}
+                          {`${firstName.charAt(0)}${lastName.charAt(0)}`}
                         </span>
                         <svg
                           className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
@@ -203,26 +162,29 @@ export default function Navbar({ usernameFirstLetter }) {
 
                       {/* Dropdown menu */}
                       {navigationMenuOpen && navigationMenu === 'getting-started' && (
-                        <div className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div onClick={handleOutsideClick} ref={navigationRef}  className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           {/* Dropdown menu items */}
                           {/* Replace these links with your actual dropdown menu items */}
                           <a href="/MyCourse" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            My Courses
-                          </a>
-                          <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            Purchases
+                          Courses
                           </a>
                           <a href="/Profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Profile
                           </a>
-                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
-                            Settings
+                          <a href="/Purchases" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Purchases
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Updates
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Accomplishments
+                          </a>
+                          <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            WorkSpace
+                          </a>
+                          <a href="/Settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            Settings
                           </a>
                           <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             Help Center

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home usernameFirstLetter={usernameFirstLetter} />} />
           <Route path="/Certificates" element={<Certificates />} />
@@ -44,11 +44,11 @@ function App() {
           <Route path="/Profile" element={<Profile usernameFirstLetter={usernameFirstLetter} />} />
           <Route path="/Settings" element={<Settings usernameFirstLetter={usernameFirstLetter} />} />
           <Route path="/Payment" element={<Payment />} />
-          <Route path="/Purchases" element={<Purchases usernameFirstLetter={usernameFirstLetter} />} />
-          <Route path="/Mycourse" element={<MyCourse usernameFirstLetter={usernameFirstLetter} />} />
+          <Route path="/Purchases" element={<Purchases />} />
+          <Route path="/Mycourse" element={<MyCourse />} />
 
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }

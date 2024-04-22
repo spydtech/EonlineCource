@@ -1,12 +1,12 @@
 import React from 'react'
-import Marquee from './Home/Marquee/Marquee';
+
 
 function Main() {
   return (
     <>
     <div>
 {/* <Navbar /> */}
-<section  class="sm:mt-6 lg:mt-8 mt-12  mx-auto px-4 sm:px-6 lg:px-8">
+<section  class="sm:mt-6 lg:mt-8  mx-auto px-4 sm:px-6 lg:px-8">
 
 <div
     class="my-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28 flex gap-3 lg:flex-justify lg:flex flex-col lg:flex-row">
@@ -50,7 +50,7 @@ function Main() {
     </div>
 
     
-    <Marquee />
+  
     </>
   )
 }

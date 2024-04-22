@@ -29,7 +29,7 @@ const courses = [
     tagText: "Artificial intelligence",
     title: "Artificial intelligence",
     skills:
-"Artificial intelligence, in its broadest sense, is intelligence exhibited by machines, particularly computer systems and networks, that simulates human cognitive functions.",
+      "Artificial intelligence, in its broadest sense, is intelligence exhibited by machines, particularly computer systems and networks, that simulates.",
     rating: "4.0",
     reviews: "34 reviews",
     button: "Start To Learn",
@@ -77,27 +77,45 @@ export default function EducationCarousel() {
         <div className="overflow-hidden" data-glide-el="track">
           <ul className="whitespace-no-wrap flex-no-wrap relative flex  w-full overflow-hidden p-0">
             {courses.map((course, index) => (
-              <li key={index} className="hover:shadow-2xl border rounded-lg">
-                <div className="flex flex-col gap-8 items-center">
+              <li
+                key={index}
+                className="bg-white rounded-lg overflow-hidden border transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 hover:shadow-2xl"
+              >
+             
+                  {/* Image */}
                   <img
+                    className="h-50  w-full object-cover object-center rounded-lg"
                     src={course.imageSrc}
-                    alt={course.title}
-                    className="rounded-lg w-full"
+                    alt="Course"
                   />
-                  <div className="flex flex-col text-gray-600 text-lg text-start p-4">
-                    <div className="font-bold">{course.title}</div>
-                    <div>{course.skills}</div>
+                  <div className="p-6">
+                    <div className="flex items-baseline gap-2">
+                      {/* Tag */}
+                      <span className="dark:text-gray-300">
+                        {course.tagText}
+                      </span>
+                    </div>
+                    {/* Rating and Reviews */}
+                    <div className="gap-2 flex items-center mt-2">
+                      <span>{course.rating}</span>
+                      <span className="text-teal-600 font-semibold">
+                        <i className="fas fa-star"></i>
+                      </span>
+                      <span className="ml-2 text-gray-600 text-sm">
+                        {course.reviews}
+                      </span>
+                    </div>
+                    <h4 className="mt-2 leading-tight ">{course.skills}</h4>
                   </div>
-                
-                </div>
-                <div className="pl-4 mb-4">
+               
 
-                <button className="border border-blue-800 hover:bg-white hover:text-black font-bold p-2 rounded-lg bg-blue-800 text-white">Eroll Now</button>
+                <div className="pl-4 mb-4">
+                  <button className="border border-blue-800 hover:bg-white hover:text-black font-bold p-2 rounded-lg bg-blue-800 text-white">
+                    Eroll Now
+                  </button>
                 </div>
               </li>
-              
             ))}
-           
           </ul>
         </div>
         <div

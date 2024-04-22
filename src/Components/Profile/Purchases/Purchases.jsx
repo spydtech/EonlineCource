@@ -3,6 +3,10 @@ import Footer from '../../Home/footer/Footer'
 import Navbar from '../../Navbar'
 import PaymentHistory from './PaymentHistory'
 
+import Slides from './Slides'
+
+
+
 function Purchases({ usernameFirstLetter }) {
     return (
         <div>
@@ -31,11 +35,11 @@ function Purchases({ usernameFirstLetter }) {
 
                 <PaymentHistory />
 
-            </div>
-
-            <Footer />
-        </div>
-    )
+</div>
+       
+        <Footer />
+    </div>
+  )
 }
 
 export default Purchases
