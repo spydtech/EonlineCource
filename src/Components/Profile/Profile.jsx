@@ -38,47 +38,49 @@ function Profile({ usernameFirstLetter }) {
   const ExplorBrowseProject = [
     {
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9UWky_Q26s8mob8oTWgxi7-gB5pMD3DDciFZHC8RO4Q&s",
-      title: "Data Science",
-      totle: "425 courses",
+        "https://t3.ftcdn.net/jpg/02/88/80/38/360_F_288803822_0CJ8L3gr6w6nGnUeje6pCllCX7s986xz.jpg",
+      title: "Data Science. 7-9 hours (self-learning)",
+      description: "Discover the transformative world of data science, from machine learning to big data analytics.",
     },
     {
       image:
-        "https://img.freepik.com/premium-photo/cardano-blockchain-platform_23-2150411956.jpg",
-      title: "Business",
-      totle: "4244 courses",
+        "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
+      title: "Business. 5-7 hours (self-learning)",
+      description: "Navigate the complexities of business strategy, finance, and leadership with expert-led courses.",
     },
     {
       image:
-        "https://imageio.forbes.com/specials-images/imageserve/61d52d4e3a76ed81ac034ea8/The-10-Tech-Trends-That-Will-Transform-Our-World/960x0.jpg?height=399&width=711&fit=bounds",
-      title: "Computer Science",
-      totle: "628 courses ",
+        "https://t3.ftcdn.net/jpg/06/17/88/90/360_F_617889061_ZO5zsPTfTmxTfcMG8spbnPHf4wfJMGLY.jpg",
+      title: "Computer Science. 6-8 hours (self-learning)",
+      description: "Embark on a journey through algorithms, programming, and emerging technologies in computer science.",
     },
     {
       image:
-        "https://img.etimg.com/thumb/msid-88634316,width-1200,height-900,imgsize-65126,resizemode-8,quality-100/tech/technology/tracking-the-buzz-in-tech.jpg",
-      title: "Health",
-      totle: "471 courses",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnxlauEo4V1_Bnb172cQTKE-i1Uc_3nBcf7tuB9MqqHhKgxLftD-g1aFIJi7PqVMJrWpc&usqp=CAU",
+      title: "Health. 4-6 hours (self-learning)",
+      description: "Explore the latest in healthcare innovations, wellness practices, and medical advancements.",
     },
     {
       image:
-        "https://img.freepik.com/free-vector/realistic-background-futuristic-style_23-2149129125.jpg",
-      title: "SOcial Science",
-      totle: "555 courses",
+        "https://videohive.img.customer.envatousercontent.com/files/229501069/Preview_Image_Di.jpg?auto=compress%2Cformat&fit=crop&crop=top&max-h=8000&max-w=590&s=9d60d3dfa35cee5db662c381e886696f",
+      title: "Social Science. 5-7 hours (self-learning)",
+      description: "Uncover insights into human behavior, societies, and cultural phenomena across diverse disciplines.",
     },
     {
       image:
-        "https://industrywired.com/wp-content/uploads/2021/02/Smart-Tech.jpg",
-      title: "Personal Development",
-      totle: "425 courses",
+        "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
+      title: "Personal Development. 4-6 hours (self-learning)",
+      description: "Invest in your personal growth and self-improvement through tailored development courses.",
     },
     {
       image:
         "https://ats.org/wp-content/uploads/2020/04/Index-High-Tech-Future-2400x1374.jpg",
-      title: "Arts and Humanities",
-      totle: "338 courses",
+      title: "Arts and Humanities. 3-5 hours (self-learning)",
+      description: "Immerse yourself in the beauty of arts, literature, and philosophical ideas from around the world.",
     },
   ];
+  
+  
 
   // Define function to handle image upload
   const handleImageUpload = (event) => {
@@ -341,8 +343,8 @@ function Profile({ usernameFirstLetter }) {
              
 
                 {isBrowseProjectOpen && (
-                  <div className=" fixed rounded-md inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center ">
-                    <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
+                  <div className=" fixed rounded-md inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center  ">
+                    <div className="relative w-auto max-w-3xl mx-auto my-6 overflow-y-auto max-h-full  ">
                       <div className="bg-[#023047] rounded-lgs">
                         <div className="text-white text-2xl p-2">
                           Browse Projects
@@ -353,35 +355,36 @@ function Profile({ usernameFirstLetter }) {
                           demonstrate your capabilities and stand out.
                         </div>
                       </div>
-                      <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
+                      <div className="bg-white rounded-lg shadow-lg relative flex flex-col  p-8">
                         <div className="grid  grid-cols-1 gap-4">
                           {ExplorBrowseProject.map((course, index) => (
-                            <div
+                            <div div
                               key={index}
-                              className=" hover:shadow-2xl border h-[85px]  w-[400px]"
+                              className=" hover:shadow-2xl border h-[85px]"
                             >
                               <div className="flex justify-start items-start flex-row gap-8">
-                                <div>
+                                <div className="md:w-36 h-[35px] w-28 ">
                                   {" "}
                                   <img
                                     src={course.image}
                                     alt={course.title}
-                                    className="md:w-32 h-[85px] rounded-lg w-28 "
+                                    className=" rounded-lg  "
                                   />
                                 </div>
-                                <div className="flex justify-center items-start flex-col pt-3 font-semibold text-gray-600 text-sm">
+                                <div className="md:w-[500px] flex justify-center items-start flex-col pt-3 font-semibold text-gray-600 text-sm">
                                   {" "}
+                                 
+                                  <div >{course.description}</div>
                                   <div>{course.title}</div>
-                                  <div>{course.totle}</div>
                                 </div>
                               </div>
                             </div>
                           ))}
                         </div>
                       
-                    <div className = "w-[400px] mt-4 text-white">
+                    <div className = "mt-4 text-white">
                     <button
-                            className="bg-blue-800 p-2 w-[400px]  text-white  hover:bg-black "
+                            className="bg-blue-800 p-2 w-[100px]  text-white  hover:bg-black "
                             onClick={closeBrowseProject}
                           >
                            Close

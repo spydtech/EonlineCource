@@ -8,11 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import { auth } from './firebase'
 
-const login = false; // Change this value based on the user's login status
+const login = true; // Change this value based on the user's login status
 // const login = true
-
-
-
 const navigation = [
   { name: "Explore", href: "/home", current: false, visible: true },
   {
