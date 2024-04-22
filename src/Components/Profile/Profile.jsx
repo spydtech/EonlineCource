@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import Footer from "../Home/footer/Footer";
 
-function Profile({ item }) {
+function Profile({ usernameFirstLetter }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
@@ -156,7 +156,7 @@ function Profile({ item }) {
 
   return (
     <>
-      <Navbar />
+      <Navbar usernameFirstLetter={usernameFirstLetter} />
       {/* left cards */}
 
       {/* Map over the profiles and render each profile card */}

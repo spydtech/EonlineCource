@@ -6,9 +6,14 @@ import { IoCloseSharp } from "react-icons/io5";
 import IMG from "../assets/E- education logo .png";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+// import { auth } from './firebase'
 
+<<<<<<< HEAD
+const login = true
+=======
 const login = true; // Change this value based on the user's login status
 
+>>>>>>> eebe8a718d6bbc187591661fed1321995981988b
 const navigation = [
   { name: 'Explore', href: "/home", current: false, visible: true },
   { name: 'My Education', href: login ? "/" : "/home", current: false, visible: login },
@@ -21,21 +26,90 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Navbar() {
+export default function Navbar({ usernameFirstLetter }) {
   const [navigationMenu, setNavigationMenu] = useState(null);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [user, setUser] = useState(null);
+  const [username, setuserName] = useState('');
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
   const navigationRef = useRef(null); 
   const navigate = useNavigate();
+  // const [userInitial, setUserInitial] = useState();
 
 
   const handleLogout = () => {
 
-    navigate('/login');
+    navigate('/');
   };
 
+<<<<<<< HEAD
+
+  // useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:3465/api/v1/user/response?username=${username}`);
+  //       if (response.data && response.data.username) {
+  //         setuserName(response.data.username.charAt(0));
+  //       } else {
+  //         console.error('Error fetching user details: Invalid response format');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user details:', error.message);
+  //     }
+  //   };
+
+  //   fetchUserDetails();
+
+  // }, [username]);
+
+
+
+  // useEffect(() => {
+
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       // const token = await user.getIdToken(); // Get the Firebase authentication token
+  //       const response = await axios.get('http://localhost:3465/api/v1/user/response');
+  //       if (response.data && response.data.username) {
+  //         const { user } = response.data;
+  //         setUser(response.data.username.charAt(0));
+  //       } else {
+  //         console.error('Error fetching user details: Invalid response format');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user details:', error.message);
+  //     }
+  //   };
+  //   fetchUserDetails();
+  // }, [user]);
+
+
+
+  // useEffect(() => {
+  //   // Assume you have a function to check if the user is logged in and fetch their data
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:3465/api/v1/user/allusers', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Assuming you store the access token in localStorage
+  //           'Content-Type': 'application/json'
+  //         }
+  //       });
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         // Extract first letter of username or name
+  //         const firstLetter = userData.username.charAt(0).toUpperCase(); // Assuming username is available in userData
+  //         setUserInitial(firstLetter);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
+
+=======
 
 
   useEffect(() => {
@@ -59,6 +133,7 @@ export default function Navbar() {
   fetchUserDetails();
 }
 }, [user]);
+>>>>>>> eebe8a718d6bbc187591661fed1321995981988b
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -140,10 +215,17 @@ export default function Navbar() {
                         onClick={() => toggleNavigationMenu('getting-started')}
 
                       >
+<<<<<<< HEAD
+                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
+                          {usernameFirstLetter}
+                        </span>
+                        <svg
+=======
                         <span className='p-3 h-12 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'> 
                         {`${firstName.charAt(0)}${lastName.charAt(0)}`}
                       </span>
                        <svg
+>>>>>>> eebe8a718d6bbc187591661fed1321995981988b
                           className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
                             }`}
                           xmlns="http://www.w3.org/2000/svg"
