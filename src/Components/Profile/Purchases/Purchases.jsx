@@ -3,7 +3,7 @@ import Footer from '../../Home/footer/Footer'
 import Navbar from '../../Navbar'
 import PaymentHistory from './PaymentHistory'
 
-import Slides from './Slides'
+
 
 
 
@@ -35,7 +35,7 @@ function Purchases({ usernameFirstLetter }) {
 
                 <PaymentHistory />
 
-</div>
+            </div>
        
         <Footer />
     </div>
