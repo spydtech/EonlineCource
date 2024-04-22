@@ -45,7 +45,7 @@ function App() {
           <Route path="/Settings" element={<Settings usernameFirstLetter={usernameFirstLetter} />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
-          <Route path="/Mycourse" element={<MyCourse />} />
+          <Route path="/Mycourse" element={<MyCourse  usernameFirstLetter={usernameFirstLetter}/>} />
 
         </Routes>
       </BrowserRouter>
