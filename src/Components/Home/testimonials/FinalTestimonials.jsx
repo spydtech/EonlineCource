@@ -29,4 +29,4 @@ const FinalTestimonials = () => {
   )
 }
 
-export default FinalTestimonials
+export default FinalTestimonials;

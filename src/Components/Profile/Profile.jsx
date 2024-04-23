@@ -3,13 +3,22 @@ import React, { useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import Footer from "../Home/footer/Footer";
 
-function Profile({ item }) {
+function Profile({ usernameFirstLetter }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [iseducationopen, setIsEducationOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isBrowseProjectOpen, setIsBrowseProjectOpen] = useState(false);
+
+  const openEducationModel = () => {
+    setIsEducationOpen(true);
+  };
+  const closeEducationModel = () => {
+    setIsEducationOpen(false);
+  };
   const openModal = () => {
     setIsOpen(true);
   };
@@ -17,6 +26,61 @@ function Profile({ item }) {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const openBrowseProject = () => {
+    setIsBrowseProjectOpen(true);
+  };
+
+  const closeBrowseProject = () => {
+    setIsBrowseProjectOpen(false)
+  }
+
+  const ExplorBrowseProject = [
+    {
+      image:
+        "https://t3.ftcdn.net/jpg/02/88/80/38/360_F_288803822_0CJ8L3gr6w6nGnUeje6pCllCX7s986xz.jpg",
+      title: "Data Science. 7-9 hours (self-learning)",
+      description: "Discover the transformative world of data science, from machine learning to big data analytics.",
+    },
+    {
+      image:
+        "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
+      title: "Business. 5-7 hours (self-learning)",
+      description: "Navigate the complexities of business strategy, finance, and leadership with expert-led courses.",
+    },
+    {
+      image:
+        "https://t3.ftcdn.net/jpg/06/17/88/90/360_F_617889061_ZO5zsPTfTmxTfcMG8spbnPHf4wfJMGLY.jpg",
+      title: "Computer Science. 6-8 hours (self-learning)",
+      description: "Embark on a journey through algorithms, programming, and emerging technologies in computer science.",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnxlauEo4V1_Bnb172cQTKE-i1Uc_3nBcf7tuB9MqqHhKgxLftD-g1aFIJi7PqVMJrWpc&usqp=CAU",
+      title: "Health. 4-6 hours (self-learning)",
+      description: "Explore the latest in healthcare innovations, wellness practices, and medical advancements.",
+    },
+    {
+      image:
+        "https://videohive.img.customer.envatousercontent.com/files/229501069/Preview_Image_Di.jpg?auto=compress%2Cformat&fit=crop&crop=top&max-h=8000&max-w=590&s=9d60d3dfa35cee5db662c381e886696f",
+      title: "Social Science. 5-7 hours (self-learning)",
+      description: "Uncover insights into human behavior, societies, and cultural phenomena across diverse disciplines.",
+    },
+    {
+      image:
+        "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
+      title: "Personal Development. 4-6 hours (self-learning)",
+      description: "Invest in your personal growth and self-improvement through tailored development courses.",
+    },
+    {
+      image:
+        "https://ats.org/wp-content/uploads/2020/04/Index-High-Tech-Future-2400x1374.jpg",
+      title: "Arts and Humanities. 3-5 hours (self-learning)",
+      description: "Immerse yourself in the beauty of arts, literature, and philosophical ideas from around the world.",
+    },
+  ];
+  
+  
 
   // Define function to handle image upload
   const handleImageUpload = (event) => {
@@ -45,44 +109,76 @@ function Profile({ item }) {
     return years;
   };
 
-  // Generate an array of years (from 1990 to current year)
   const years = generateYearOptions(1990, new Date().getFullYear());
+
+  const generateYearOptions2 = (startYear, endYear) => {
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year.toString());
+    }
+    return years;
+  };
+
+  const years2 = generateYearOptions2(1990, new Date().getFullYear());
 
   const profiles = [
     {
       id: 1,
-      Email: "Jane Doe",
-      role: "ShareLink Profile",
+      Email: "Emily Wilson",
+      role: "Share Profile Link",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia Maiores et perferendis eaque.",
       imageUrl:
-        "https://gumlet-blog-content.gumlet.io/learn/content/images/2022/07/Elearning_platform.jpg?w=3840&q=70",
+        "https://static.vecteezy.com/system/resources/thumbnails/024/354/297/small_2x/business-woman-isolated-illustration-ai-generative-free-photo.jpg",
     },
-    // Add more dummy data objects as needed
   ];
+
+  const [formData, setFormData] = useState({
+    educationInstitute: "",
+    degree: "",
+    educationStartMonth: "",
+    educationStartYear: "",
+    graduationMonth: "",
+    graduationYear: "",
+    currentlyStudying: false,
+  });
+
+  const handleEducationSubmit = (e) => {
+    e.preventDefault();
+    localStorage.setItem("educationData", JSON.stringify(formData));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData1) => ({
+      ...prevData1,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
   return (
     <>
-      <Navbar />
+      <Navbar usernameFirstLetter={usernameFirstLetter} />
       {/* left cards */}
 
       {/* Map over the profiles and render each profile card */}
-      <div className="flex flex-col md:flex-row bg-blue-100">
+      <div className="flex flex-col md:flex-row bg-blue-100 justify-center items-center">
         <div>
           {profiles.map((profile) => (
             <div key={profile.id} className="flex">
-              <div className="p-12 ">
+              <div className="m-20 shadow-xl w-[300px] ">
                 <div className="relative">
                   {/* Profile Image */}
-                  <div className="py-5 p-10 px-20 bg-white border-2 rounded text-center text-gray-500 max-w-xl">
+                  <div className="py-5 p-10 px-20 bg-white rounded text-center text-gray-500 max-w-2xl">
                     <div className="flex space-x-2 -mr-4 ">
-                      <h1 className="text-xl">Personal Details</h1>
+                      <h1 className="text-sm w-full">Personal Details</h1>
                       <div>
                         <CiEdit
                           className="text-2xl cursor-pointer"
                           onClick={() => setIsPopupOpen(true)}
                         />
                       </div>
+
                       {isPopupOpen && (
                         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
                           <div className="bg-white p-8 rounded-lg">
@@ -218,7 +314,7 @@ function Profile({ item }) {
                     <h1 className="text-center font-bold p-2">
                       {profile.Email}
                     </h1>
-                    <button className="py-2 p-2 text-lg border-2 border-blue-600">
+                    <button className="py-1 p-2 text-sm border-2 border-blue-400 w-full">
                       {profile.role}
                     </button>
                     <p className="mt-2 text-sm text-gray-900 p-2">
@@ -229,28 +325,76 @@ function Profile({ item }) {
               </div>
             </div>
           ))}
-          <div class="  p-12 ">
-            <div className="p-10 w-[20rem]  bg-white border-2">
-              <p>
-                Let recruiters know what role you’re looking for to make sure
-                you find opportunities that are right for you.
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* right cards */}
-        <div className="pt-10 pl-10">
-          <h1 className="text-2xl font-bold py-2">Experience</h1>
+        <div className="pt-10 pl-10 pr-6 flex flex-col mb-8">
+          <h1 className="text-2xl font-bold py-2">WorkSpace</h1>
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
-                <a
+                <button
+                  onClick={openBrowseProject}
                   href="#"
-                  class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
+                  class=" font-bold text-lg leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
                 >
                   Browse your Projects
-                </a>
+                </button>
+             
+
+                {isBrowseProjectOpen && (
+                  <div className=" fixed rounded-md inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center  ">
+                    <div className="relative w-auto max-w-3xl mx-auto my-6 overflow-y-auto max-h-full  ">
+                      <div className="bg-[#023047] rounded-lgs">
+                        <div className="text-white text-2xl p-2">
+                          Browse Projects
+                        </div>
+                        <div className="text-white p-2">
+                          Projects give you real-world challenges to solve with
+                          industry tools, and produce work samples that help you
+                          demonstrate your capabilities and stand out.
+                        </div>
+                      </div>
+                      <div className="bg-white rounded-lg shadow-lg relative flex flex-col  p-8">
+                        <div className="grid  grid-cols-1 gap-4">
+                          {ExplorBrowseProject.map((course, index) => (
+                            <div div
+                              key={index}
+                              className=" hover:shadow-2xl border h-[85px]"
+                            >
+                              <div className="flex justify-start items-start flex-row gap-8">
+                                <div className="md:w-36 h-[35px] w-28 ">
+                                  {" "}
+                                  <img
+                                    src={course.image}
+                                    alt={course.title}
+                                    className=" rounded-lg  "
+                                  />
+                                </div>
+                                <div className="md:w-[500px] flex justify-center items-start flex-col pt-3 font-semibold text-gray-600 text-sm">
+                                  {" "}
+                                 
+                                  <div >{course.description}</div>
+                                  <div>{course.title}</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      
+                    <div className = "mt-4 text-white">
+                    <button
+                            className="bg-blue-800 p-2 w-[100px]  text-white  hover:bg-black "
+                            onClick={closeBrowseProject}
+                          >
+                           Close
+                          </button>
+                    </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                )}
                 <h2 className="text-lg font-semibold">
                   Showcase your skills to recruiters with job-relevant projects
                 </h2>
@@ -262,341 +406,310 @@ function Profile({ item }) {
             </div>
           </div>
 
-          <div className="py-10">
-            <div class="p-5   border bg-white rounded text-gray-500">
-              <div class="flex items-center">
-                <div class="">
-                  <a
-                    href="#"
-                    class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
-                  >
-                    Work history
-                  </a>
-                  <div className="flex flex-col md:flex-row gap-2 p-10 border bg-gray-100">
-                    <h2 className=" font-semibold w-2/3">
-                      Add your past work experience here. If you’re just
-                      starting out, you can add internships or volunteer
-                      experience instead.
-                    </h2>
-                    <button
-                      onClick={openModal}
-                      className="px-5 h-10 border-2 border-blue-700"
-                    >
-                      + Add Experience
-                    </button>
-
-                    {isOpen && (
-                      <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
-                        <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
-                          {/* Modal content */}
-                          <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
-                            {/* Close button */}
-                            <button
-                              className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
-                              onClick={closeModal}
-                            >
-                              <svg
-                                className="h-6 w-6 fill-current"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-
-                            {/* Modal content */}
-                            <div className="text-start">
-                              <h2 className="text-xl font-bold mb-4">
-                                Work experience
-                              </h2>
-                              <p className="mb-4">
-                                Add your past work experience. If you're just
-                                starting out, you can add internships or
-                                volunteer experience instead.
-                              </p>
-                              <div>
-                                <form class="max-w-sm">
-                                  <label
-                                    for="countries"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
-                                  >
-                                    Name of institution
-                                  </label>
-                                  <select
-                                    id="countries"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option selected>
-                                      Choose an institution
-                                    </option>
-                                    <option value="Harvard University">
-                                      Harvard University
-                                    </option>
-                                    <option value="Stanford University">
-                                      Stanford University
-                                    </option>
-                                    <option value="Massachusetts Institute of Technology (MIT)">
-                                      Massachusetts Institute of Technology
-                                      (MIT)
-                                    </option>
-                                    <option value="University of Oxford">
-                                      University of Oxford
-                                    </option>
-                                    <option value="University of Cambridge">
-                                      University of Cambridge
-                                    </option>
-                                  </select>
-                                </form>
-                              </div>
-
-                              <div>
-                                <form class="max-w-sm ">
-                                  <label
-                                    for="countries"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                                  >
-                                    Role/Job title
-                                  </label>
-                                  <select
-                                    id="countries"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  >
-                                    <option selected>
-                                      Choose a role/title
-                                    </option>
-                                    <option value="Software Engineer">
-                                      Software Engineer
-                                    </option>
-                                    <option value="Project Manager">
-                                      Project Manager
-                                    </option>
-                                    <option value="Graphic Designer">
-                                      Graphic Designer
-                                    </option>
-                                    <option value="Data Analyst">
-                                      Data Analyst
-                                    </option>
-                                    <option value="Marketing Specialist">
-                                      Marketing Specialist
-                                    </option>
-                                  </select>
-                                </form>
-                              </div>
-                              {/* start Month */}
-                              <label
-                                for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
-                              >
-                                Start date
-                              </label>
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div>
-                                  <form class="max-w-sm ">
-                                    <label
-                                      for="countries"
-                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                      Month
-                                    </label>
-                                    <select
-                                      id="countries"
-                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    >
-                                      <option value="">Choose a month</option>
-                                      <option value="January">January</option>
-                                      <option value="February">February</option>
-                                      <option value="March">March</option>
-                                      <option value="April">April</option>
-                                      <option value="May">May</option>
-                                      <option value="June">June</option>
-                                      <option value="July">July</option>
-                                      <option value="August">August</option>
-                                      <option value="September">
-                                        September
-                                      </option>
-                                      <option value="October">October</option>
-                                      <option value="November">November</option>
-                                      <option value="December">December</option>
-                                    </select>
-                                  </form>
-                                </div>
-                                <div>
-                                  <form class="max-w-sm ">
-                                    <label
-                                      for="countries"
-                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                      Year
-                                    </label>
-                                    <select
-                                      id="startYear"
-                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    >
-                                      <option value="">Choose a year</option>
-                                      {/* List of year options */}
-                                      {years.map((year) => (
-                                        <option key={year} value={year}>
-                                          {year}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </form>
-                                </div>
-                              </div>
-
-                              {/* End month  */}
-                              <label
-                                for="countries"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                End month
-                              </label>
-
-                              <div className="flex justify-start items-start flex-rows gap-12">
-                                <div>
-                                  <form class="max-w-sm ">
-                                    <label
-                                      for="countries"
-                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                      Month
-                                    </label>
-                                    <select
-                                      id="countries"
-                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    >
-                                      <option value="">Choose a month</option>
-                                      <option value="January">January</option>
-                                      <option value="February">February</option>
-                                      <option value="March">March</option>
-                                      <option value="April">April</option>
-                                      <option value="May">May</option>
-                                      <option value="June">June</option>
-                                      <option value="July">July</option>
-                                      <option value="August">August</option>
-                                      <option value="September">
-                                        September
-                                      </option>
-                                      <option value="October">October</option>
-                                      <option value="November">November</option>
-                                      <option value="December">December</option>
-                                    </select>
-                                  </form>
-                                </div>
-                                <div>
-                                  <form class="max-w-sm ">
-                                    <label
-                                      for="countries"
-                                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                     Year
-                                    </label>
-                                    <select
-                                      id="startYear"
-                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    >
-                                      <option value="">Choose a year</option>
-                                      {/* List of year options */}
-                                      {years.map((year) => (
-                                        <option key={year} value={year}>
-                                          {year}
-                                        </option>
-                                      ))}
-                                    </select>
-                                  </form>
-                                </div>
-                              </div>
-
-                              {/* Currently work here */}
-
-                              <div class="flex items-center py-4">
-                                <input
-                                 
-                                  id="checked-checkbox"
-                                  type="checkbox"
-                                  value=""
-                                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                  for="checked-checkbox"
-                                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                >
-                                 I currently work here
-                                </label>
-                              </div>
-
-                              <hr className=""/>
-
-                              <div className="pt-4">
-                                <div className="font-bold text-sm">Description</div>
-                                <div className="pt-2 text-sm">
-                                  Add a simple description of your
-                                  responsibilities and achievements in this
-                                  role.
-                                </div>
-                              </div>
-
-                              {/* TextArea */}
-
-                              <label
-                                for="message"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
-                              >
-                                Your message
-                              </label>
-                              <textarea
-                                id="message"
-                                rows="4"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Include a few brief details about what you did in this role. Try to focus on your most meaningful accomplishments, and use numbers to quantify them where possible."
-                              ></textarea>
-                              <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
-                                <div>
-                                <button
-                                className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
-                                
-                              >
-                              Save
-                              </button>
-                                </div>
-                                <div>
-                                <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                onClick={closeModal}
-                              >
-                               Remove
-                              </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <h1 className="text-2xl font-bold py-2">Education</h1>
+          <h1 className="text-2xl font-bold py-4">Education</h1>
           <div class="p-5 border bg-white rounded text-gray-500">
             <div class="flex items-center">
               <div class="">
-                <a
-                  href="#"
-                  class="font-bold text-lg py-4 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out"
-                >
+                <div class="font-bold text-lg py-2 leading-none hover:underline text-gray-900 hover:text-indigo-600 transition duration-500 ease-in-out">
                   Credentials
-                </a>
+                </div>
+                <div className="mb-4">
+                  Update your educational background to showcase where you are
+                  currently studying or have recently graduated. Including this
+                  information is essential for potential employers. Even if you
+                  are still in school or haven't completed your studies, it's
+                  beneficial to share your educational path. If you have
+                  obtained a college degree, you can exclude your high school or
+                  GED details. Remember, all fields are optional but can greatly
+                  enhance your profile.
+                </div>
+
                 <div className="py-2 gap-5 boder bg-gray-200 flex flex-col md:flex-row p-2">
-                  <button className="px-5 h-10 border-2 border-blue-700">
+                  <button
+                    onClick={openEducationModel}
+                    className="px-5 h-10 border-2 border-blue-700"
+                  >
                     + Add Education
                   </button>
+                  {/* education open */}
+                  {iseducationopen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-30 z-50 flex items-center justify-center mt-16 ">
+                      <div className="relative w-auto max-w-lg mx-auto my-6 overflow-y-auto max-h-full">
+                        <div className="bg-white rounded-lg shadow-lg relative flex flex-col w-full p-8">
+                          <button
+                            className="absolute top-0 right-0 text-gray-500 hover:text-gray-700"
+                            onClick={closeEducationModel}
+                          >
+                            <svg
+                              className="h-6 w-6 fill-current"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M3.293 3.293a1 1 0 011.414 0L10 8.586l5.293-5.293a1 1 0 111.414 1.414L11.414 10l5.293 5.293a1 1 0 01-1.414 1.414L10 11.414l-5.293 5.293a1 1 0 01-1.414-1.414L8.586 10 3.293 4.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          </button>
+
+                          {/* Modal content */}
+                          <form
+                            className="text-start"
+                            onSubmit={handleEducationSubmit}
+                          >
+                            <h2 className="text-xl font-bold mb-4">
+                              Education
+                            </h2>
+                            <p className="mb-4">
+                              Add your educational background to let employers
+                              know where you studied or are currently studying.
+                              Even if you didn’t finish, it’s important to
+                              include it here. And if you’ve earned a college
+                              degree, you don’t need to add your high
+                              school/GED. All fields are optional.
+                            </p>
+                            <div className="max-w-sm">
+                              <label
+                                htmlFor="educationInstitute"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white "
+                              >
+                                Name of institution
+                              </label>
+                              <select
+                                value={formData.educationInstitute}
+                                onChange={handleInputChange}
+                                id="educationInstitute"
+                                name="educationInstitute"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              >
+                                <option value="">Choose an institution</option>
+                                <option value="Harvard University">
+                                  Harvard University
+                                </option>
+                                <option value="Stanford University">
+                                  Stanford University
+                                </option>
+                                <option value="Massachusetts Institute of Technology (MIT)">
+                                  Massachusetts Institute of Technology (MIT)
+                                </option>
+                                <option value="University of Oxford">
+                                  University of Oxford
+                                </option>
+                                <option value="University of Cambridge">
+                                  University of Cambridge
+                                </option>
+                              </select>
+                            </div>
+
+                            <div className="max-w-sm">
+                              <label
+                                htmlFor="degree"
+                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                              >
+                                Degree
+                              </label>
+                              <select
+                                value={formData.degree}
+                                onChange={handleInputChange}
+                                name="degree"
+                                id="degree"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              >
+                                <option value="">Choose a degree</option>
+                                <option value="Less than high school diploma">
+                                  Less than high School diploma (or equivalent)
+                                </option>
+                                <option value="High school diploma">
+                                  High school diploma (or equivalent)
+                                </option>
+                                <option value="Associate Degree">
+                                  Associate Degree (e.g.,AA,AS)
+                                </option>
+                                <option value="Bachelor's degree">
+                                  Bachelor's degree (e.g.,BA,BTECH)
+                                </option>
+                                <option value="Master's degree">
+                                  Master's degree (e.g.,MA,MS,MEd,MSW,MBA)
+                                </option>
+                                <option value="Professional school degree ">
+                                  Professional school degree
+                                  (e.g.,MD,DDS,DVM,LLB,JD)
+                                </option>
+                                <option value="Doctorate degree ">
+                                  Doctorate degree (e.g.,phD,EdD)
+                                </option>
+                              </select>
+                            </div>
+                            {/* start Month */}
+                            <label
+                              htmlFor="EducationStartDate"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4 "
+                            >
+                              Start date
+                            </label>
+                            <div className="flex justify-start items-start flex-rows gap-12">
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="educationStartMonth"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Month
+                                </label>
+                                <select
+                                  value={formData.educationStartMonth}
+                                  onChange={handleInputChange}
+                                  name="educationStartMonth"
+                                  id="educationStartMonth"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a month</option>
+                                  <option value="January">January</option>
+                                  <option value="February">February</option>
+                                  <option value="March">March</option>
+                                  <option value="April">April</option>
+                                  <option value="May">May</option>
+                                  <option value="June">June</option>
+                                  <option value="July">July</option>
+                                  <option value="August">August</option>
+                                  <option value="September">September</option>
+                                  <option value="October">October</option>
+                                  <option value="November">November</option>
+                                  <option value="December">December</option>
+                                </select>
+                              </div>
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="educationStartYear"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Year
+                                </label>
+                                <select
+                                  value={formData.educationStartYear}
+                                  onChange={handleInputChange}
+                                  name="educationStartYear"
+                                  id="educationStartYear"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a year</option>
+                                  {/* List of year options */}
+                                  {years2.map((year2) => (
+                                    <option key={year2} value={year2}>
+                                      {year2}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* End month  */}
+                            <label
+                              htmlFor="graduationDate"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white pt-4"
+                            >
+                              Graduation date or expected graduation date
+                            </label>
+
+                            <div className="flex justify-start items-start flex-rows gap-12">
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="graduationMonth"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Month
+                                </label>
+                                <select
+                                  value={formData.graduationMonth}
+                                  onChange={handleInputChange}
+                                  name="graduationMonth"
+                                  id="graduationMonth"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a month</option>
+                                  <option value="January">January</option>
+                                  <option value="February">February</option>
+                                  <option value="March">March</option>
+                                  <option value="April">April</option>
+                                  <option value="May">May</option>
+                                  <option value="June">June</option>
+                                  <option value="July">July</option>
+                                  <option value="August">August</option>
+                                  <option value="September">September</option>
+                                  <option value="October">October</option>
+                                  <option value="November">November</option>
+                                  <option value="December">December</option>
+                                </select>
+                              </div>
+                              <div className="max-w-sm">
+                                <label
+                                  htmlFor="graduation-Year"
+                                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                  Year
+                                </label>
+                                <select
+                                  value={formData.graduationYear}
+                                  name="graduationYear"
+                                  onChange={handleInputChange}
+                                  id="graduationYear"
+                                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                >
+                                  <option value="">Choose a year</option>
+                                  {/* List of year options */}
+                                  {years2.map((year2) => (
+                                    <option key={year2} value={year2}>
+                                      {year2}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+
+                            {/* Currently work here */}
+
+                            <div className="flex items-center py-4">
+                              <input
+                                value={formData.currentlyStudying}
+                                onChange={handleInputChange}
+                                name="currentlyStudying"
+                                id="currentlyStudying"
+                                type="checkbox"
+                                // value="currently studying"
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label
+                                htmlFor="currentlyStudying"
+                                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                              >
+                                I currently studying here
+                              </label>
+                            </div>
+
+                            <div className="flex md:flex-row justify-start items-start mt-4 gap-8">
+                              <div>
+                                <button
+                                  type="submit"
+                                  className="bg-white hover:bg-blue-700 text-blue-700 hover:text-white border border-gray-400 hover:border-none font-bold py-2 px-4 rounded"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div>
+                                <button
+                                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                  onClick={closeEducationModel}
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {/* education close */}
                   <p className="font-bold hover:underline hover:text-blue-600 py-2">
                     Browse your Certificate
                   </p>

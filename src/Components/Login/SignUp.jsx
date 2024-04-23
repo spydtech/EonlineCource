@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 
-function SignUp({ onSignup }) {
+function SignUp() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate(); 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        try {
-            const response = await axios.post('http://localhost:3000/SignUp', {
-                username,
-                email,
-                password,
-            });
-    
-            // Handle success response
-            console.log('Response:', response.data);
-            // Redirect to login page upon successful signup
-            navigate('/Login');
-        } catch (error) {
-            // Handle error
-            console.error('Error:', error);
-        }
+      e.preventDefault();
+
+      try {
+        const response = await axios.post('http://localhost:3465/api/v1/user/save', {
+          employeename: username,
+          email: email,
+          password: password
+        });
+        alert("Employee Registration Successfully");
+
+        // Handle success response
+        console.log('Response:', response.data);
+        // Redirect to login page upon successful signup
+        navigate('/Login');
+      } catch (error) {
+        // Handle error
+        console.error('Error:', error);
+      }
     };
   return (
     <>
@@ -95,37 +96,37 @@ function SignUp({ onSignup }) {
               </h3>
             </div>
 
-            {/* Third Party Authentication Options */}
-            <div id="third-party-auth" className="flex items-center justify-center mt-5 flex-wrap">
-              <button href="#" className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1">
-                <img className="max-w-[25px]" src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/" alt="Google" />
-              </button>
-              {/* Add other third-party authentication buttons similarly */}
-            </div>
+              {/* Third Party Authentication Options */}
+              <div id="third-party-auth" className="flex items-center justify-center mt-5 flex-wrap">
+                <button href="#" className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1">
+                  <img className="max-w-[25px]" src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/" alt="Google" />
+                </button>
+                {/* Add other third-party authentication buttons similarly */}
+              </div>
 
-            <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
-              <p className="cursor-default">
-                By signing in, you agree to our
-                <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
-                  <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                    Terms
-                  </span>
-                </a>
-                and
-                <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
-                  <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                    Privacy Policy
-                  </span>
-                </a>
-              </p>
+              <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
+                <p className="cursor-default">
+                  By signing in, you agree to our
+                  <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                      Terms
+                    </span>
+                  </a>
+                  and
+                  <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                      Privacy Policy
+                    </span>
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
-   
-    
+
+
   );
 }
 
