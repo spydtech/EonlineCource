@@ -15,6 +15,7 @@ import EducationCarousel from "./eductionCarousel/EductionCarousel";
 import FinalTestimonials from "./testimonials/FinalTestimonials";
 import Platform from "./Plat form/Platform"
 import Pricing from "./Pricing/Pricing";
+import SlideInTimer from "./Timer/SlideInTimer";
 
 function Home({ usernameFirstLetter }) {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -150,6 +151,8 @@ function Home({ usernameFirstLetter }) {
       <Aurora />
       <FinalTestimonials />
       <Pricing />
+      <SlideInTimer />
+
       <Footer />
     </>
   );
