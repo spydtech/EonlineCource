@@ -13,6 +13,8 @@ import Aurora from "./aurora/Aurora";
 import Footer from "./footer/Footer"
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
 import FinalTestimonials from "./testimonials/FinalTestimonials";
+import Platform from "./Plat form/Platform"
+import Pricing from "./Pricing/Pricing";
 
 function Home({ usernameFirstLetter }) {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -32,7 +34,7 @@ function Home({ usernameFirstLetter }) {
       <Navbar usernameFirstLetter={usernameFirstLetter} />
       <Main />
       <div class="w-full px-16  ">
-        <span class="text-4xl font-bold text-[#023047]  border-b border-[#023047]">
+        <span class="text-5xl font-bold text-[#0284c7]  border-b border-[#023047]">
           Start a new career with E-education &#8594;
         </span>
       </div>
@@ -143,10 +145,11 @@ function Home({ usernameFirstLetter }) {
 
         <EducationCarousel />
       </div>
-
+      <Platform />
       <ExploreCources />
       <Aurora />
       <FinalTestimonials />
+      <Pricing />
       <Footer />
     </>
   );
