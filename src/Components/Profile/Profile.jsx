@@ -1,16 +1,17 @@
 import Navbar from "../Navbar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiEdit } from "react-icons/ci";
 import Footer from "../Home/footer/Footer";
-
+import { Link } from "react-router-dom";
 function Profile({ usernameFirstLetter }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [gender, setGender] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [name, setName] = useState("john Zeo");
+  const [email, setEmail] = useState("john9@gmail.com");
+  const [password, setPassword] = useState("12345678");
+  const [profileName, setProfileName] = useState(name);
+  const [firstName, lastName] = profileName.split(" ");
   const [isOpen, setIsOpen] = useState(false);
   const [iseducationopen, setIsEducationOpen] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const [isBrowseProjectOpen, setIsBrowseProjectOpen] = useState(false);
 
   const openEducationModel = () => {
@@ -32,75 +33,242 @@ function Profile({ usernameFirstLetter }) {
   };
 
   const closeBrowseProject = () => {
-    setIsBrowseProjectOpen(false)
-  }
+    setIsBrowseProjectOpen(false);
+  };
 
   const ExplorBrowseProject = [
     {
       image:
         "https://t3.ftcdn.net/jpg/02/88/80/38/360_F_288803822_0CJ8L3gr6w6nGnUeje6pCllCX7s986xz.jpg",
-      title: "Data Science. 7-9 hours (self-learning)",
-      description: "Discover the transformative world of data science, from machine learning to big data analytics.",
+      title: "Data Science",
+      timing: "7-9 hours (self-learning)",
+      description:
+        "Discover the transformative world of data science, from machine learning to big data analytics.",
     },
     {
       image:
         "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
       title: "Business. 5-7 hours (self-learning)",
-      description: "Navigate the complexities of business strategy, finance, and leadership with expert-led courses.",
+      description:
+        "Navigate the complexities of business strategy, finance, and leadership with expert-led courses.",
     },
     {
       image:
         "https://t3.ftcdn.net/jpg/06/17/88/90/360_F_617889061_ZO5zsPTfTmxTfcMG8spbnPHf4wfJMGLY.jpg",
       title: "Computer Science. 6-8 hours (self-learning)",
-      description: "Embark on a journey through algorithms, programming, and emerging technologies in computer science.",
+      description:
+        "Embark on a journey through algorithms, programming, and emerging technologies in computer science.",
     },
     {
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnxlauEo4V1_Bnb172cQTKE-i1Uc_3nBcf7tuB9MqqHhKgxLftD-g1aFIJi7PqVMJrWpc&usqp=CAU",
       title: "Health. 4-6 hours (self-learning)",
-      description: "Explore the latest in healthcare innovations, wellness practices, and medical advancements.",
+      description:
+        "Explore the latest in healthcare innovations, wellness practices, and medical advancements.",
     },
     {
       image:
         "https://videohive.img.customer.envatousercontent.com/files/229501069/Preview_Image_Di.jpg?auto=compress%2Cformat&fit=crop&crop=top&max-h=8000&max-w=590&s=9d60d3dfa35cee5db662c381e886696f",
       title: "Social Science. 5-7 hours (self-learning)",
-      description: "Uncover insights into human behavior, societies, and cultural phenomena across diverse disciplines.",
+      description:
+        "Uncover insights into human behavior, societies, and cultural phenomena across diverse disciplines.",
     },
     {
       image:
         "https://t4.ftcdn.net/jpg/02/86/02/67/360_F_286026740_xWkobcEk5g38qrH7cpfeImAnlUUSIrc5.jpg",
-      title: "Personal Development. 4-6 hours (self-learning)",
-      description: "Invest in your personal growth and self-improvement through tailored development courses.",
+      title: "Personal Development",
+      timing: "4-6 hours (self-learning)",
+      description:
+        "Invest in your personal growth and self-improvement through tailored development courses.",
     },
     {
       image:
         "https://ats.org/wp-content/uploads/2020/04/Index-High-Tech-Future-2400x1374.jpg",
       title: "Arts and Humanities. 3-5 hours (self-learning)",
-      description: "Immerse yourself in the beauty of arts, literature, and philosophical ideas from around the world.",
+      description:
+        "Immerse yourself in the beauty of arts, literature, and philosophical ideas from around the world.",
     },
   ];
-  
-  
 
-  // Define function to handle image upload
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
+  const firstLetter = firstName.charAt(0).toUpperCase();
+  const secondLetter = lastName ? lastName.charAt(0).toUpperCase() : null;
+  const combinedLetters = secondLetter
+    ? firstLetter + secondLetter
+    : firstName.slice(0, 1).toUpperCase();
+
+  const [avatar, setAvatar] = useState(combinedLetters);
+
+  ///
+  const [removeImage, setRemoveimage] = useState(false);
+
+  useEffect(() => {
+    const hasStoredData = localStorage.getItem("hasStoredData");
+    if (!hasStoredData) {
+      const newData = { name, email, password, removeImage };
+      console.log(removeImage); //false-store in LS
+      const existingData =
+        JSON.parse(localStorage.getItem("formDataList")) || [];
+      const updatedList = [...existingData, newData];
+      localStorage.setItem("formDataList", JSON.stringify(updatedList));
+      localStorage.setItem("hasStoredData", true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const formDataListJSON = localStorage.getItem("formDataList");
+    if (formDataListJSON) {
+      const formDataList = JSON.parse(formDataListJSON);
+
+      const storedName = formDataList[0].name;
+      if (storedName) {
+        setProfileName(storedName);
+      }
+    }
+  }, []);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
     const reader = new FileReader();
+
     reader.onloadend = () => {
-      setImageUrl(reader.result);
+      setAvatar(reader.result);
+      const formDataListJSON = localStorage.getItem("formDataList");
+      let formDataList = [];
+      if (formDataListJSON) {
+        formDataList = JSON.parse(formDataListJSON);
+      }
+
+      formDataList.forEach((user) => {
+        user.removeImage = true;
+      });
+
+      localStorage.setItem("formDataList", JSON.stringify(formDataList));
+
+      if (email) {
+        localStorage.setItem("image", reader.result);
+      } else {
+        alert("User email not found in local storage.");
+      }
     };
+
     if (file) {
       reader.readAsDataURL(file);
     }
   };
 
-  // Define function to handle image removal
+  useEffect(() => {
+    const formDataListJSON = localStorage.getItem("formDataList");
+    const formDataList = JSON.parse(formDataListJSON);
+
+    const statusFromLocalStorage = formDataList[0].removeImage; //false-getFrom LS
+    const avatarFromLocalStorage = localStorage.getItem("image");
+
+    if (statusFromLocalStorage === true && avatarFromLocalStorage) {
+      setAvatar(avatarFromLocalStorage);
+    }
+  }, [removeImage, email]);
+
+  useEffect(() => {
+    const formDataListJSON = localStorage.getItem("formDataList");
+    const formDataList = JSON.parse(formDataListJSON);
+
+    const statusFromLocalStorage = formDataList[0].removeImage;
+
+    console.log(" statusFromLocalStorage:" + statusFromLocalStorage);
+
+    if (statusFromLocalStorage === false) {
+      setAvatar(" ");
+    }
+  }, [removeImage, email]);
+
+  const createDefaultAvatar = (letter) => {
+    return `data:image/svg+xml;base64,${window.btoa(
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="150"
+        height="150"
+        viewBox="0 0 150 150"
+      >
+        <rect width="100%" height="100%" fill="#fff" />
+        <text
+          x="50%"
+          y="50%"
+          dy=".1em"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="Arial"
+          font-size="96"
+          fill="#000"
+        >
+          ${letter}
+        </text>
+      </svg>
+    )}`;
+  };
+  const [fullName, setFullName] = useState("");
+
+  const [gender, setGender] = useState("male");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // const avatarInput = document.getElementById("avatarInput");
+    // if (!avatarInput || !avatarInput.files || avatarInput.files.length === 0) {
+    //   alert("Please select a profile image before submitting.");
+    //   return;
+    // }
+
+    const formDataListJSON = localStorage.getItem("formDataList");
+    let formDataList = [];
+    if (formDataListJSON) {
+      formDataList = JSON.parse(formDataListJSON);
+    }
+
+    const userEmail = email;
+    const userIndex = formDataList.findIndex(
+      (user) => user.email === userEmail
+    );
+
+    if (userIndex !== -1) {
+      formDataList[userIndex] = {
+        ...formDataList[userIndex],
+        name: fullName,
+        gender: gender,
+      };
+
+      const updatedFormDataListJSON = JSON.stringify(formDataList);
+      localStorage.setItem("formDataList", updatedFormDataListJSON);
+
+      setProfileName(fullName);
+
+      setFullName("");
+
+      setGender("");
+
+      alert("Data stored successfully.");
+    } else {
+      alert("User not found in formDataList.");
+    }
+  };
+
   const handleImageRemove = () => {
-    setImageUrl("");
+    setAvatar(" ");
+
+    const formDataListJSON = localStorage.getItem("formDataList");
+    let formDataList = [];
+    if (formDataListJSON) {
+      formDataList = JSON.parse(formDataListJSON);
+    }
+
+    formDataList.forEach((user) => {
+      user.removeImage = false;
+    });
+
+    localStorage.setItem("formDataList", JSON.stringify(formDataList));
   };
-  const handleSave = () => {
-    // Add logic to save profile changes here
-  };
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const generateYearOptions = (startYear, endYear) => {
     const years = [];
     for (let year = startYear; year <= endYear; year++) {
@@ -110,16 +278,6 @@ function Profile({ usernameFirstLetter }) {
   };
 
   const years = generateYearOptions(1990, new Date().getFullYear());
-
-  const generateYearOptions2 = (startYear, endYear) => {
-    const years = [];
-    for (let year = startYear; year <= endYear; year++) {
-      years.push(year.toString());
-    }
-    return years;
-  };
-
-  const years2 = generateYearOptions2(1990, new Date().getFullYear());
 
   const profiles = [
     {
@@ -156,6 +314,16 @@ function Profile({ usernameFirstLetter }) {
     }));
   };
 
+  const generateYearOptions2 = (startYear, endYear) => {
+    const years = [];
+    for (let year = startYear; year <= endYear; year++) {
+      years.push(year.toString());
+    }
+    return years;
+  };
+
+  const years2 = generateYearOptions2(1990, new Date().getFullYear());
+
   return (
     <>
       <Navbar usernameFirstLetter={usernameFirstLetter} />
@@ -191,77 +359,82 @@ function Profile({ usernameFirstLetter }) {
                             <h1 className="text-2xl font-bold mb-4">
                               Edit Profile
                             </h1>
-                            {/* Upload Image */}
-                            <div className="mb-4  space-x-10 flex">
-                              <div>
-                                <button
-                                  onClick={() =>
-                                    document.getElementById("fileInput").click()
-                                  }
-                                  className="p-2 text-white border rounded bg-blue-500 px-4"
-                                >
-                                  Change Photo
-                                </button>
-                                <input
-                                  type="file"
-                                  id="fileInput"
-                                  accept="image/*"
-                                  onChange={handleImageUpload}
-                                  style={{ display: "none" }}
-                                />
+                            <form onSubmit={handleSubmit}>
+                              {/* Upload Image */}
+                              <div className="mb-4  space-x-10 flex">
+                                <div>
+                                  <button
+                                    onClick={() =>
+                                      document
+                                        .getElementById("avatarInput")
+                                        .click()
+                                    }
+                                    className="p-2 text-white border rounded bg-blue-500 px-4"
+                                  >
+                                    Change Photo
+                                  </button>
+                                  <input
+                                    type="file"
+                                    id="avatarInput"
+                                    accept="image/*"
+                                    onChange={handleAvatarChange}
+                                    className="hidden"
+                                  />
+                                </div>
+
+                                {/* Remove Image */}
+                                {profile.imageUrl && (
+                                  <div className="mb-4">
+                                    <button
+                                      onClick={handleImageRemove}
+                                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    >
+                                      Remove image
+                                    </button>
+                                  </div>
+                                )}
                               </div>
 
-                              {/* Remove Image */}
-                              {profile.imageUrl && (
-                                <div className="mb-4">
-                                  <button
-                                    onClick={handleImageRemove}
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                  >
-                                    Remove image
-                                  </button>
-                                </div>
-                              )}
-                            </div>
+                              {/* First Name */}
+                              <div className="mb-4 flex gap-2">
+                                <label
+                                  htmlFor="firstName"
+                                  className="block mb-2"
+                                >
+                                  First Name & Lastname:
+                                </label>
+                                <input
+                                  required
+                                  type="text"
+                                  id="firstName"
+                                  value={fullName}
+                                  onChange={(e) => setFullName(e.target.value)}
+                                  className="border rounded-lg p-2"
+                                />
+                              </div>
+                              {/* Last Name */}
 
-                            {/* First Name */}
-                            <div className="mb-4 flex gap-2">
-                              <label htmlFor="firstName" className="block mb-2">
-                                First Name & Lastname:
-                              </label>
-                              <input
-                                type="text"
-                                id="firstName"
-                                value={profile.Email}
-                                onChange={(e) => setFirstName(e.target.value)}
-                                className="border rounded-lg p-2"
-                              />
-                            </div>
-                            {/* Last Name */}
+                              {/* Gender */}
+                              <div className="mb-4 flex space-x-[7.5rem]">
+                                <label htmlFor="gender" className="block mb-2">
+                                  Gender:
+                                </label>
+                                <select
+                                  id="gender"
+                                  value={gender}
+                                  onChange={(e) => setGender(e.target.value)}
+                                  className="border rounded-lg p-2 px-16"
+                                >
+                                  <option value="male">Male</option>
+                                  <option value="female">Female</option>
+                                  <option value="other">Other</option>
+                                </select>
+                              </div>
 
-                            {/* Gender */}
-                            <div className="mb-4 flex space-x-[7.5rem]">
-                              <label htmlFor="gender" className="block mb-2">
-                                Gender:
-                              </label>
-                              <select
-                                id="gender"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
-                                className="border rounded-lg p-2 px-16"
-                              >
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                              </select>
-                            </div>
-
-                            <button
-                              onClick={handleSave}
-                              className="bg-blue-500 text-start text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-                            >
-                              Save
-                            </button>
+                              <button className="bg-blue-500 text-start text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                                Save
+                              </button>
+                            </form>
                             {/* Close Button */}
                           </div>
                         </div>
@@ -269,22 +442,26 @@ function Profile({ usernameFirstLetter }) {
                     </div>
 
                     <img
-                      className="w-32 h-32 rounded-full mx-auto border-2 hover:border-gray-900"
-                      src={imageUrl || profile.imageUrl}
+                      className="w-32 h-32  rounded-full mx-auto border-2 bg-gray-700 hover:border-gray-900"
+                      src={
+                        avatar === combinedLetters
+                          ? createDefaultAvatar(combinedLetters)
+                          : avatar
+                      }
                       alt=""
                     />
                     {/* Image Upload Button (Hidden by default) */}
                     <input
                       type="file"
                       name="profile"
-                      id={`upload_profile_${profile.imageUrl}`}
+                      // id={upload_profile_${profile.imageUrl}}
                       hidden
                       required
                       className="absolute top-0 left-0 ml-10 w-32 h-32 opacity-0 cursor-pointer"
                     />
                     {/* Label to trigger file input */}
                     <label
-                      htmlFor={`upload_profile_${profile.imageUrl}`}
+                      // htmlFor={upload_profile_${profile.imageUrl}}
                       className="absolute top-10 left-[45%] w-32 h-32"
                     >
                       <div className=" rounded-full  text-center mt-4">
@@ -311,14 +488,14 @@ function Profile({ usernameFirstLetter }) {
                         </svg>
                       </div>
                     </label>
-                    <h1 className="text-center font-bold p-2">
-                      {profile.Email}
-                    </h1>
-                    <button className="py-1 p-2 text-sm border-2 border-blue-400 w-full">
+                    <h1 className="text-center font-bold p-2">{profileName}</h1>
+                    <button className="py-2 p-2 text-lg border-2 border-blue-600">
                       {profile.role}
                     </button>
                     <p className="mt-2 text-sm text-gray-900 p-2">
-                      Update Profile visibility
+                      <Link to="#" htmlFor="" className="text-blue-500">
+                        Update Profile visibility
+                      </Link>
                     </p>
                   </div>
                 </div>
@@ -340,7 +517,6 @@ function Profile({ usernameFirstLetter }) {
                 >
                   Browse your Projects
                 </button>
-             
 
                 {isBrowseProjectOpen && (
                   <div className=" fixed rounded-md inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center  ">
@@ -358,41 +534,42 @@ function Profile({ usernameFirstLetter }) {
                       <div className="bg-white rounded-lg shadow-lg relative flex flex-col  p-8">
                         <div className="grid  grid-cols-1 gap-4">
                           {ExplorBrowseProject.map((course, index) => (
-                            <div div
+                            <div
                               key={index}
-                              className=" hover:shadow-2xl border h-[85px]"
+                              className="hover:shadow-2xl border h-[85px]"
                             >
-                              <div className="flex justify-start items-start flex-row gap-8">
-                                <div className="md:w-36 h-[35px] w-28 ">
-                                  {" "}
+                              <Link
+                                to={`/course/${(
+                                  course.title
+                                )}`}
+                                className="flex justify-start items-start flex-row gap-8"
+                              >
+                                <div className="md:w-36 h-[35px] w-28">
                                   <img
                                     src={course.image}
                                     alt={course.title}
-                                    className=" rounded-lg  "
+                                    className="rounded-lg"
                                   />
                                 </div>
                                 <div className="md:w-[500px] flex justify-center items-start flex-col pt-3 font-semibold text-gray-600 text-sm">
-                                  {" "}
-                                 
-                                  <div >{course.description}</div>
+                                  <div>{course.description}</div>
                                   <div>{course.title}</div>
                                 </div>
-                              </div>
+                              </Link>
                             </div>
                           ))}
                         </div>
-                      
-                    <div className = "mt-4 text-white">
-                    <button
+
+                        <div className="mt-4 text-white">
+                          <button
                             className="bg-blue-800 p-2 w-[100px]  text-white  hover:bg-black "
                             onClick={closeBrowseProject}
                           >
-                           Close
+                            Close
                           </button>
-                    </div>
+                        </div>
                       </div>
                     </div>
-                   
                   </div>
                 )}
                 <h2 className="text-lg font-semibold">

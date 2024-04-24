@@ -9,7 +9,8 @@ import Settings from "./Components/Profile/Settings"
 import ForgotPassword from "./Components/Login/ForgotPassword"
 import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
-import MyCourse from "./Components/mycourse/MyCourse"
+import MyCourse from "./Components/mycourse/MyCourse";
+import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/DataAnalytics";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
           <Route path="/Mycourse" element={<MyCourse  usernameFirstLetter={usernameFirstLetter}/>} />
+          <Route path="/course/Data Science" element={<DataAnalytics />} />
 
         </Routes>
       </BrowserRouter>

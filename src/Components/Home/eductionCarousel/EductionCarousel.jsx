@@ -1,50 +1,60 @@
 import React, { useEffect } from "react";
 import Glide from "@glidejs/glide";
+import { FaBrain, FaCode, FaDatabase, FaReact, FaPython, FaJs } from 'react-icons/fa';
 
 const courses = [
   {
-    imageSrc:
-      "https://www.simplilearn.com/ice9/free_resources_article_thumb/What_is_the_Importance_of_Technology.jpg",
-    tagText: "Cybersecurity",
-    title: "Cybersecurity",
-    skills:
-      "Computer security, cybersecurity, digital security or information technology security is the protection of computer systems and networks. ",
-    rating: "4.8",
-    reviews: "34 reviews",
-    button: "Start To Learn",
+    title: "Generative AI in Practice",
+    bgColor: "bg-blue-300",
+    icon: <FaBrain className="text-blue-800" />,
   },
   {
-    imageSrc:
-      "https://imageio.forbes.com/specials-images/imageserve/5ef3f7eec4f2390006f0c356/GUI--Graphical-User-Interface--concept-/960x0.jpg?format=jpg&width=960",
-    tagText: "BlockChain",
-    title: "BlockChain",
-    skills:
-      "Blockchain Technology. Blockchain is an emerging technology for recording information in a way so that it is impossible to manipulate it. ",
-    reviews: "34 reviews",
-    button: "Start To Learn",
+    title: "Web Development",
+    bgColor: "bg-green-300",
+    icon: <FaCode className="text-green-800" />,
   },
   {
-    imageSrc:
-      "https://cdn1.expresscomputer.in/wp-content/uploads/2021/03/24161759/EC_Artificial_Intelligence_750.jpg",
-    tagText: "Artificial intelligence",
-    title: "Artificial intelligence",
-    skills:
-      "Artificial intelligence, in its broadest sense, is intelligence exhibited by machines, particularly computer systems and networks, that simulates.",
-    rating: "4.0",
-    reviews: "34 reviews",
-    button: "Start To Learn",
+    title: "Data Science Fundamentals",
+    bgColor: "bg-purple-300",
+    icon: <FaDatabase className="text-purple-800" />,
+  },
+  {
+    title: "React.js Mastery",
+    bgColor: "bg-yellow-300",
+    icon: <FaReact className="text-yellow-800" />,
+  },
+  {
+    title: "Python Programming",
+    bgColor: "bg-red-300",
+    icon: <FaPython className="text-red-800" />,
+  },
+  {
+    title: "JavaScript Essentials",
+    bgColor: "bg-indigo-300",
+    icon: <FaJs className="text-indigo-800" />,
+  },
+  {
+    title: "Machine Learning Algorithms",
+    bgColor: "bg-pink-300",
+    icon: <FaBrain className="text-pink-800" />,
+  },
+  {
+    title: "Database Design and Optimization",
+    bgColor: "bg-orange-300",
+    icon: <FaDatabase className="text-orange-800" />,
   },
 ];
+
 
 export default function EducationCarousel() {
   useEffect(() => {
     const slider = new Glide(".glide-01", {
       type: "carousel",
       focusAt: "center",
-      perView: 3,
+      perView: 5,
       autoplay: 3000,
       animationDuration: 700,
-      gap: 24,
+      gap: 12,
       breakpoints: {
         1024: {
           perView: 2,
@@ -64,62 +74,33 @@ export default function EducationCarousel() {
 
   return (
     <>
-      <div className="my-8">
-        <div className=" text-xl lg:text-4xl font-semibold pb-4">
-          Get a head start on a degree today
+      <div className="my-8 ">
+        <div className=" text-xl lg:text-4xl font-semibold pb-4 text-center">
+         Choose a course for you
         </div>
-        <div className="text-lg lg:text-xl ">
-          With these programs, you can build valuable skills, earn career
-          credentials, and make progress toward a degree before you even enroll.
-        </div>
+       
       </div>
-      <div className="glide-01 relative w-full mb-12">
+      <div className="glide-01 relative  mb-12">
         <div className="overflow-hidden" data-glide-el="track">
-          <ul className="whitespace-no-wrap flex-no-wrap relative flex  w-full overflow-hidden p-0">
-            {courses.map((course, index) => (
-              <li
-                key={index}
-                className="bg-white rounded-lg overflow-hidden border transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 hover:shadow-2xl"
-              >
-             
-                  {/* Image */}
-                  <img
-                    className="h-50  w-full object-cover object-center rounded-lg"
-                    src={course.imageSrc}
-                    alt="Course"
-                  />
-                  <div className="p-6">
-                    <div className="flex items-baseline gap-2">
-                      {/* Tag */}
-                      <span className="dark:text-gray-300">
-                        {course.tagText}
-                      </span>
-                    </div>
-                    {/* Rating and Reviews */}
-                    <div className="gap-2 flex items-center mt-2">
-                      <span>{course.rating}</span>
-                      <span className="text-teal-600 font-semibold">
-                        <i className="fas fa-star"></i>
-                      </span>
-                      <span className="ml-2 text-gray-600 text-sm">
-                        {course.reviews}
-                      </span>
-                    </div>
-                    <h4 className="mt-2 leading-tight ">{course.skills}</h4>
-                  </div>
-               
-
-                <div className="pl-4 mb-4">
-                  <button className="border border-blue-800 hover:bg-white hover:text-black font-bold p-2 rounded-lg bg-blue-800 text-white">
-                    Eroll Now
-                  </button>
-                </div>
-              </li>
-            ))}
+          <ul className="whitespace-no-wrap flex-no-wrap relative flex   overflow-hidden p-0">
+          {courses.map((course, index) => (
+          <div
+            key={index}
+            className={`p-4 rounded-lg shadow-lg ${course.bgColor} text-center cursor`}
+          >
+          <div className="flex justify-center items-center">
+          <div className="text-4xl mb-4">{course.icon}</div>
+          </div>
+            <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
+            <p className="text-gray-800">
+              Learn and master {course.title.toLowerCase()}!
+            </p>
+          </div>
+        ))}
           </ul>
         </div>
         <div
-          className="flex w-full items-center justify-center gap-2 p-4"
+          className="flex  items-center justify-center gap-2 p-4"
           data-glide-el="controls"
         >
           <button
