@@ -11,7 +11,9 @@ import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
 import MyCourse from "./Components/mycourse/MyCourse";
 import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/DataAnalytics";
+import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
+import Professional from "./Components/Home/Plat form/Professionals";
 
 function App() {
   const [usernameFirstLetter, setUsernameFirstLetter] = useState('');
@@ -49,6 +51,9 @@ function App() {
           <Route path="/Mycourse" element={<MyCourse  usernameFirstLetter={usernameFirstLetter}/>} />
           <Route path="/course/Data Science" element={<DataAnalytics />} />
 
+
+          <Route path="/student" element={<Student />} />
+          <Route path="/professional" element={<Professional />} />
         </Routes>
       </BrowserRouter>
     </div>

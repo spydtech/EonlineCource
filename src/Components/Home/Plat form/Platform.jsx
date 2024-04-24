@@ -2,7 +2,7 @@ import React from 'react'
 import IMG from "../../../assets/Platform/student.png"
 import IMG1 from "../../../assets/E- education logo .png"
 import Certified from './Certified'
-
+import { Link } from 'react-router-dom'
 function Platform() {
   return (
     <div className='bg-blue-200'>
@@ -15,25 +15,32 @@ function Platform() {
       </div>
      
         <h1 className="text-7xl  text-center p-[5%] font-anton ">The perfect platform to boost your technical skills</h1>
-        <div className='flex gap-[20%] p-20'>
-            <div className='text-center'>
-                <img src={IMG} className='h-[360px] w-[360px]' />
-                <h2 className='text-5xl font-bold'>Students</h2>
-                <p className='text-gray-500 text-xl'>
-                Prepping for the big test or want to ace your first interview?
-                 Use Sololearn's real-world practice to reinforce what you've learned and get you 
-                 ready for that big moment.
+        <div className='flex p-20 gap-8'>
+          <Link to = "/student">
+          
+            <div className='text-center shadow-2xl p-4'>
+               <div className='flex justify-center items-center'>
+               <img src={IMG} className='h-[360px] w-[360px]' />
+               </div>
+                <h2 className='text-3xl font-bold'>Students</h2>
+                <p className='text-gray-500 text-md'>
+                Kickstart your career in tech with industry-relevant skills and certifications that make you stand out to employers.
                 </p>
             </div>
-            <div className='text-center'>
+          </Link>
+          <Link to = '/professional'>
+          
+            <div className='text-center shadow-2xl p-4 '>
+              <div className='flex justify-center items-center'>
+
                 <img  src='https://png.pngtree.com/png-vector/20240201/ourmid/pngtree-man-seated-using-laptop-character-png-image_11581009.png' />
-                <h2 className='text-5xl font-bold'>Professionals</h2>
-                <p className='text-gray-500 text-xl'>
-                You can learn something totally new to advance your career. 
-                Or maybe you just want to knock off the rust.
-                 Try Sololearn to get access to a variety of courses, from machine learning to web development.
+              </div>
+                <h2 className='text-3xl font-bold'>Professionals</h2>
+                <p className='text-gray-500 text-md'>
+                Stay ahead of the curve by mastering emerging technologies and techniques that drive innovation in your field.
                 </p>
             </div>
+          </Link>
         </div>
     </div>
   )
