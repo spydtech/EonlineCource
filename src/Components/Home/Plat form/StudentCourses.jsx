@@ -58,7 +58,9 @@ const StudentCourses = () => {
   return (
     <>
     <div>
-      <div>Explore Your Courses</div>
+    <div className="text-4xl font-bold text-center mb-8 text-gray-800 underline">Explore Your Courses</div>
+    {/* <div className="text-2xl font-semibold mb-8 text-center text-gray-800 uppercase">Explore Your Courses</div> */}
+
     </div>
     <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 w-full items-center justify-center from-indigo-500 to-violet-500 px-4 py-12 text-slate-900">
       {courseData.map((course, index) => (

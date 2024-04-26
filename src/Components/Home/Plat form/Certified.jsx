@@ -19,7 +19,7 @@ function Certified() {
 
     return (
         <div>
-            <div className="flex gap-10 justify-center bg-white ">
+            <div className="flex gap-10 justify-center bg-white py-8">
                 {[1, 2, 3].map(index => (
                     <div key={index} className={`relative flex border-2 border-[#0ea5e9] flex-col rounded-xl   bg-clip-border text-gray-700 shadow-md transition-all w-80 hover:scale-110`}>
                         <div className="relative mx-4 -mt-10 h-44 overflow-hidden  bg-gray-200 rounded-xl bg-blue-gray-500 bg-clip-border shadow-lg shadow-blue-gray-500/40">

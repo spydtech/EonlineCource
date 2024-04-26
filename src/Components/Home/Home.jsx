@@ -8,7 +8,7 @@ import FrontEnd from "./StartNew Car/Front-End Developer/FrontEnd";
 import Cybersecurity from "./StartNew Car/Cybersecurity/Cybersecurity";
 import UiUx from "./StartNew Car/Ui-Ux/UiUx";
 
-import ExploreCources from "./ExploreOurCources/ExploreCources";
+// import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
 import Footer from "./footer/Footer"
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
@@ -148,7 +148,7 @@ function Home({ usernameFirstLetter }) {
         <EducationCarousel />
       </div>
       <Platform />
-      <ExploreCources />
+      {/* <ExploreCources /> */}
       <Aurora />
       <FinalTestimonials />
       <Pricing />
