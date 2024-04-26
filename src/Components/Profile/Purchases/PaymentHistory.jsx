@@ -1,4 +1,5 @@
 import React from 'react';
+import Slides from './Slides';
 
 function PaymentHistory() {
   const purchasesData = []; // Placeholder for demonstration
@@ -21,6 +22,7 @@ function PaymentHistory() {
           <p>No purchases found.</p>
         )}
       </div>
+       <Slides />
     </div>
   );
 }

@@ -8,11 +8,15 @@ import FrontEnd from "./StartNew Car/Front-End Developer/FrontEnd";
 import Cybersecurity from "./StartNew Car/Cybersecurity/Cybersecurity";
 import UiUx from "./StartNew Car/Ui-Ux/UiUx";
 
-import ExploreCources from "./ExploreOurCources/ExploreCources";
+// import ExploreCources from "./ExploreOurCources/ExploreCources";
 import Aurora from "./aurora/Aurora";
 import Footer from "./footer/Footer"
 import EducationCarousel from "./eductionCarousel/EductionCarousel";
 import FinalTestimonials from "./testimonials/FinalTestimonials";
+import Platform from "./Plat form/Platform"
+import Pricing from "./Pricing/Pricing";
+import SlideInTimer from "./Timer/SlideInTimer";
+import ImageHomePage from '../Home/Plat form/AllCourses/ImageHomepage'
 
 function Home({ usernameFirstLetter }) {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -32,7 +36,7 @@ function Home({ usernameFirstLetter }) {
       <Navbar usernameFirstLetter={usernameFirstLetter} />
       <Main />
       <div class="w-full px-16  ">
-        <span class="text-4xl font-bold text-[#023047]  border-b border-[#023047]">
+        <span class="text-5xl font-bold text-[#0284c7]  border-b border-[#023047]">
           Start a new career with E-education &#8594;
         </span>
       </div>
@@ -140,13 +144,16 @@ function Home({ usernameFirstLetter }) {
             </p>
           </div>
         </div>
-
+<ImageHomePage />
         <EducationCarousel />
       </div>
-
-      <ExploreCources />
+      <Platform />
+      {/* <ExploreCources /> */}
       <Aurora />
       <FinalTestimonials />
+      <Pricing />
+      <SlideInTimer />
+
       <Footer />
     </>
   );

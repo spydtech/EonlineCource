@@ -130,7 +130,7 @@ export default function Navbar({ usernameFirstLetter }) {
 
                       >
 
-                        <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
+                        <span className='p-3 w-12 h-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
                           {usernameFirstLetter}
                         </span>
                         <svg
