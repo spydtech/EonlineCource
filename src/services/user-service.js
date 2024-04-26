@@ -2,6 +2,6 @@ import { myAxios } from "./helper";
 
 export const signUp=(user)=>{
     return myAxios
-    .post('/api/v1/user/register',user)
+    .post('/api/register/user',user)
     .then((response)=>response.data);
 }

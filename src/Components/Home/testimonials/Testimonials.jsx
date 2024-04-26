@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { GoDotFill } from "react-icons/go";
 
 const Testimonials = ({data}) => {
-  console.log("newdd", data);
     const [currentId,setCurrentId] = useState(1);
 
     const incCurrentId = ()=>{

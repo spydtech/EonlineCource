@@ -13,8 +13,8 @@ function SignUp() {
       e.preventDefault();
 
       try {
-        const response = await axios.post('http://localhost:3465/api/v1/user/save', {
-          employeename: username,
+        const response = await axios.post('http://localhost:3465/api/v1/user/register', {
+          username: username,
           email: email,
           password: password
         });

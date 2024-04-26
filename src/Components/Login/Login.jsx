@@ -11,13 +11,15 @@ function Login({ setUsernameFirstLetter }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
+  const [error, setError] = useState(null);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8082/api/v1/user/login', {
+      const response = await axios.post('http://localhost:3465/api/v1/user/login', {
         email: email,
         password: password,
       })
@@ -47,23 +49,24 @@ function Login({ setUsernameFirstLetter }) {
 
   const handleSignUpWithGoogle = async() => {
     // Redirect to your backend endpoint for Google OAuth
-    try {
-      // Make a request to the backend server to initiate the Google OAuth2 flow
-      const response = await axios.get('http://localhost:8082/user-info');
-      window.location.href = response.data.redirectUrl;
-    } catch (error) {
-      console.error('Error initiating Google login:', error);
-    }
+    // try {
+    //   // Make a request to the backend server to initiate the Google OAuth2 flow
+    //   const response = await axios.get('http://localhost:8082/user-info');
+    //   window.location.href = response.data.redirectUrl;
+    //   navigate('/Home');
+    // } catch (error) {
+    //   console.error('Error initiating Google login:', error);
+    // }
+     try {
+            const response = await axios.get('http://localhost:8080');
+            window.location.href = response.data.redirectUrl;
+            console.log('Google Login Response:', response);
+            // Handle success, e.g., redirect to home page
+        } catch (error) {
+            console.error('Google Login Error:', error);
+            // Handle error, e.g., show error message to user
+        }
   };
-
-  // const handleGoogleLoginSuccess = (response) => {
-  //   console.log('Google login success:', response);
-  //   // Send the Google ID token to your backend for verification and user creation
-  // };
-
-  // const handleGoogleLoginFailure = (error) => {
-  //   console.error('Google login error:', error);
-  // };
 
   return (
     <div>
