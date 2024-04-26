@@ -108,7 +108,8 @@ const ComputerScience = () => {
     <>
      <Navbar />
     <img
-        src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://images.ctfassets.net/wp1lcwdav1p1/6z473u5f7WaFUnr9GxDEk2/085274c4a841bd2dc900ebca36c43c9c/GettyImages-1255905237.jpg?w=1500&h=680&q=60&fit=fill&f=faces&fm=jpg&fl=progressive&auto=format%2Ccompress&dpr=1&w=1000"
+        src="https://res.cloudinary.com/practicaldev/image/fetch/s--ES7ZxtOz--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_800/https://www.mjvinnovation.com/wp-content/uploads/2021/07/Etapas-do-Data-Science-para-aplicar-na-sua-empresa.gif"
+      
         className=" object-cover  w-full md:h-[450px]"
         alt="Background Image"
       />

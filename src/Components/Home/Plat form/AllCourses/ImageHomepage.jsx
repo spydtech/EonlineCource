@@ -4,14 +4,14 @@ import img2 from "../../../../assets/img2students.png";
 import img3 from "../../../../assets/img3students.png";
 const ImageHomePage = () => {
   return (
-    <div className="flex flex-col   bg-gray-200 min-h-screen ">
+    <div className="flex flex-col">
       <div className="container mx-auto px-4   ">
         <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 h-auto relative bottom-10 ">
           <div className="max-w-full  rounded overflow-y-visible  flex flex-col  ">
             <div className="mx-auto  flex-1  relative top-24">
               <img className="w-auto h-60" src={img1} alt="student" />
             </div>
-            <div className="px-6  flex-1  bg-white ">
+            <div className="px-6  flex-1  bg-gray-200  ">
               <br></br>
               <div className="font-bold text-3xl mb-2 text-center pt-10">
                 it's popular
@@ -29,7 +29,7 @@ const ImageHomePage = () => {
             <div className="mx-auto  flex-1  relative top-24">
               <img className="w-auto h-60  " src={img2} alt="student" />
             </div>
-            <div className="px-6 pt-10 pb-6  flex-1 bg-white h-60">
+            <div className="px-6 pt-10 pb-6  flex-1 bg-gray-200 h-60">
               <br></br>
               <div className="font-bold text-3xl mb-2 text-center">
                 it's promising
@@ -46,7 +46,7 @@ const ImageHomePage = () => {
             <div className="mx-auto  flex-1  relative top-24">
               <img className="w-auto h-60  " src={img3} alt="student" />
             </div>
-            <div className="px-6 pt-10  pb-6  flex-1 bg-white h-60">
+            <div className="px-6 pt-10  pb-6  flex-1 bg-gray-200 h-60">
               <br></br>
               <div className="font-bold text-3xl mb-2 text-center">
                 it's fun

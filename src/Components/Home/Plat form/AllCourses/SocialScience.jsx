@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const SocialScience = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -91,8 +91,17 @@ const SocialScience = () => {
   );
 
   return (
+    <>
+    <Navbar />
+    <img
+        src="https://media.geeksforgeeks.org/wp-content/uploads/20231227161609/Social-Science-MAin-Banner.gif"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Social Science Courses</h1>
+      {/* <h1 className="text-3xl font-bold mb-4">Social Science Courses</h1> */}
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Social Science Courses</h1>
+
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -108,6 +117,7 @@ const SocialScience = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

@@ -111,7 +111,7 @@ const Business = () => {
     <>
     <Navbar />
     <img
-        src="https://static-assets.business.amazon.com/assets/in/17th-aug-2022/910_AB_Website_Cover_1450x664_03.jpg.transform/1450x664/image.jpg"
+        src="https://images.squarespace-cdn.com/content/v1/56ef2b8127d4bd622b7ea7c0/1458888781027-FTYJ41LPJTSRC7C1AGKY/BIZGIF01.gif"
         className=" object-cover  w-full md:h-[450px]"
         alt="Background Image"
       />

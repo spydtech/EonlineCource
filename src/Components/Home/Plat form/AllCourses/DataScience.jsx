@@ -106,11 +106,11 @@ const DataScience = () => {
     <>
     <Navbar />
       <img
-        src="https://www.fsm.ac.in/blog/wp-content/uploads/2022/07/FUqHEVVUsAAbZB0.jpg"
+        src="https://miro.medium.com/v2/resize:fit:1400/1*e4HBnH84BpwLCFr78xvfjg.gif"
         className=" object-cover  w-full md:h-[450px]"
         alt="Background Image"
       />
-    
+       <div className="absolute inset-0 bg-gradient-to-t from-transparent to-black opacity-70"></div>
     <div className="container mx-auto px-4 py-8">
     <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Data Science Courses</h1>
       

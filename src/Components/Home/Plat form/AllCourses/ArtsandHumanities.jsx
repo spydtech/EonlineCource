@@ -112,7 +112,8 @@ const ArtsAndHumanities = () => {
     <Navbar />
     <img
         src="https://cdnsm5-ss11.sharpschool.com/UserFiles/Servers/Server_79269/Image/Academics%20&%20Programs/arts_humanities.png"
-        className=" object-cover  w-full"
+        // src="https://media.wired.com/photos/59265a0eaf95806129f4f24b/master/w_2560%2Cc_limit/ComputerSci-512286518.gif"
+        className=" object-cover  w-full md:h-[450px]"
         alt="Background Image"
       />
     <div className="container mx-auto px-4 py-8">

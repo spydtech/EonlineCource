@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const PersonalityDevelopment = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -109,10 +109,19 @@ const PersonalityDevelopment = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <img
+        src="https://www.careerguide.com/career/wp-content/uploads/2021/05/33da8758da5ed6e097c8dc0dee917595.gif"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Personality Development Courses</h1>
+
+      {/* <h1 className="text-3xl font-bold mb-4">
         Personality Development Courses
-      </h1>
+      </h1> */}
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -124,6 +133,7 @@ const PersonalityDevelopment = () => {
       </div>
       <CourseList />
     </div>
+    </>
   );
 };
 

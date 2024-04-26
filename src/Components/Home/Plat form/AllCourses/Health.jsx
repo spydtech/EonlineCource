@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const Health = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -106,8 +106,17 @@ const Health = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <img
+        src="https://images.axios.com/CmKuLx5r7rtik7bObXzbK5WDdOw=/0x0:1920x1080/1920x1080/filters:no_upscale()/2018/08/06/1533591029310.gif"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Health Courses</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Health Courses</h1>
+
+      {/* <h1 className="text-3xl font-bold mb-4"></h1> */}
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -119,6 +128,7 @@ const Health = () => {
       </div>
       <CourseList />
     </div>
+    </>
   );
 };
 
