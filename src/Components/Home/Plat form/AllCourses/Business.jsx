@@ -1,6 +1,6 @@
 // Business.js
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const Business = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -108,8 +108,17 @@ const Business = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <img
+        src="https://static-assets.business.amazon.com/assets/in/17th-aug-2022/910_AB_Website_Cover_1450x664_03.jpg.transform/1450x664/image.jpg"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Business Courses</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Business Courses</h1>
+       
+      {/* <h1 className="text-3xl font-bold mb-4">Business Courses</h1> */}
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -121,6 +130,7 @@ const Business = () => {
       </div>
       <CourseList />
     </div>
+    </>
   );
 };
 

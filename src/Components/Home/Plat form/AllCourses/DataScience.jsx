@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const DataScience = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -103,8 +103,17 @@ const DataScience = () => {
   };
 
   return (
+    <>
+    <Navbar />
+      <img
+        src="https://www.fsm.ac.in/blog/wp-content/uploads/2022/07/FUqHEVVUsAAbZB0.jpg"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
+    
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Data Science Courses</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Data Science Courses</h1>
+      
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -116,6 +125,7 @@ const DataScience = () => {
       </div>
       <CourseList />
     </div>
+    </>
   );
 };
 

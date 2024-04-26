@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const ComputerScience = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -105,8 +105,17 @@ const ComputerScience = () => {
   };
 
   return (
+    <>
+     <Navbar />
+    <img
+        src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://images.ctfassets.net/wp1lcwdav1p1/6z473u5f7WaFUnr9GxDEk2/085274c4a841bd2dc900ebca36c43c9c/GettyImages-1255905237.jpg?w=1500&h=680&q=60&fit=fill&f=faces&fm=jpg&fl=progressive&auto=format%2Ccompress&dpr=1&w=1000"
+        className=" object-cover  w-full md:h-[450px]"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Computer Science Courses</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Computer Science Courses</h1>
+
+      {/* <h1 className="text-3xl font-bold mb-4">Computer Science Courses</h1> */}
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -122,6 +131,7 @@ const ComputerScience = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 

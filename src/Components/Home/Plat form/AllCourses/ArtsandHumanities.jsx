@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-
+import Navbar from "../../../Navbar";
 const ArtsAndHumanities = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const CourseCard = ({ title, description, image }) => {
     return (
+      <>
+   
       <div className="max-w-sm rounded overflow-hidden shadow-lg transition-transform duration-300 transform hover:scale-105 hover:cursor-pointer">
         <img className="w-full" src={image} alt={title} />
         <div className="px-6 py-4">
@@ -12,6 +14,7 @@ const ArtsAndHumanities = () => {
           <p className="text-gray-700 text-base">{description}</p>
         </div>
       </div>
+      </>
     );
   };
 
@@ -105,8 +108,16 @@ const ArtsAndHumanities = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <img
+        src="https://cdnsm5-ss11.sharpschool.com/UserFiles/Servers/Server_79269/Image/Academics%20&%20Programs/arts_humanities.png"
+        className=" object-cover  w-full"
+        alt="Background Image"
+      />
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Arts and Humanities Courses</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center text-purple-600 underline">Arts and Humanities Courses</h1>
+
       <div className="mb-4 flex justify-center">
         <input
           type="text"
@@ -118,6 +129,7 @@ const ArtsAndHumanities = () => {
       </div>
       <CourseList />
     </div>
+    </>
   );
 };
 
