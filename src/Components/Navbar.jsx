@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Fragment, useRef, useEffect } from 'react';
 import React, { useState } from 'react';
 import { Disclosure, Menu } from '@headlessui/react';
@@ -8,67 +7,32 @@ import IMG from '../assets/E- education logo .png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, logout } from '../State/Auth/Action';
-=======
-import { Fragment, useRef, useEffect } from "react";
-import React, { useState } from "react";
-import { Disclosure, Menu } from "@headlessui/react";
-import { FaBars } from "react-icons/fa";
-import { IoCloseSharp } from "react-icons/io5";
-import IMG from "../assets/E- education logo .png";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-// import { auth } from './firebase'
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
 
-const login = true; // Change this value based on the user's login status
-// const login = true
+const login = true;
 const navigation = [
-<<<<<<< HEAD
   { name: 'My Learning', href: `${login ? '/' : '/login'}`, current: false },
   { name: 'Course', href: '#', current: false },
-=======
-  { name: "Explore", href: "/home", current: false, visible: true },
-  {
-    name: login ? "My Learning" : " ",
-    href: "/home",
-    current: false,
-    visible: login,
-  },
-  {
-    name: login ? "Courses" : " ",
-    href: "/MyCourse",
-    current: false,
-    visible: login,
-  },
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
-export default function Navbar({ usernameFirstLetter }) {
+export default function Navbar() {
   const [navigationMenu, setNavigationMenu] = useState(null);
   const [navigationMenuOpen, setNavigationMenuOpen] = useState(false);
-  const navigationRef = useRef(null);
+  const navigationRef = useRef(null); // Initialize navigationRef with useRef
   const navigate = useNavigate();
   const jwt = localStorage.getItem('jwt');
   const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-<<<<<<< HEAD
     dispatch(logout());
   };
   useEffect(() => {
     dispatch(getUser(jwt));
   }, [jwt, auth.jwt]);
-=======
-    navigate("/");
-  };
-
-
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -108,13 +72,8 @@ export default function Navbar({ usernameFirstLetter }) {
                   <span className='sr-only'>Open main menu</span>
                   {open ? (
                     <IoCloseSharp
-<<<<<<< HEAD
                       className='block h-6 w-6'
                       aria-hidden='true'
-=======
-                      className="block h-6 w-6"
-                      aria-hidden="true"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                     />
                   ) : (
                     <FaBars className='block h-6 w-6' aria-hidden='true' />
@@ -139,17 +98,11 @@ export default function Navbar({ usernameFirstLetter }) {
                         href={item.href}
                         className={classNames(
                           item.current
-<<<<<<< HEAD
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'rounded-md px-3 py-2 mt-2 text-sm font-medium'
-=======
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "rounded-md px-3 py-2 mt-2 text-sm font-medium"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
                       </a>
@@ -187,7 +140,6 @@ export default function Navbar({ usernameFirstLetter }) {
                         strokeLinejoin='round'
                         aria-hidden='true'
                       >
-<<<<<<< HEAD
                         <polyline points='6 9 12 15 18 9'></polyline>
                       </svg>
                     </button>
@@ -213,53 +165,10 @@ export default function Navbar({ usernameFirstLetter }) {
                           <a
                             href='/Profile'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-=======
-
-                        <span className='p-3 w-12 h-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
-                          {usernameFirstLetter}
-                        </span>
-                        <svg
-
-                          className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen && navigationMenu === 'getting-started' ? '-rotate-180' : ''
-                            }`}
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </button>
-
-                    {/* Dropdown menu */}
-                    {navigationMenuOpen &&
-                      navigationMenu === "getting-started" && (
-                        <div
-                          onClick={handleOutsideClick}
-                          ref={navigationRef}
-                          className="absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        >
-                          {/* Dropdown menu items */}
-                          {/* Replace these links with your actual dropdown menu items */}
-                          <a
-                            href="/MyCourse"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          >
-                            Courses
-                          </a>
-                          <a
-                            href="/Profile"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                           >
                             Profile
                           </a>
                           <a
-<<<<<<< HEAD
                             href='/Settings'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                           >
@@ -268,61 +177,24 @@ export default function Navbar({ usernameFirstLetter }) {
                           <a
                             href='#'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-=======
-                            href="/Purchases"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          >
-                            Purchases
-                          </a>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                           >
                             Updates
                           </a>
                           <a
-<<<<<<< HEAD
                             href='#'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-=======
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                           >
                             Accomplishments
                           </a>
                           <a
-<<<<<<< HEAD
                             href='#'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-=======
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          >
-                            WorkSpace
-                          </a>
-                          <a
-                            href="/Settings"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          >
-                            Settings
-                          </a>
-                          <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                           >
                             Help Center
                           </a>
                           <a
-<<<<<<< HEAD
                             href='#'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-=======
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                             onClick={handleLogout}
                           >
                             Logout
@@ -331,32 +203,18 @@ export default function Navbar({ usernameFirstLetter }) {
                       )}
                   </div>
                 ) : (
-<<<<<<< HEAD
                   <Menu as='div' className='relative ml-3'>
                     <Link to='/login'>
                       <div className='text-white'>Log In</div>
-=======
-                  <Menu as="div" className="relative ml-3">
-                    <Link to="/">
-                      <div className="text-white">Log In</div>
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                     </Link>
                   </Menu>
                 )}
                 {login ? (
-<<<<<<< HEAD
                   ''
                 ) : (
                   <Menu as='div' className='relative ml-3 pl-8'>
                     <Link to='/SignUp'>
                       <button className='py-3 px-6 bg-blue-800 text-white rounded'>
-=======
-                  ""
-                ) : (
-                  <Menu as="div" className="relative ml-3 pl-8">
-                    <Link to="/SignUp">
-                      <button className="py-3 px-6 bg-blue-800 text-white rounded">
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                         Join Us
                       </button>
                     </Link>
@@ -374,17 +232,11 @@ export default function Navbar({ usernameFirstLetter }) {
                   href={item.href}
                   className={classNames(
                     item.current
-<<<<<<< HEAD
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
-=======
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium"
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
