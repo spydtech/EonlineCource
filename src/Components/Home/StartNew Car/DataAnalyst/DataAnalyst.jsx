@@ -44,7 +44,7 @@ function DataAnalyst() {
       return;
     }
 
-    axios.post('http://localhost:3465/create-order', {
+    axios.post('http://localhost:8082/create-order', {
       amount: amountInPaise, // Send the amount in paise to the backend
       currency: 'INR',
       name: 'E_ONLINE_EDU',
@@ -136,7 +136,7 @@ function DataAnalyst() {
               </div>
               <div className="mt-4 flex justify-end">
                 <button onClick={() => handlePayment(cert)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  Purchase Rs:₹{cert.price}
+                  Enroll Now Rs:₹{cert.price}
                 </button>
               </div>
             </div>
@@ -147,13 +147,7 @@ function DataAnalyst() {
 
       </div>
 
-      <div className="text-base font-semibold leading-7 mt-8 text-center">
-        <p>
-          <a href="#" className="text-sky-500 hover:text-sky-700 transition-all duration-300">
-            Explore all Certificates &rarr;
-          </a>
-        </p>
-      </div>
+      
     </div>
   );
 }

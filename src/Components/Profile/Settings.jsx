@@ -12,7 +12,7 @@ import Calendar from './Calendar Sync/Calendar ';
 import Notes from './Notes/Notes';
 import Communication from './Communication Preferences/Communication';
 
-function Settings() {
+function Settings({ usernameFirstLetter }) {
     const [activeTab, setActiveTab] = useState('tab1');
 
     const openTab = (tabName) => {
@@ -21,7 +21,7 @@ function Settings() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar usernameFirstLetter={usernameFirstLetter} />
             <div className='bg-blue-100 p-10'>
                 <div className="w-full max-w-md mx-auto md:max-w-none md:flex md:gap-10 pt-10 md:ml-[8rem]">
                     <div className="grid-fix space-y-5">
@@ -36,7 +36,7 @@ function Settings() {
                             className={`flex gap-x-2 hover:underline text-start font-medium text-gray-700 ${activeTab === 'tab2' && 'active:bg-blue-200'}`}
                             onClick={() => openTab('tab2')}
                         >
-                            <FaRegCreditCard className='text-xl'/>
+                            <FaRegCreditCard className='text-xl' />
                             Payment
                         </button>
                         <button
@@ -50,14 +50,14 @@ function Settings() {
                             className={`flex gap-x-2 hover:underline text-start font-medium text-gray-700 ${activeTab === 'tab2' && 'active:bg-blue-200'}`}
                             onClick={() => openTab('tab4')}
                         >
-                            <CgNotes className="text-xl"/>
+                            <CgNotes className="text-xl" />
                             Notes & Highlights
                         </button>
                         <button
                             className={`flex hover:underline text-start font-medium text-gray-700 ${activeTab === 'tab2' && 'active:bg-blue-200'}`}
                             onClick={() => openTab('tab5')}
                         >
-                            <FaCalendarCheck className="text-xl"/>
+                            <FaCalendarCheck className="text-xl" />
                             Calendar Sync
                         </button>
                     </div>
@@ -68,15 +68,15 @@ function Settings() {
                         <Payment />
                     </div>
                     <div id="tab3" className={`tabcontent p-4 ${activeTab === 'tab3' ? '' : 'hidden'}`}>
-                    <Communication />
+                        <Communication />
                     </div>
                     <div id="tab4" className={`tabcontent p-4  ${activeTab === 'tab4' ? '' : 'hidden'}`}>
-                       <Notes />
-                        
+                        <Notes />
+
                     </div>
                     <div id="tab5" className={`tabcontent p-4 ${activeTab === 'tab5' ? '' : 'hidden'}`}>
-                       <Calendar />
-                       
+                        <Calendar />
+
                     </div>
                 </div>
             </div>

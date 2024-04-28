@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
+=======
+import React, { useState } from 'react';
+import axios from 'axios';
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,12 +23,31 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     const data = new FormData(e.currentTarget);
     const userData = {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
+=======
+      try {
+        const response = await axios.post('http://localhost:3465/api/v1/user/register', {
+          username: username,
+          email: email,
+          password: password
+        });
+        alert("Employee Registration Successfully");
+
+        // Handle success response
+        console.log('Response:', response.data);
+        // Redirect to login page upon successful signup
+        navigate('/Login');
+      } catch (error) {
+        // Handle error
+        console.error('Error:', error);
+      }
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
     };
     console.log('user data', userData);
     dispatch(register(userData));
@@ -133,6 +157,7 @@ function SignUp() {
               </div>
 
               {/* Third Party Authentication Options */}
+<<<<<<< HEAD
               <div
                 id='third-party-auth'
                 className='flex items-center justify-center mt-5 flex-wrap'
@@ -146,10 +171,16 @@ function SignUp() {
                     src='https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/'
                     alt='Google'
                   />
+=======
+              <div id="third-party-auth" className="flex items-center justify-center mt-5 flex-wrap">
+                <button href="#" className="hover:scale-105 ease-in-out duration-300 shadow-lg p-2 rounded-lg m-1">
+                  <img className="max-w-[25px]" src="https://ucarecdn.com/8f25a2ba-bdcf-4ff1-b596-088f330416ef/" alt="Google" />
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                 </button>
                 {/* Add other third-party authentication buttons similarly */}
               </div>
 
+<<<<<<< HEAD
               <div className='text-gray-500 flex text-center flex-col mt-4 items-center text-sm'>
                 <p className='cursor-default'>
                   By signing in, you agree to our
@@ -158,15 +189,27 @@ function SignUp() {
                     href='#'
                   >
                     <span className='cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out'>
+=======
+              <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
+                <p className="cursor-default">
+                  By signing in, you agree to our
+                  <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                       Terms
                     </span>
                   </a>
                   and
+<<<<<<< HEAD
                   <a
                     className='group text-blue-400 transition-all duration-100 ease-in-out'
                     href='#'
                   >
                     <span className='cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out'>
+=======
+                  <a className="group text-blue-400 transition-all duration-100 ease-in-out" href="#">
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
                       Privacy Policy
                     </span>
                   </a>
@@ -177,6 +220,11 @@ function SignUp() {
         </div>
       </div>
     </>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
   );
 }
 

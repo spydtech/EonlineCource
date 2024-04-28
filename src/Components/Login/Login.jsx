@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Navbar from '../Navbar';
+<<<<<<< HEAD
 import IMG from '../../assets/E- education logo .png';
 import { useDispatch } from 'react-redux';
 import { login } from '../../State/Auth/Action';
 
 function Login() {
   const dispatch = useDispatch();
+=======
+import IMG from '../../assets/E- education logo .png'
+// import { GoogleLogin } from 'react-google-login';
+
+function Login({ setUsernameFirstLetter }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
+  const [error, setError] = useState(null);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+<<<<<<< HEAD
     const data = new FormData(event.currentTarget);
 
     const userData = {
@@ -23,6 +36,58 @@ function Login() {
     navigate('/');
     dispatch(login(userData));
   };
+=======
+    try {
+      const response = await axios.post('http://localhost:3465/api/v1/user/login', {
+        email: email,
+        password: password,
+      })
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userPassword', password);
+      localStorage.setItem('username', response.data.username);
+      console.log(response.data); // Check the response structure
+
+      if (response.data.message === "Email not exits") {
+        alert("Email not exits");
+      } else if (response.data.message === "Login Success") {
+        setUsernameFirstLetter(response.data.usernameFirstLetter);
+        navigate('/Home');
+      }
+      else {
+        alert("Incorrect Email or Password");
+      }
+
+
+      // Handle success response
+      console.log('Response:', response.data);
+    } catch (error) {
+      // Handle error
+      console.error('Error:', error);
+    }
+  };
+
+  const handleSignUpWithGoogle = async() => {
+    // Redirect to your backend endpoint for Google OAuth
+    // try {
+    //   // Make a request to the backend server to initiate the Google OAuth2 flow
+    //   const response = await axios.get('http://localhost:8082/user-info');
+    //   window.location.href = response.data.redirectUrl;
+    //   navigate('/Home');
+    // } catch (error) {
+    //   console.error('Error initiating Google login:', error);
+    // }
+     try {
+            const response = await axios.get('http://localhost:8080');
+            window.location.href = response.data.redirectUrl;
+            console.log('Google Login Response:', response);
+            // Handle success, e.g., redirect to home page
+        } catch (error) {
+            console.error('Google Login Error:', error);
+            // Handle error, e.g., show error message to user
+        }
+  };
+
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
   return (
     <div>
       <Navbar />
@@ -116,7 +181,12 @@ function Login() {
                     />
                   </svg>
                 </div>
+<<<<<<< HEAD
                 <span className='ml-4'>Login with Google</span>
+=======
+                <span className="ml-4">Login with Google</span>
+                
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
               </button>
             </div>
           </div>
@@ -133,6 +203,7 @@ function Login() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
 export default Login;
 // import React, { useState } from 'react'
@@ -278,3 +349,7 @@ export default Login;
 //     </div>
 //   );
 // }
+=======
+};
+export default Login
+>>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
