@@ -1,61 +1,118 @@
-package com.example.RegisterLogin.EmployeeController;
+package com.example.RegisterLogin.Controller;
 
-import com.example.RegisterLogin.Dto.JwtAuthRequest;
-import com.example.RegisterLogin.Dto.JwtAuthResponse;
-import com.example.RegisterLogin.security.JwtTokenHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.RegisterLogin.Configuration.JwtTokenProvider;
+import com.example.RegisterLogin.Request.LoginRequest;
+import com.example.RegisterLogin.Service.CustomUserDetails;
+import com.example.RegisterLogin.exceptions.UserException;
+import com.example.RegisterLogin.modals.User;
+import com.example.RegisterLogin.repository.UserRepository;
+import com.example.RegisterLogin.response.AuthResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/auth/")
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private JwtTokenHelper jwtTokenHelper;
-
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private AuthenticationManager manager;
+    private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
+    private CustomUserDetails customUserDetails;
 
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) {
-        this.Authenticate(request.getEmail(), request.getPassword());
+    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomUserDetails customUserDetails){
+        this.userRepository=userRepository;
+        this.passwordEncoder=passwordEncoder;
+        this.jwtTokenProvider=jwtTokenProvider;
+        this.customUserDetails=customUserDetails;
 
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        String token = this.jwtTokenHelper.generateToken(userDetails);
-
-        JwtAuthResponse response = new JwtAuthResponse();
-        response.setToken(token);
-
-        return new ResponseEntity<JwtAuthResponse>(response, HttpStatus.OK);
     }
 
-    private void Authenticate(String email, String password) {
+    @PostMapping("/signup")
+    public ResponseEntity<AuthResponse> createUserHandler(@Valid @RequestBody User user) throws UserException {
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
-        try {
-            this.manager.authenticate(authenticationToken);
+        String email = user.getEmail();
+        String password = user.getPassword();
+        String firstName=user.getFirstName();
+        String lastName=user.getLastName();
 
 
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(" Invalid email or Password  !!");
+        User isEmailExist=userRepository.findByEmail(email);
+
+        // Check if user with the given email already exists
+        if (isEmailExist!=null) {
+
+            throw new UserException("Email Is Already Used With Another Account");
         }
 
-    }
-    @ExceptionHandler(BadCredentialsException.class)
-    public String exceptionHandler() {
-        return "Credentials Invalid !!";
+        // Create new user
+        User createdUser= new User();
+        createdUser.setEmail(email);
+        createdUser.setFirstName(firstName);
+        createdUser.setLastName(lastName);
+        createdUser.setPassword(passwordEncoder.encode(password));
+
+
+        User savedUser= userRepository.save(createdUser);
+
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        AuthResponse authResponse= new AuthResponse(token,true);
+
+        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
+
     }
 
+    @PostMapping("/signin")
+    public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        System.out.println(username +" ----- "+password);
+
+        Authentication authentication = authenticate(username, password);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+        String token = jwtTokenProvider.generateToken(authentication);
+        AuthResponse authResponse= new AuthResponse();
+
+        authResponse.setStatus(true);
+        authResponse.setJwt(token);
+
+        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
+    }
+
+    private Authentication authenticate(String username, String password) {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+
+        System.out.println("sign in userDetails - "+userDetails);
+
+        if (userDetails == null) {
+            System.out.println("sign in userDetails - null " + userDetails);
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+            System.out.println("sign in userDetails - password not match " + userDetails);
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
 }

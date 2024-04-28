@@ -1,11 +1,13 @@
-package com.example.RegisterLogin.Entity;
+package com.example.RegisterLogin.modals;
 
-import com.example.RegisterLogin.Dto.UserDTO;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +31,7 @@ public class User {
 
 	@Column(name = "email")
 	private String email;
+
+	private LocalDateTime createdAt;
+
 }

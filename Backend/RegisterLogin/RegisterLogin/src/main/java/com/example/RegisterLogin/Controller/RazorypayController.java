@@ -1,4 +1,4 @@
-package com.example.RegisterLogin.EmployeeController;
+package com.example.RegisterLogin.Controller;
 
 import com.example.RegisterLogin.modals.OrderRequest;
 import com.razorpay.RazorpayClient;
