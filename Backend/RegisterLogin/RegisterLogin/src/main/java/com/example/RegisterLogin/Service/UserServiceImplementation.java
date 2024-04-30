@@ -3,8 +3,12 @@ package com.example.RegisterLogin.Service;
 
 import com.example.RegisterLogin.Configuration.JwtTokenProvider;
 import com.example.RegisterLogin.exceptions.UserException;
+import com.example.RegisterLogin.modals.Account;
 import com.example.RegisterLogin.modals.User;
+import com.example.RegisterLogin.repository.AccountRepository;
 import com.example.RegisterLogin.repository.UserRepository;
+import com.example.RegisterLogin.response.AccountResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +20,8 @@ public class UserServiceImplementation implements UserService {
 
     private UserRepository userRepository;
     private JwtTokenProvider jwtTokenProvider;
+
+    private AccountRepository accountRepository;
 
     public UserServiceImplementation(UserRepository userRepository,JwtTokenProvider jwtTokenProvider) {
 
@@ -56,6 +62,51 @@ public class UserServiceImplementation implements UserService {
     public List<User> findAllUsers() {
         // TODO Auto-generated method stub
         return userRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+
+    @Override
+    public ResponseEntity<?> getAccount_Details(String email) {
+        User UserDetails = userRepository.findByEmail(email);
+        Account AccountDetails = new Account();
+        long userAccID =UserDetails.getId();
+
+        if(!accountRepository.existsByUserId(userAccID)){
+            AccountDetails.setUser(UserDetails);
+            AccountDetails.setUserEmail(UserDetails.getEmail());
+            AccountDetails.setFullName(UserDetails.getFirstName()+UserDetails.getLastName());
+            accountRepository.save(AccountDetails);
+        }
+        Account account =accountRepository.findByUserId(userAccID);
+        AccountResponse accountResponse =new AccountResponse();
+        accountResponse.setFullName(account.getFullName());
+        accountResponse.setUserEmail(account.getUserEmail());
+        accountResponse.setLocation(account.getLocation());
+        accountResponse.setPhoneNumber(account.getPhoneNumber());
+        return ResponseEntity.ok(accountResponse);
+    }
+
+    @Override
+    public ResponseEntity<?> updateAccount_Details(String email, Account userAccount) {
+        User currentUser =userRepository.findByEmail(email);
+        long currentUserId =currentUser.getId();
+
+        try {
+            if (accountRepository.existsByUserId(currentUserId) )
+            {
+                Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
+                currentAccountDetails.setFullName(userAccount.getFullName());
+                currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
+                currentAccountDetails.setLocation(userAccount.getLocation());
+                currentAccountDetails.setUserEmail(userAccount.getUserEmail());
+                accountRepository.save(currentAccountDetails);
+
+            }
+            return getAccount_Details(email);
+        }
+        catch(Exception e){
+            return ResponseEntity.ok(e);
+        }
     }
 
 }

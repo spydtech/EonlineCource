@@ -2,6 +2,7 @@ package com.example.RegisterLogin.modals;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,5 +34,10 @@ public class User {
 	private String email;
 
 	private LocalDateTime createdAt;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Account account;
+
 
 }
