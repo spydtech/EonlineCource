@@ -4,9 +4,9 @@ import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
 import Certificates from "./Components/Home/Professional Certificates/Certificates";
 
-import Profile from "./Components/Profile/Profile"
-import Settings from "./Components/Profile/Settings"
-import ForgotPassword from "./Components/Login/ForgotPassword"
+import Profile from "./Components/Profile/Profile";
+import Settings from "./Components/Profile/Settings";
+import ForgotPassword from "./Components/Login/ForgotPassword";
 import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
 import MyCourse from "./Components/mycourse/MyCourse";
@@ -14,6 +14,15 @@ import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/Data
 import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
 import Professional from "./Components/Home/Plat form/Professionals";
+<<<<<<< HEAD
+import ArtsandHumanities from "./Components/Home/Plat form/AllCourses/ArtsandHumanities";
+import Business from "./Components/Home/Plat form/AllCourses/Business";
+import ComputerScience from "./Components/Home/Plat form/AllCourses/ComputerScience";
+import DataScience from "./Components/Home/Plat form/AllCourses/DataScience";
+import Health from "./Components/Home/Plat form/AllCourses/Health";
+import PersonalDevelopment from "./Components/Home/Plat form/AllCourses/PersonalDevelopment";
+import SocialScience from "./Components/Home/Plat form/AllCourses/SocialScience";
+=======
 import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
 import Business from './Components/Home/Plat form/AllCourses/Business';
 import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
@@ -21,12 +30,13 @@ import DataScience from './Components/Home/Plat form/AllCourses/DataScience';
 import Health from './Components/Home/Plat form/AllCourses/Health';
 import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
 import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
+>>>>>>> 9504f513e9f8b8d3422118852360150df33486da
 function App() {
-  const [usernameFirstLetter, setUsernameFirstLetter] = useState('');
+  const [usernameFirstLetter, setUsernameFirstLetter] = useState("");
 
   useEffect(() => {
     // Check if the username's first letter exists in local storage
-    const storedFirstLetter = localStorage.getItem('usernameFirstLetter');
+    const storedFirstLetter = localStorage.getItem("usernameFirstLetter");
     if (storedFirstLetter) {
       setUsernameFirstLetter(storedFirstLetter);
     }
@@ -34,7 +44,7 @@ function App() {
 
   useEffect(() => {
     // Update username's first letter in local storage when changed
-    localStorage.setItem('usernameFirstLetter', usernameFirstLetter);
+    localStorage.setItem("usernameFirstLetter", usernameFirstLetter);
   }, [usernameFirstLetter]);
 
   return (
@@ -61,7 +71,10 @@ function App() {
           <Route path="/professional" element={<Professional />} />
           <Route path="/datascience" element={<DataScience />} />
           <Route path="/health" element={<Health />} />
-          <Route path="/personaldevelopment" element={<PersonalDevelopment />} />
+          <Route
+            path="/personaldevelopment"
+            element={<PersonalDevelopment />}
+          />
           <Route path="/socialscience" element={<SocialScience />} />
         </Routes>
       </BrowserRouter>

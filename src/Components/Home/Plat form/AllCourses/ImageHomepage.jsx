@@ -63,7 +63,7 @@ const ImageHomePage = () => {
       </div>
 
       {/* Button */}
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center my-8">
         <button className="bg-blue-500 w-72 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           I want to Code
         </button>
