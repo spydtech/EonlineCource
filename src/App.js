@@ -14,23 +14,16 @@ import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/Data
 import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
 import Professional from "./Components/Home/Plat form/Professionals";
-<<<<<<< HEAD
-import ArtsandHumanities from "./Components/Home/Plat form/AllCourses/ArtsandHumanities";
-import Business from "./Components/Home/Plat form/AllCourses/Business";
-import ComputerScience from "./Components/Home/Plat form/AllCourses/ComputerScience";
-import DataScience from "./Components/Home/Plat form/AllCourses/DataScience";
-import Health from "./Components/Home/Plat form/AllCourses/Health";
-import PersonalDevelopment from "./Components/Home/Plat form/AllCourses/PersonalDevelopment";
-import SocialScience from "./Components/Home/Plat form/AllCourses/SocialScience";
-=======
+
 import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
 import Business from './Components/Home/Plat form/AllCourses/Business';
 import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
-import DataScience from './Components/Home/Plat form/AllCourses/DataScience';
+import FullStack from './Components/Home/Plat form/AllCourses/FullStack';
+import ParticularFullStack from './Components/Home/Plat form/particularCoursesPage/ParticularFullStack';
 import Health from './Components/Home/Plat form/AllCourses/Health';
 import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
 import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
->>>>>>> 9504f513e9f8b8d3422118852360150df33486da
+
 function App() {
   const [usernameFirstLetter, setUsernameFirstLetter] = useState("");
 
@@ -69,7 +62,8 @@ function App() {
           <Route path="/business" element={<Business />} />
           <Route path="/computerscience" element={<ComputerScience />} />
           <Route path="/professional" element={<Professional />} />
-          <Route path="/datascience" element={<DataScience />} />
+          <Route path="/fullStack" element={<FullStack />} />
+          <Route path="/fullStack/particularFullStack" element={<ParticularFullStack />} />
           <Route path="/health" element={<Health />} />
           <Route
             path="/personaldevelopment"

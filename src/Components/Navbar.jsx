@@ -115,6 +115,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
+              {/* before login when user is not loged in */}
               <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
                 {auth.user ? (
                   <div className='relative inline-block'>

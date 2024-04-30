@@ -1,71 +1,265 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { IoLogoElectron, IoBriefcase, IoCodeSlash, IoMedkit, IoPeople, IoBrush, IoShapes } from 'react-icons/io5';
+import { IoLogoElectron, IoPhonePortrait, IoCodeWorking , IoFlask, IoGameController, IoLockClosed, IoAnalyticsSharp, IoCloudSharp, IoCodeSlash, IoShapes, IoPeople, IoShieldCheckmark, IoArrowUndoCircleSharp, IoBookSharp, IoConstructSharp, IoWifiSharp, IoRocketSharp, IoHardwareChipSharp, IoRoseSharp } from 'react-icons/io5';
 const StudentCourses = () => {
-    const courseData = [
-        {
-          icon: <IoLogoElectron /> ,
-          title: "Data Science",
-          description: "Explore the world of data analysis and machine learning.",
-          totle: "425 courses",
-          link: "/datascience"
-        },
-        {
-            icon: <IoBriefcase />,
-            title: "Business",
-            description: "Learn key business strategies and management principles.",
-            total: "4244 courses",
-            link: "/business"
-          },
-          {
-            icon: <IoCodeSlash />,
-            title: "Computer Science",
-            description: "Master programming and software development skills.",
-            total: "628 courses",
-            link: "/computerscience"
-          },
-        {
-         icon: <IoMedkit />,
-          title: "Health",
-          description: "Explore health sciences and medical technologies.",
-          totle: "471 courses",
-          link: "/health"
-        },
-        {
-          icon: <IoPeople />,
-          title: "Social Science",
-          description: "Study human behavior and societal trends.",
-          totle: "555 courses",
-          link: "/socialscience"
-        },
-        {
-         icon: <IoBrush />,
-          title: "Personal Development",
-          description: "Improve personal skills and professional growth.",
-          totle: "425 courses",
-          link: "/personaldevelopment"
-        },
-        {
-          icon: <IoShapes />,
-          title: "Arts and Humanities",
-          description: "Explore creativity, culture, and historical studies.",
-          totle: "338 courses",
-          link: "/artsandHumanities"
-        },
-      ];
-
+  // const courseData = [
+  //   {
+  //     icon: <IoLogoElectron />,
+  //     title: "Full Stack Web Development",
+  //     description: "Explore the world of data analysis and machine learning.",
+  //     total: "425 courses",
+  //     link: "/datascience"
+  //   },
+  //   {
+  //     icon: <IoBriefcase />,
+  //     title: "Business",
+  //     description: "Learn key business strategies and management principles.",
+  //     total: "4244 courses",
+  //     link: "/business"
+  //   },
+  //   {
+  //     icon: <IoCodeSlash />,
+  //     title: "Computer Science",
+  //     description: "Master programming and software development skills.",
+  //     total: "628 courses",
+  //     link: "/computerscience"
+  //   },
+  //   {
+  //     icon: <IoMedkit />,
+  //     title: "Health",
+  //     description: "Explore health sciences and medical technologies.",
+  //     total: "471 courses",
+  //     link: "/health"
+  //   },
+  //   {
+  //     icon: <IoPeople />,
+  //     title: "Social Science",
+  //     description: "Study human behavior and societal trends.",
+  //     total: "555 courses",
+  //     link: "/socialscience"
+  //   },
+  //   {
+  //     icon: <IoBrush />,
+  //     title: "Personal Development",
+  //     description: "Improve personal skills and professional growth.",
+  //     total: "425 courses",
+  //     link: "/personaldevelopment"
+  //   },
+  //   {
+  //     icon: <IoShapes />,
+  //     title: "Arts and Humanities",
+  //     description: "Explore creativity, culture, and historical studies.",
+  //     total: "338 courses",
+  //     link: "/artsandHumanities"
+  //   },
+  //   {
+  //     icon: <IoLockClosed />,
+  //     title: "Cybersecurity",
+  //     description: "Protect systems, networks, and programs from digital attacks.",
+  //     courses: [
+  //       "Cybersecurity Fundamentals: Introduction to Cyber Security (Coursera by NYU)",
+  //       "Ethical Hacking: The Complete Ethical Hacking Course (Udemy by Ermin Kreponic)",
+  //       "Network Security: Network Security Fundamentals (Pluralsight)",
+  //       "Certifications: CompTIA Security+, Certified Ethical Hacker (CEH), Certified Information Systems Security Professional (CISSP)"
+  //     ],
+  //     link: "/cybersecurity"
+  //   },
+  //   {
+  //     icon: <IoAnalyticsSharp />,
+  //     title: "Data Science and Analytics",
+  //     description: "Analyze and interpret complex data.",
+  //     courses: [
+  //       "Data Analysis with Python: Python for Data Science and Machine Learning Bootcamp (Udemy by Jose Portilla)",
+  //       "Data Visualization: Data Visualization with Python (Coursera by University of Michigan)",
+  //       "Big Data: Big Data Specialization (Coursera by University of California, San Diego)",
+  //       "Data Engineering: Data Engineering, Big Data, and Machine Learning on GCP (Coursera by Google Cloud)"
+  //     ],
+  //     link: "/datascience"
+  //   },
+  //   {
+  //     icon: <IoCloudSharp />,
+  //     title: "Cloud Computing",
+  //     description: "Utilize remote servers hosted on the internet to store, manage, and process data.",
+  //     courses: [
+  //       "AWS: AWS Certified Solutions Architect – Associate (A Cloud Guru)",
+  //       "Microsoft Azure: Microsoft Certified: Azure Fundamentals (Pluralsight)",
+  //       "Google Cloud: Google Cloud Platform Fundamentals: Core Infrastructure (E-education)"
+  //     ],
+  //     link: "/cloudcomputing"
+  //   },
+  //   {
+  //     icon: <IoCodeWorkingSharp />,
+  //     title: "IT and Networking",
+  //     description: "Manage and maintain computer networks and related services.",
+  //     courses: [
+  //       "Cisco CCNA: Cisco CCNA 200-301 – The Complete Guide to Getting Certified (Udemy by Neil Anderson)",
+  //       "CompTIA A+: CompTIA A+ 2019 Certification 1001. The Total Course (Udemy by Mike Meyers)",
+  //       "Linux Administration: Linux Administration Bootcamp: Go from Beginner to Advanced (Udemy by Jason Cannon)"
+  //     ],
+  //     link: "/itandnetworking"
+  //   },
+  //   {
+  //     icon: <FaRobot />,
+  //     title: "Robotics and IoT",
+  //     description: "Explore the world of robotics and connected devices.",
+  //     courses: [
+  //       "Robot Operating System (ROS): ROS for Beginners: Basics, Motion, and OpenCV (Udemy by Anis Koubaa)",
+  //       "Internet of Things (IoT): IoT Foundations: Fundamentals (LinkedIn Learning)",
+  //       "Embedded Systems: Embedded Systems – Shape the World (edX by University of Texas at Austin)"
+  //     ],
+  //     link: "/roboticsandiot"
+  //   }
+  // ];
+  
+  const courseData = [
+    {
+      title: "Full Stack Web Development",
+      icon: <IoLogoElectron />,
+      description: "Learn to build dynamic websites and web applications with the Full Stack Web Development course. Covering both front-end and back-end development, this course will teach you everything you need to know to become a proficient web developer. Taught by Rob Percival on Udemy.",
+      link: "/fullStack"
+    },
+    {
+      title: "Mobile App Development",
+      icon: <IoPhonePortrait />,
+      description: "Dive into the world of mobile app development with the Mobile App Development course. Led by Rob Percival on Udemy, this course will equip you with the skills to create Android applications using the latest technologies, including Android Oreo.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Data Structures and Algorithms",
+      icon: <IoFlask />,
+      description: "Master the fundamental concepts of data structures and algorithms with the Data Structures and Algorithms course. Offered by Princeton University on Coursera, this course provides a comprehensive understanding of how to design and analyze algorithms.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Machine Learning",
+      icon: <IoAnalyticsSharp />,
+      description: "Explore the exciting field of Machine Learning with this course led by Andrew Ng on Coursera. From basic concepts to advanced techniques, you'll learn how to develop machine learning models and apply them to real-world problems.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Game Development",
+      icon: <IoGameController />,
+      description: "Create captivating 2D games with the Game Development course. Taught by Ben Tristem on Udemy, this course covers everything from game design principles to implementing gameplay mechanics using C# and Unity.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Cybersecurity Fundamentals",
+      icon: <IoLockClosed />,
+      description: "Gain a solid understanding of cybersecurity fundamentals with this course on Coursera by NYU. You'll learn about various security concepts, threats, and best practices to protect digital assets.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Ethical Hacking",
+      icon: <IoShieldCheckmark />,
+      description: "Become an ethical hacker with the Ethical Hacking course on Udemy by Ermin Kreponic. Learn how to identify vulnerabilities, exploit security weaknesses, and strengthen systems against cyber attacks.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Network Security",
+      icon: <IoWifiSharp />,
+      description: "Discover the principles of network security with the Network Security Fundamentals course on Pluralsight. This course covers topics such as encryption, firewalls, and intrusion detection systems.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Certifications",
+      icon: <IoArrowUndoCircleSharp />,
+      description: "Prepare for cybersecurity certifications including CompTIA Security+, Certified Ethical Hacker (CEH), and Certified Information Systems Security Professional (CISSP). These certifications validate your knowledge and expertise in the field of cybersecurity.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Data Analysis with Python",
+      icon: <IoCodeSlash />,
+      description: "Learn data analysis with Python through the Python for Data Science and Machine Learning Bootcamp on Udemy by Jose Portilla. This course covers essential Python libraries for data manipulation, visualization, and machine learning.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Data Visualization",
+      icon: <IoCodeWorking />,
+      description: "Master the art of data visualization with the Data Visualization with Python course on Coursera by University of Michigan. Visualize data effectively using Python libraries like Matplotlib and Seaborn.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Big Data",
+      icon: <IoConstructSharp />,
+      description: "Dive into the world of big data with the Big Data Specialization on Coursera by University of California, San Diego. Learn about big data technologies, platforms, and analytics techniques to derive valuable insights from large datasets.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Data Engineering",
+      icon: <IoHardwareChipSharp />,
+      description: "Become a skilled data engineer with the Data Engineering, Big Data, and Machine Learning on GCP course on Coursera by Google Cloud. Learn how to design and implement scalable data processing systems on Google Cloud Platform.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "AWS",
+      icon: <IoCloudSharp />,
+      description: "Prepare for the AWS Certified Solutions Architect – Associate certification with the AWS Certified Solutions Architect – Associate course on A Cloud Guru. Gain expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Microsoft Azure",
+      icon: <IoCloudSharp />,
+      description: "Get started with Microsoft Azure with the Microsoft Certified: Azure Fundamentals course on Pluralsight. Learn about Azure services, deployment models, and management tools to build and manage cloud solutions.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Google Cloud",
+      icon: <IoCloudSharp />,
+      description: "Explore the core infrastructure services of Google Cloud Platform with the Google Cloud Platform Fundamentals: Core Infrastructure course on E-education. Learn about compute, storage, networking, and security services on Google Cloud.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Cisco CCNA",
+      icon: <IoWifiSharp />,
+      description: "Prepare for the Cisco CCNA 200-301 exam with the Cisco CCNA 200-301 – The Complete Guide to Getting Certified course on Udemy by Neil Anderson. Gain the knowledge and skills required to install, configure, operate, and troubleshoot network devices.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "CompTIA A+",
+      icon: <IoConstructSharp />,
+      description: "Get certified with the CompTIA A+ 2019 Certification 1001. The Total Course on Udemy by Mike Meyers. This course covers essential topics such as hardware, networking, mobile devices, and troubleshooting.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Linux Administration",
+      icon: <IoConstructSharp />,
+      description: "Master Linux administration with the Linux Administration Bootcamp: Go from Beginner to Advanced course on Udemy by Jason Cannon. Learn essential Linux skills, including system administration, shell scripting, and networking.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Robot Operating System (ROS)",
+      icon: <IoRocketSharp />,
+      description: "Learn the basics of Robot Operating System (ROS) with the ROS for Beginners: Basics, Motion, and OpenCV course on Udemy by Anis Koubaa. Explore ROS concepts, motion planning, and image processing for robotics applications.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Internet of Things (IoT)",
+      icon: <IoRoseSharp />,
+      description: "Get started with Internet of Things (IoT) with the IoT Foundations: Fundamentals course on LinkedIn Learning. Learn about IoT concepts, technologies, and applications to build connected devices and systems.",
+      link: "link-to-the-course"
+    },
+    {
+      title: "Embedded Systems",
+      icon: <IoRoseSharp />,
+      description: "Shape the world of Embedded Systems with the Embedded Systems – Shape the World course on edX by University of Texas at Austin. Explore embedded systems design, programming, and interfacing for real-world applications.",
+      link: "link-to-the-course"
+    }
+  ];
   return (
     <>
-    <div>
+    <div >
     <div className="text-4xl font-bold text-center mb-8 text-gray-800 underline">Explore Your Courses</div>
-    {/* <div className="text-2xl font-semibold mb-8 text-center text-gray-800 uppercase">Explore Your Courses</div> */}
+   
 
     </div>
-    <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 w-full items-center justify-center from-indigo-500 to-violet-500 px-4 py-12 text-slate-900">
+   
+
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full from-indigo-500 to-violet-500 py-12 text-slate-900  place-items-center">
       {courseData.map((course, index) => (
-        <TiltCard key={index} title={course.title} description={course.description} icon={course.icon} link={course.link} />
+        <TiltCard  key={index} title={course.title} description={course.description} icon={course.icon} link={course.link} />
       ))}
+   
     </div>
   </>
   );
@@ -112,7 +306,7 @@ const TiltCard = ({ title, description, icon, link }) => { // Accept link prop
           rotateX,
           transformStyle: "preserve-3d",
         }}
-        className="relative h-[300px] w-72 rounded-xl bg-gradient-to-br from-indigo-300 to-violet-300 mb-5"
+        className="relative h-[400px] w-72 gap-0 rounded-xl bg-gradient-to-br from-indigo-300 to-violet-300 mb-5 "
       >
         <div
           style={{
