@@ -6,11 +6,14 @@ import Navbar from '../Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, register } from '../../State/Auth/Action';
 
+
+
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem('jwt');
-  const { auth } = useSelector((store) => store);
+  const { auth } = useSelector(store => store);
+
   useEffect(() => {
     if (jwt) {
       dispatch(getUser(jwt));
@@ -29,6 +32,7 @@ function SignUp() {
       password: data.get('password'),
 
     };
+    navigate("/")
     console.log('user data', userData);
     dispatch(register(userData));
   };

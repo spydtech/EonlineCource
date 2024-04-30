@@ -14,13 +14,13 @@ import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/Data
 import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
 import Professional from "./Components/Home/Plat form/Professionals";
- import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
- import Business from './Components/Home/Plat form/AllCourses/Business';
- import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
- import DataScience from './Components/Home/Plat form/AllCourses/DataScience';
- import Health from './Components/Home/Plat form/AllCourses/Health';
- import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
- import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
+import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
+import Business from './Components/Home/Plat form/AllCourses/Business';
+import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
+import DataScience from './Components/Home/Plat form/AllCourses/DataScience';
+import Health from './Components/Home/Plat form/AllCourses/Health';
+import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
+import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
 function App() {
   const [usernameFirstLetter, setUsernameFirstLetter] = useState('');
 
@@ -41,29 +41,19 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-<<<<<<< HEAD
           <Route path="/" element={<Home />} />
           <Route path="/Certificates" element={<Certificates />} />
           <Route path="/login" element={<Login />} />
-=======
-          <Route path="/home" element={<Home usernameFirstLetter={usernameFirstLetter} />} />
-          <Route path="/Certificates" element={<Certificates />} />
-          <Route
-            path="/"
-            element={<Login setUsernameFirstLetter={setUsernameFirstLetter} />}
-          />
->>>>>>> ea29ab36a3d8572ad1b420ae742aa35ee23e86e6
+
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           <Route path="/signUp" element={<SignUp />} />
-          <Route path="/Profile" element={<Profile usernameFirstLetter={usernameFirstLetter} />} />
-          <Route path="/Settings" element={<Settings usernameFirstLetter={usernameFirstLetter} />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Settings" element={<Settings />} />
           <Route path="/Payment" element={<Payment />} />
           <Route path="/Purchases" element={<Purchases />} />
-          <Route path="/Mycourse" element={<MyCourse  usernameFirstLetter={usernameFirstLetter}/>} />
+          <Route path="/Mycourse" element={<MyCourse />} />
           <Route path="/course/Data Science" element={<DataAnalytics />} />
-
-
           <Route path="/student" element={<Student />} />
           <Route path="/artsandHumanities" element={<ArtsandHumanities />} />
           <Route path="/business" element={<Business />} />
