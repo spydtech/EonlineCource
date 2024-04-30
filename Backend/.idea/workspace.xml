@@ -5,41 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Razorpay Completed in backend">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_api_0_11_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_impl_0_11_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_jsonwebtoken_jjwt_jackson_0_11_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_validation_jakarta_validation_api_3_0_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_validator_hibernate_validator_8_0_0_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_modelmapper_modelmapper_3_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_validation_3_2_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Configuration/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Configuration/JwtConstant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Configuration/JwtTokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Configuration/JwtTokenValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Request/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/CustomUserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserServiceImplementation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/exceptions/ResourceNotFoundException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/exceptions/UserException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/response/AuthResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Dto/LoginDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Dto/UserDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/EmployeeController/RazorypayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/RazorypayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/EmployeeController/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/RegisterLoginApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/RegisterLoginApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Repo/UserRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/impl/UserIMPL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/response/LoginResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/GoogleSignInController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Components/Login/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Login/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Navbar.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

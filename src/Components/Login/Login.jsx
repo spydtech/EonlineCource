@@ -9,12 +9,9 @@ import { login } from '../../State/Auth/Action';
 
 function Login() {
   const dispatch = useDispatch();
-// import { GoogleLogin } from 'react-google-login';
+  // import { GoogleLogin } from 'react-google-login';
 
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
-  const [error, setError] = useState(null);
-
 
   const handleSubmit = (event) => {
     event.preventDefault();

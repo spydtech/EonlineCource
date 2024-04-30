@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Fragment, useRef, useEffect } from 'react';
 import React, { useState } from 'react';
 import { Disclosure, Menu } from '@headlessui/react';
@@ -8,9 +9,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, logout } from '../State/Auth/Action';
 
-const login = true;
+
 const navigation = [
-  { name: 'My Learning', href: `${login ? '/' : '/login'}`, current: false },
+  { name: 'My Learning', href: "/mylearning", current: false },
   { name: 'Course', href: '#', current: false },
 ];
 
@@ -29,10 +30,14 @@ export default function Navbar() {
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/")
   };
+
   useEffect(() => {
-    dispatch(getUser(jwt));
-  }, [jwt, auth.jwt]);
+    if (jwt) {
+      dispatch(getUser(jwt));
+    }
+  }, [jwt, auth.jwt, dispatch]);
 
   const toggleNavigationMenu = (menuName) => {
     if (navigationMenuOpen && navigationMenu === menuName) {
@@ -114,23 +119,21 @@ export default function Navbar() {
                 {auth.user ? (
                   <div className='relative inline-block'>
                     <button
-                      className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${
-                        navigationMenu === 'getting-started'
-                          ? 'border-2 border-black'
-                          : ''
-                      } ${navigationMenu !== 'getting-started' ? '' : ''}`}
+                      className={`inline-flex items-center justify-center h-14 px-4 py-2 text-sm font-medium transition-colors rounded-md ${navigationMenu === 'getting-started'
+                        ? 'border-2 border-black'
+                        : ''
+                        } ${navigationMenu !== 'getting-started' ? '' : ''}`}
                       onClick={() => toggleNavigationMenu('getting-started')}
                     >
                       <span className='p-3 w-12 rounded-full bg-blue-400 text-white font-bold text-center cursor-pointer'>
                         {auth.user.firstName[0].toUpperCase()}
                       </span>
                       <svg
-                        className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${
-                          navigationMenuOpen &&
+                        className={`relative top-[1px] ml-1 h-5 w-5 ease-out duration-300 ${navigationMenuOpen &&
                           navigationMenu === 'getting-started'
-                            ? '-rotate-180'
-                            : ''
-                        }`}
+                          ? '-rotate-180'
+                          : ''
+                          }`}
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 24 24'
                         fill='none'
@@ -148,8 +151,7 @@ export default function Navbar() {
                     {navigationMenuOpen &&
                       navigationMenu === 'getting-started' && (
                         <div className='absolute z-10 mt-1 w-48 -ml-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                          {/* Dropdown menu items */}
-                          {/* Replace these links with your actual dropdown menu items */}
+
                           <a
                             href='/MyCourse'
                             className='block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900'
@@ -209,7 +211,7 @@ export default function Navbar() {
                     </Link>
                   </Menu>
                 )}
-                {login ? (
+                {auth.user ? (
                   ''
                 ) : (
                   <Menu as='div' className='relative ml-3 pl-8'>
