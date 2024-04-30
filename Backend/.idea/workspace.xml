@@ -5,14 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Razorpay Completed in backend">
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/repository/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/response/AccountResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/GoogleSignInController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Login/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Components/Login/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Login/SignUp.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
