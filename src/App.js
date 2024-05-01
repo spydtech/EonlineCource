@@ -3,7 +3,6 @@ import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/Login/SignUp";
 import Certificates from "./Components/Home/Professional Certificates/Certificates";
-
 import Profile from "./Components/Profile/Profile";
 import Settings from "./Components/Profile/Settings";
 import ForgotPassword from "./Components/Login/ForgotPassword";
@@ -14,7 +13,6 @@ import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/Data
 import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
 import Professional from "./Components/Home/Plat form/Professionals";
-
 import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
 import Business from './Components/Home/Plat form/AllCourses/Business';
 import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
@@ -23,7 +21,7 @@ import ParticularFullStack from './Components/Home/Plat form/particularCoursesPa
 import Health from './Components/Home/Plat form/AllCourses/Health';
 import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
 import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
-
+import DataAnalatics from "./Components/Home/Plat form/AllCourses/dataAnalatics/DataAnalatics";
 function App() {
   const [usernameFirstLetter, setUsernameFirstLetter] = useState("");
 
@@ -58,6 +56,7 @@ function App() {
           <Route path="/Mycourse" element={<MyCourse />} />
           <Route path="/course/Data Science" element={<DataAnalytics />} />
           <Route path="/student" element={<Student />} />
+          <Route path="/dataAnalatics" element={<DataAnalatics />} />
           <Route path="/artsandHumanities" element={<ArtsandHumanities />} />
           <Route path="/business" element={<Business />} />
           <Route path="/computerscience" element={<ComputerScience />} />

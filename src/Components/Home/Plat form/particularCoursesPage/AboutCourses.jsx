@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import About from "./About";
 const AboutCourses = () => {
     const [activeTab, setActiveTab] = useState("tab1");
 
@@ -68,7 +68,7 @@ const AboutCourses = () => {
               activeTab === "tab1" ? "" : "hidden"
             }`}
           >
-            {/* <DataAnalyst /> */}
+           <About />
           </div>
           <div
             id="tab2"

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { BiBarChartSquare } from 'react-icons/bi';
 import { IoLogoElectron, IoPhonePortrait, IoCodeWorking , IoFlask, IoGameController, IoLockClosed, IoAnalyticsSharp, IoCloudSharp, IoCodeSlash, IoShapes, IoPeople, IoShieldCheckmark, IoArrowUndoCircleSharp, IoBookSharp, IoConstructSharp, IoWifiSharp, IoRocketSharp, IoHardwareChipSharp, IoRoseSharp } from 'react-icons/io5';
 const StudentCourses = () => {
   // const courseData = [
@@ -120,11 +121,12 @@ const StudentCourses = () => {
       link: "/fullStack"
     },
     {
-      title: "Mobile App Development",
-      icon: <IoPhonePortrait />,
-      description: "Dive into the world of mobile app development with the Mobile App Development course. Led by Rob Percival on Udemy, this course will equip you with the skills to create Android applications using the latest technologies, including Android Oreo.",
-      link: "link-to-the-course"
+      title: "Data Analytics",
+      icon: <BiBarChartSquare />,
+      description: "Master data analytics essentials: cleaning, visualization, stats, modeling. From beginners to pros, unlock data's power for informed decisions and business success.",
+      link: "/dataAnalatics"
     },
+    
     {
       title: "Data Structures and Algorithms",
       icon: <IoFlask />,
