@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Razorpay Completed in backend">
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/Account.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/repository/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/response/AccountResponse.java" afterDir="false" />
+    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="account_details added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/Service/UserServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/example/RegisterLogin/modals/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713286592667</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="account_details added">
+      <created>1714466281385</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1714466281385</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -112,6 +112,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Razorpay Completed in backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Razorpay Completed in backend" />
+    <MESSAGE value="account_details added" />
+    <option name="LAST_COMMIT_MESSAGE" value="account_details added" />
   </component>
 </project>
