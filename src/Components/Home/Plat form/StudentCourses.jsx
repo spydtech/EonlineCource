@@ -118,7 +118,7 @@ const StudentCourses = () => {
       title: "Full Stack Web Development",
       icon: <IoLogoElectron />,
       description: "Learn to build dynamic websites and web applications with the Full Stack Web Development course. Covering both front-end and back-end development, this course will teach you everything you need to know to become a proficient web developer. Taught by Rob Percival on Udemy.",
-      link: "/fullStack"
+      link: "/particularFullStack"
     },
     {
       title: "Data Analytics",
