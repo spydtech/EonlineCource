@@ -13,6 +13,7 @@ import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/Data
 import Student from "./Components/Home/Plat form/Student";
 import { useState, useEffect } from "react";
 import Professional from "./Components/Home/Plat form/Professionals";
+<<<<<<< HEAD
 import ArtsandHumanities from "./Components/Home/Plat form/AllCourses/ArtsandHumanities";
 import Business from "./Components/Home/Plat form/AllCourses/Business";
 import ComputerScience from "./Components/Home/Plat form/AllCourses/ComputerScience";
@@ -20,7 +21,15 @@ import DataScience from "./Components/Home/Plat form/AllCourses/DataScience";
 import Health from "./Components/Home/Plat form/AllCourses/Health";
 import PersonalDevelopment from "./Components/Home/Plat form/AllCourses/PersonalDevelopment";
 import SocialScience from "./Components/Home/Plat form/AllCourses/SocialScience";
-
+=======
+import ArtsandHumanities from './Components/Home/Plat form/AllCourses/ArtsandHumanities';
+import Business from './Components/Home/Plat form/AllCourses/Business';
+import ComputerScience from './Components/Home/Plat form/AllCourses/ComputerScience'
+import DataScience from './Components/Home/Plat form/AllCourses/DataScience';
+import Health from './Components/Home/Plat form/AllCourses/Health';
+import PersonalDevelopment from './Components/Home/Plat form/AllCourses/PersonalDevelopment';
+import SocialScience from './Components/Home/Plat form/AllCourses/SocialScience'
+>>>>>>> 9504f513e9f8b8d3422118852360150df33486da
 function App() {
 
   return (
@@ -41,11 +50,13 @@ function App() {
           <Route path="/Mycourse" element={<MyCourse />} />
           <Route path="/course/Data Science" element={<DataAnalytics />} />
           <Route path="/student" element={<Student />} />
+          <Route path="/dataAnalatics" element={<DataAnalatics />} />
           <Route path="/artsandHumanities" element={<ArtsandHumanities />} />
           <Route path="/business" element={<Business />} />
           <Route path="/computerscience" element={<ComputerScience />} />
           <Route path="/professional" element={<Professional />} />
-          <Route path="/datascience" element={<DataScience />} />
+          <Route path="/fullStack" element={<FullStack />} />
+          <Route path="/fullStack/particularFullStack" element={<ParticularFullStack />} />
           <Route path="/health" element={<Health />} />
           <Route
             path="/personaldevelopment"
