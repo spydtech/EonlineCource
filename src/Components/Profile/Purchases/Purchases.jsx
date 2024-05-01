@@ -7,10 +7,10 @@ import PaymentHistory from './PaymentHistory'
 
 
 
-function Purchases({ usernameFirstLetter }) {
+function Purchases() {
     return (
         <div>
-            <Navbar usernameFirstLetter={usernameFirstLetter} />
+            <Navbar />
             <div className='p-10'>
                 <h1 className='text-2xl font-semibold'>Purchases</h1>
                 <p>Need more help? Check out our <span className="text-blue-500 hover:underline cursor-pointer ">help center</span> and<span className="text-blue-500 hover:underline cursor-pointer ">refund policies.</span> </p>
@@ -36,10 +36,10 @@ function Purchases({ usernameFirstLetter }) {
                 <PaymentHistory />
 
             </div>
-       
-        <Footer />
-    </div>
-  )
+
+            <Footer />
+        </div>
+    )
 }
 
 export default Purchases

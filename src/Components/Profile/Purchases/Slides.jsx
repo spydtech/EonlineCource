@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import Slider from 'react-slick';
 // import 'slick-carousel/slick/slick.css';
@@ -69,49 +70,49 @@ function Slides() {
   };
   return (
     <div className='p-10'>
-     <div className="container mx-auto mt-5">
-      <Slider {...settings}>
-        {cards.map((card, index) => (
-          <div key={index} className="p-4">
-            <div className="bg-white rounded-lg shadow-lg p-6 h-96">
-              <img className='' src={card.image} />
-              <h2 className="text-xl font-semibold">{card.title}</h2>
-              <p className="text-gray-700 mt-2">{card.description}</p>
-              <a
-               
-                class="text-sky-500  transition-all duration-300 group-hover:text-white cursor-pointer "
-              >
-                Explore &rarr;
-              </a>
+      <div className="container mx-auto mt-5">
+        <Slider {...settings}>
+          {cards.map((card, index) => (
+            <div key={index} className="p-4">
+              <div className="bg-white rounded-lg shadow-lg p-6 h-96">
+                <img className='' src={card.image} />
+                <h2 className="text-xl font-semibold">{card.title}</h2>
+                <p className="text-gray-700 mt-2">{card.description}</p>
+                <a
+
+                  class="text-sky-500  transition-all duration-300 group-hover:text-white cursor-pointer "
+                >
+                  Explore &rarr;
+                </a>
+              </div>
+            </div>
+          ))}
+        </Slider>
+
+      </div>
+      <div>
+        <div class="flex h-screen items-center justify-center bg-blue-100 p-5">
+          <div class="grid md:grid-cols-2 grid-cols-1 items-center gap-10 md:px-10">
+            <div>
+              <img src={IMG} />
+              <h1 class="mb-2 text-3xl font-bold "><span class="text-green-500">Try out different courses to see which one fits your needs</span> </h1>
+              <p class="mb-6 ">Get a 7-day free trial that includes courses, Specializations, Projects, and Professional Certificates.
+
+              </p>
+              <div class="flex justify-center space-x-5">
+                <button class="flex w-full items-center justify-center gap-1 rounded-2xl bg-blue-500 p-5 py-3 font-semibold text-white hover:bg-blue-700">
+                  Learn More &rarr;
+
+                </button>
+
+              </div>
+            </div>
+            <div>
+              <img src="https://intellipaat.com/academy/wp-content/uploads/2022/03/home-banner.png" alt="" class="md:size-96 size-72 rounded-full " />
             </div>
           </div>
-        ))}
-      </Slider>
-
-    </div>
-    <div>
-  <div class="flex h-screen items-center justify-center bg-blue-100 p-5">
-    <div class="grid md:grid-cols-2 grid-cols-1 items-center gap-10 md:px-10">
-      <div>
-        <img src={IMG} />
-        <h1 class="mb-2 text-3xl font-bold "><span class="text-green-500">Try out different courses to see which one fits your needs</span> </h1>
-        <p class="mb-6 ">Get a 7-day free trial that includes courses, Specializations, Projects, and Professional Certificates.
-
-</p>
-        <div class="flex justify-center space-x-5">
-          <button class="flex w-full items-center justify-center gap-1 rounded-2xl bg-blue-500 p-5 py-3 font-semibold text-white hover:bg-blue-700">
-            Learn More &rarr;
-            
-          </button>
-         
         </div>
       </div>
-      <div>
-        <img src="https://intellipaat.com/academy/wp-content/uploads/2022/03/home-banner.png" alt="" class="md:size-96 size-72 rounded-full " />
-      </div>
-    </div>
-  </div>
-</div>
 
     </div>
   )
