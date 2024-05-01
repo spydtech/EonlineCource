@@ -10,18 +10,16 @@ import Purchases from "./Components/Profile/Purchases/Purchases";
 import Payment from "./Components/Profile/Payment/Payment";
 import MyCourse from "./Components/mycourse/MyCourse";
 import DataAnalytics from "./Components/Profile/BrowseProject/dataAnalytics/DataAnalytics";
-import FullStack from "./Components/Home/Plat form/AllCourses/FullStack";
 import Student from "./Components/Home/Plat form/Student";
 import Professional from "./Components/Home/Plat form/Professionals";
 import ArtsandHumanities from "./Components/Home/Plat form/AllCourses/ArtsandHumanities";
 import Business from "./Components/Home/Plat form/AllCourses/Business";
 import ComputerScience from "./Components/Home/Plat form/AllCourses/ComputerScience";
-import ParticularFullStack from './Components/Home/Plat form/particularCoursesPage/ParticularFullStack'
 import DataScience from "./Components/Home/Plat form/AllCourses/dataAnalatics/DataAnalatics";
 import Health from "./Components/Home/Plat form/AllCourses/Health";
 import PersonalDevelopment from "./Components/Home/Plat form/AllCourses/PersonalDevelopment";
 import SocialScience from "./Components/Home/Plat form/AllCourses/SocialScience";
-import DataAnalatics from "./Components/Home/Plat form/AllCourses/dataAnalatics/DataAnalatics";
+
 function App() {
 
   return (
@@ -42,14 +40,11 @@ function App() {
           <Route path="/Mycourse" element={<MyCourse />} />
           <Route path="/course/Data Science" element={<DataAnalytics />} />
           <Route path="/student" element={<Student />} />
-          <Route path="/fullStack" element={<FullStack />} />
-          <Route path="/particularFullStack" element={<ParticularFullStack />} />
-          {/* <Route path="/FullStack" element={<ParticularFullStack />} */}
           <Route path="/artsandHumanities" element={<ArtsandHumanities />} />
           <Route path="/business" element={<Business />} />
           <Route path="/computerscience" element={<ComputerScience />} />
           <Route path="/professional" element={<Professional />} />
-          <Route path="/dataAnalatics" element={<DataAnalatics />} />
+          <Route path="/datascience" element={<DataScience />} />
           <Route path="/health" element={<Health />} />
           <Route
             path="/personaldevelopment"
@@ -62,4 +57,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;
