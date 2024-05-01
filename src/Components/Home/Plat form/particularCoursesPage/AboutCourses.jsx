@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import About from "./About";
+import Outcomes from "./Outcomes";
 const AboutCourses = () => {
     const [activeTab, setActiveTab] = useState("tab1");
 
@@ -16,16 +17,14 @@ const AboutCourses = () => {
   return (
     <>
      <div class="w-full px-16  ">
-        {/* <span class="text-5xl font-bold text-[#0284c7]  border-b border-[#023047]">
-          Start a new career with E-education &#8594;
-        </span> */}
+       
       </div>
       <div className="w-full mt-10 px-16">
         {/* Tab Buttons */}
         <div className="p-2 rounded-t-lg overflow-x-auto">
           <div className="flex space-x-4">
             <button
-              className={`px-4 py-2 font-semibold border-b-4 border-blue-100 rounded-lg hover:bg-blue-100 focus:outline-none tab-button ${
+              className={`px-4 py-2 font-semibold border-b-4 border-blue-800 rounded-lg hover:bg-blue-800 hover:text-white focus:outline-none tab-button ${
                 activeTab === "tab1" ? "active" : ""
               }`}
               onClick={() => showTab("tab1")}
@@ -33,7 +32,7 @@ const AboutCourses = () => {
               About
             </button>
             <button
-              className={`px-4 py-2 font-semibold border-b-4 border-blue-100 rounded-lg hover:bg-blue-100 focus:outline-none tab-button ${
+              className={`px-4 py-2 font-semibold border-b-4 border-blue-800 rounded-lg hover:bg-blue-800 hover:text-white focus:outline-none tab-button ${
                 activeTab === "tab2" ? "active" : ""
               }`}
               onClick={() => showTab("tab2")}
@@ -41,7 +40,7 @@ const AboutCourses = () => {
             Outcomes
             </button>
             <button
-              className={`px-4 py-2 font-semibold border-b-4 border-blue-100 rounded-lg hover:bg-blue-100 focus:outline-none tab-button ${
+              className={`px-4 py-2 font-semibold border-b-4 border-blue-800 rounded-lg hover:bg-blue-800 hover:text-white focus:outline-none tab-button ${
                 activeTab === "tab3" ? "active" : ""
               }`}
               onClick={() => showTab("tab3")}
@@ -49,7 +48,7 @@ const AboutCourses = () => {
               Courses
             </button>
             <button
-              className={`px-4 py-2 font-semibold border-b-4 border-blue-100 rounded-lg hover:bg-blue-100 focus:outline-none tab-button ${
+              className={`px-4 py-2 font-semibold border-b-4 border-blue-800 rounded-lg hover:bg-blue-800 hover:text-white focus:outline-none tab-button ${
                 activeTab === "tab4" ? "active" : ""
               }`}
               onClick={() => showTab("tab4")}
@@ -61,7 +60,7 @@ const AboutCourses = () => {
         </div>
 
         {/* Tab Content */}
-        <div className="border-2 rounded-lg border-blue-100  pb-5">
+        <div className="border-2 rounded-lg border-blue-800  pb-5">
           <div
             id="tab1"
             className={`p-4 tab-content bg-white  rounded-lg ${
@@ -76,7 +75,7 @@ const AboutCourses = () => {
               activeTab === "tab2" ? "" : "hidden"
             }`}
           >
-            {/* <DigitalMarketing /> */}
+            <Outcomes />
           </div>
           <div
             id="tab3"
@@ -110,19 +109,8 @@ const AboutCourses = () => {
           >
             {/* <UiUx /> */}
           </div>
-          {/* <div class=" text-base font-semibold leading-7 text-center justify-center  ">
-            <p>
-              <a
-                href="/Certificates"
-                class="text-sky-500  transition-all duration-300 group-hover:text-white "
-              >
-                Explore all Certificates &rarr;
-              </a>
-            </p>
-          </div> */}
+        
         </div>
-
-        {/* <EducationCarousel /> */}
       </div>
     </>
   )
