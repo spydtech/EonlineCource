@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import About from "./About";
 import Outcomes from "./Outcomes";
-import FullStackWebDev from "./FullStackWebDevelopmentFQA/FullStackWebDev";
+import FullStackWebDevFQACourses from "./FullStackWebDevFQACourses";
 const AboutCourses = () => {
     const [activeTab, setActiveTab] = useState("tab1");
 
@@ -84,7 +84,7 @@ const AboutCourses = () => {
               activeTab === "tab3" ? "" : "hidden"
             }`}
           >
-         <FullStackWebDev />
+         <FullStackWebDevFQACourses />
           </div>
           <div
             id="tab4"

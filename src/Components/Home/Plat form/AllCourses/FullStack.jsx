@@ -6,7 +6,7 @@ const FullStack = () => {
 
   const CourseCard = ({ id, title, description, image, link }) => { 
     return (
-      <Link to={link || "/"}> 
+      <Link to={link}> 
         <div className="max-w-sm rounded overflow-hidden shadow-lg transition-transform duration-300 transform hover:scale-105">
           <img className="w-full" src={image} alt={title} />
           <div className="px-6 py-4">
@@ -23,7 +23,7 @@ const FullStack = () => {
       title: "Full Stack Web Development",
       description: "Learn how to build web applications from front to back.",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCP7WwqRZMt45muqpTdBtWssi3TJHjGG4UkwvxBaIBRAV5naPe4-XBwl6tatEPaZWkDDk&usqp=CAU",
-      link: "particularFullStack"
+      link: "/fullStackWebDevelopment"
     },
     {
       id: 2,

@@ -4,121 +4,12 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { BiBarChartSquare } from 'react-icons/bi';
 import { IoLogoElectron, IoPhonePortrait, IoCodeWorking , IoFlask, IoGameController, IoLockClosed, IoAnalyticsSharp, IoCloudSharp, IoCodeSlash, IoShapes, IoPeople, IoShieldCheckmark, IoArrowUndoCircleSharp, IoBookSharp, IoConstructSharp, IoWifiSharp, IoRocketSharp, IoHardwareChipSharp, IoRoseSharp } from 'react-icons/io5';
 const StudentCourses = () => {
-  // const courseData = [
-  //   {
-  //     icon: <IoLogoElectron />,
-  //     title: "Full Stack Web Development",
-  //     description: "Explore the world of data analysis and machine learning.",
-  //     total: "425 courses",
-  //     link: "/datascience"
-  //   },
-  //   {
-  //     icon: <IoBriefcase />,
-  //     title: "Business",
-  //     description: "Learn key business strategies and management principles.",
-  //     total: "4244 courses",
-  //     link: "/business"
-  //   },
-  //   {
-  //     icon: <IoCodeSlash />,
-  //     title: "Computer Science",
-  //     description: "Master programming and software development skills.",
-  //     total: "628 courses",
-  //     link: "/computerscience"
-  //   },
-  //   {
-  //     icon: <IoMedkit />,
-  //     title: "Health",
-  //     description: "Explore health sciences and medical technologies.",
-  //     total: "471 courses",
-  //     link: "/health"
-  //   },
-  //   {
-  //     icon: <IoPeople />,
-  //     title: "Social Science",
-  //     description: "Study human behavior and societal trends.",
-  //     total: "555 courses",
-  //     link: "/socialscience"
-  //   },
-  //   {
-  //     icon: <IoBrush />,
-  //     title: "Personal Development",
-  //     description: "Improve personal skills and professional growth.",
-  //     total: "425 courses",
-  //     link: "/personaldevelopment"
-  //   },
-  //   {
-  //     icon: <IoShapes />,
-  //     title: "Arts and Humanities",
-  //     description: "Explore creativity, culture, and historical studies.",
-  //     total: "338 courses",
-  //     link: "/artsandHumanities"
-  //   },
-  //   {
-  //     icon: <IoLockClosed />,
-  //     title: "Cybersecurity",
-  //     description: "Protect systems, networks, and programs from digital attacks.",
-  //     courses: [
-  //       "Cybersecurity Fundamentals: Introduction to Cyber Security (Coursera by NYU)",
-  //       "Ethical Hacking: The Complete Ethical Hacking Course (Udemy by Ermin Kreponic)",
-  //       "Network Security: Network Security Fundamentals (Pluralsight)",
-  //       "Certifications: CompTIA Security+, Certified Ethical Hacker (CEH), Certified Information Systems Security Professional (CISSP)"
-  //     ],
-  //     link: "/cybersecurity"
-  //   },
-  //   {
-  //     icon: <IoAnalyticsSharp />,
-  //     title: "Data Science and Analytics",
-  //     description: "Analyze and interpret complex data.",
-  //     courses: [
-  //       "Data Analysis with Python: Python for Data Science and Machine Learning Bootcamp (Udemy by Jose Portilla)",
-  //       "Data Visualization: Data Visualization with Python (Coursera by University of Michigan)",
-  //       "Big Data: Big Data Specialization (Coursera by University of California, San Diego)",
-  //       "Data Engineering: Data Engineering, Big Data, and Machine Learning on GCP (Coursera by Google Cloud)"
-  //     ],
-  //     link: "/datascience"
-  //   },
-  //   {
-  //     icon: <IoCloudSharp />,
-  //     title: "Cloud Computing",
-  //     description: "Utilize remote servers hosted on the internet to store, manage, and process data.",
-  //     courses: [
-  //       "AWS: AWS Certified Solutions Architect – Associate (A Cloud Guru)",
-  //       "Microsoft Azure: Microsoft Certified: Azure Fundamentals (Pluralsight)",
-  //       "Google Cloud: Google Cloud Platform Fundamentals: Core Infrastructure (E-education)"
-  //     ],
-  //     link: "/cloudcomputing"
-  //   },
-  //   {
-  //     icon: <IoCodeWorkingSharp />,
-  //     title: "IT and Networking",
-  //     description: "Manage and maintain computer networks and related services.",
-  //     courses: [
-  //       "Cisco CCNA: Cisco CCNA 200-301 – The Complete Guide to Getting Certified (Udemy by Neil Anderson)",
-  //       "CompTIA A+: CompTIA A+ 2019 Certification 1001. The Total Course (Udemy by Mike Meyers)",
-  //       "Linux Administration: Linux Administration Bootcamp: Go from Beginner to Advanced (Udemy by Jason Cannon)"
-  //     ],
-  //     link: "/itandnetworking"
-  //   },
-  //   {
-  //     icon: <FaRobot />,
-  //     title: "Robotics and IoT",
-  //     description: "Explore the world of robotics and connected devices.",
-  //     courses: [
-  //       "Robot Operating System (ROS): ROS for Beginners: Basics, Motion, and OpenCV (Udemy by Anis Koubaa)",
-  //       "Internet of Things (IoT): IoT Foundations: Fundamentals (LinkedIn Learning)",
-  //       "Embedded Systems: Embedded Systems – Shape the World (edX by University of Texas at Austin)"
-  //     ],
-  //     link: "/roboticsandiot"
-  //   }
-  // ];
-  
   const courseData = [
     {
       title: "Full Stack Web Development",
       icon: <IoLogoElectron />,
       description: "Learn to build dynamic websites and web applications with the Full Stack Web Development course. Covering both front-end and back-end development, this course will teach you everything you need to know to become a proficient web developer. Taught by Rob Percival on Udemy.",
-      link: "/particularFullStack"
+      link: "/fullStack"
     },
     {
       title: "Data Analytics",
@@ -229,24 +120,7 @@ const StudentCourses = () => {
       description: "Master Linux administration with the Linux Administration Bootcamp: Go from Beginner to Advanced course on Udemy by Jason Cannon. Learn essential Linux skills, including system administration, shell scripting, and networking.",
       link: "link-to-the-course"
     },
-    {
-      title: "Robot Operating System (ROS)",
-      icon: <IoRocketSharp />,
-      description: "Learn the basics of Robot Operating System (ROS) with the ROS for Beginners: Basics, Motion, and OpenCV course on Udemy by Anis Koubaa. Explore ROS concepts, motion planning, and image processing for robotics applications.",
-      link: "link-to-the-course"
-    },
-    {
-      title: "Internet of Things (IoT)",
-      icon: <IoRoseSharp />,
-      description: "Get started with Internet of Things (IoT) with the IoT Foundations: Fundamentals course on LinkedIn Learning. Learn about IoT concepts, technologies, and applications to build connected devices and systems.",
-      link: "link-to-the-course"
-    },
-    {
-      title: "Embedded Systems",
-      icon: <IoRoseSharp />,
-      description: "Shape the world of Embedded Systems with the Embedded Systems – Shape the World course on edX by University of Texas at Austin. Explore embedded systems design, programming, and interfacing for real-world applications.",
-      link: "link-to-the-course"
-    }
+   
   ];
   return (
     <>
