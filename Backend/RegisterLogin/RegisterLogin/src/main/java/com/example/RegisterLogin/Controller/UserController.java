@@ -4,6 +4,7 @@ import com.example.RegisterLogin.Service.EmailService;
 import com.example.RegisterLogin.Service.UserService;
 import com.example.RegisterLogin.exceptions.UserException;
 import com.example.RegisterLogin.modals.Account;
+import com.example.RegisterLogin.modals.Education;
 import com.example.RegisterLogin.modals.User;
 import com.example.RegisterLogin.response.EmailVerficationInput;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,15 @@ public class UserController {
         String status =emailService.verifyingCode(EmailId,emailVerficationInput);
 
         return status;
+    }
+    @GetMapping("/getEducationDetail/{emailid}")
+    public ResponseEntity<?> getUserEducationDetails(@PathVariable("emailid") String emailid) {
+        return userService.getEducation_Details(emailid);
+    }
+
+    @PutMapping("/updateUserEducationDetails/{emailid}")
+    public ResponseEntity<?> updateUserEducationDetails(@PathVariable("emailid") String emailid, @RequestBody Education userEducation) {
+        return userService.updateEduction_Details(emailid, userEducation);
     }
 
 }
