@@ -13,6 +13,6 @@ public interface UserService {
 	public User findUserProfileByJwt(String jwt) throws Exception;
 	public List<User> findAllUsers();
 	public ResponseEntity<?> getAccount_Details(String email);
-
 	ResponseEntity<?> updateAccount_Details(String email, Account userAccount);
+	public int generateSixDigitNumber();
 }
