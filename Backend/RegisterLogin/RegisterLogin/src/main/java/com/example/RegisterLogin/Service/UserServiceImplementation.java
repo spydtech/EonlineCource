@@ -98,25 +98,29 @@ public class UserServiceImplementation implements UserService {
         return ResponseEntity.ok(accountResponse);
     }
 
+
     @Override
-    public ResponseEntity<?> updateAccount_Details(String email, Account userAccount) {
-        User currentUser =userRepository.findByEmail(email);
-        long currentUserId =currentUser.getId();
+    public ResponseEntity<?> updateAccount_Details(String email,Account userAccount) {
+        User currentUser = userRepository.findByEmail(email);
+        long currentUserId = currentUser.getId();
 
         try {
-            if (accountRepository.existsByUserId(currentUserId) )
-            {
-                Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
-                currentAccountDetails.setFullName(userAccount.getFullName());
-                currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
-                currentAccountDetails.setLocation(userAccount.getLocation());
-                currentAccountDetails.setUserEmail(userAccount.getUserEmail());
-                accountRepository.save(currentAccountDetails);
+            if (accountRepository.existsByUserId(currentUserId)) {
+                if (!userRepository.existsByEmail(userAccount.getUserEmail())) {
+                    Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
+                    currentUser.setEmail(userAccount.getUserEmail());
+                    currentAccountDetails.setFullName(userAccount.getFullName());
+                    currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
+                    currentAccountDetails.setLocation(userAccount.getLocation());
+                    currentAccountDetails.setUserEmail(userAccount.getUserEmail());
+                    accountRepository.save(currentAccountDetails);
+                    userRepository.save(currentUser);
+
+                }
 
             }
-            return getAccount_Details(email);
-        }
-        catch(Exception e){
+            return getAccount_Details(userAccount.getUserEmail());
+        } catch (Exception e) {
             return ResponseEntity.ok(e);
         }
     }
