@@ -58,8 +58,8 @@ public class EmailServiceImpl implements EmailService {
             // Setting up necessary details
             mailMessage.setFrom(sender);
             mailMessage.setTo(EmailId);
-            mailMessage.setText("Your Email verfication code is "+Code);
-            mailMessage.setSubject("Email Verfication");
+            mailMessage.setText("Your Email verification code is "+Code);
+            mailMessage.setSubject("Email Verification");
 
             // Sending the mail
             javaMailSender.send(mailMessage);
