@@ -24,8 +24,6 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     const data = new FormData(e.currentTarget);
     const userData = {
       firstName: data.get('firstName'),

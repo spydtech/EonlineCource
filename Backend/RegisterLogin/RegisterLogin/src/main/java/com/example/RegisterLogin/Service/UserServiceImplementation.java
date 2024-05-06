@@ -74,7 +74,7 @@ public class UserServiceImplementation implements UserService {
         if(!accountRepository.existsByUserId(userAccID)){
             AccountDetails.setUser(UserDetails);
             AccountDetails.setUserEmail(UserDetails.getEmail());
-            AccountDetails.setFullName(UserDetails.getFirstName()+UserDetails.getLastName());
+            AccountDetails.setFullName(UserDetails.getUserName());
             accountRepository.save(AccountDetails);
         }
         Account account =accountRepository.findByUserId(userAccID);
