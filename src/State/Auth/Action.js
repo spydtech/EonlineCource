@@ -11,6 +11,12 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   LOGOUT,
+  GET_ACCOUNT_REQUEST,
+  GET_ACCOUNT_SUCCESS,
+  GET_ACCOUNT_FAILURE,
+  UPDATE_ACCOUNT_REQUEST,
+  UPDATE_ACCOUNT_SUCCESS,
+  UPDATE_ACCOUNT_FAILURE,
 } from './ActionType';
 
 const token = localStorage.getItem('jwt');
@@ -74,6 +80,44 @@ export const getUser = (jwt) => async (dispatch) => {
     dispatch(getUserSuccess(user));
   } catch (error) {
     dispatch(getUserFailure(error.message));
+  }
+};
+
+
+const updateAccountRequest = () => ({ type: UPDATE_ACCOUNT_REQUEST });
+const updateAccountSuccess = (updatedAccount) => ({ type: UPDATE_ACCOUNT_SUCCESS, payload: updatedAccount });
+const updateAccountFailure = (error) => ({ type: UPDATE_ACCOUNT_FAILURE, payload: error });
+
+// export const updateAccount = (accountData) => async (dispatch) => {
+//   dispatch(updateAccountRequest());
+//   const jwtToken = localStorage.getItem('jwt');
+//   try {
+//     const response = await axios.put(`${API_BASE_URL}/api/users/updateUserDetails`, accountData, {
+//       headers: { Authorization: `Bearer ${jwtToken}` },
+//     });
+//     const updatedAccount = response.data;
+//     dispatch(updateAccountSuccess(updatedAccount));
+//     // Optionally, dispatch an action to refresh user details or update the state
+//   } catch (error) {
+//     dispatch(updateAccountFailure(error.message));
+//   }
+// };
+
+export const updateAccount = (jwt, accountData) => async (dispatch) => {
+  dispatch(updateAccountRequest());
+  try {
+    const response = await axios.put('http://localhost:8082/api/users/updateUserDetails', accountData, {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    });
+    const updatedAccount = response.data;
+    console.log('Account details updated successfully');
+    dispatch(updateAccountSuccess(updatedAccount));
+    // Optionally, dispatch an action or update state in Redux
+  } catch (error) {
+    dispatch(updateAccountFailure(error.message));
+    // Handle error (e.g., show error message to the user)
   }
 };
 
