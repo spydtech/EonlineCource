@@ -15,6 +15,9 @@ import com.example.RegisterLogin.response.MessageResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -101,29 +104,38 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public ResponseEntity<?> updateAccount_Details(String email,Account userAccount) {
+
         User currentUser = userRepository.findByEmail(email);
         long currentUserId = currentUser.getId();
 
         try {
             if (accountRepository.existsByUserId(currentUserId)) {
-                if (!userRepository.existsByEmail(userAccount.getUserEmail())) {
-                    Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
+
+                Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
+
+                currentAccountDetails.setFullName(userAccount.getFullName());
+                currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
+                currentAccountDetails.setLocation(userAccount.getLocation());
+
+                if(!accountRepository.existsByUserEmail(userAccount.getUserEmail())){
                     currentUser.setEmail(userAccount.getUserEmail());
-                    currentAccountDetails.setFullName(userAccount.getFullName());
-                    currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
-                    currentAccountDetails.setLocation(userAccount.getLocation());
                     currentAccountDetails.setUserEmail(userAccount.getUserEmail());
-                    accountRepository.save(currentAccountDetails);
-                    userRepository.save(currentUser);
 
                 }
-
+                accountRepository.save(currentAccountDetails);
+                userRepository.save(currentUser);
+                return getAccount_Details(userAccount.getUserEmail());
             }
-            return getAccount_Details(userAccount.getUserEmail());
+            else{
+                return ResponseEntity.ok(new MessageResponse("Email already exists please enter new email ID"));
+            }
+
         } catch (Exception e) {
             return ResponseEntity.ok(e);
         }
     }
+
+
 
     @Override
     public int generateSixDigitNumber() {
