@@ -1,9 +1,13 @@
 package com.example.RegisterLogin.Controller;
 
+import com.example.RegisterLogin.Service.EmailService;
 import com.example.RegisterLogin.Service.UserService;
 import com.example.RegisterLogin.exceptions.UserException;
 import com.example.RegisterLogin.modals.Account;
+import com.example.RegisterLogin.modals.Education;
 import com.example.RegisterLogin.modals.User;
+import com.example.RegisterLogin.response.EmailVerficationInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
 
     public UserController(UserService userService) {
         this.userService=userService;
@@ -34,6 +40,31 @@ public class UserController {
     @PutMapping("/updateUserDetails/{emailid}")
     public ResponseEntity<?> updateUserDetails(@PathVariable("emailid") String emailid, @RequestBody Account userAccount) {
         return userService.updateAccount_Details(emailid, userAccount);
+    }
+    // Sending a simple Email
+    @PostMapping("/sendMail/{EmailId}")
+    public String sendMail(@PathVariable ("EmailId") String EmailId)
+    {
+        String status
+                = emailService.sendSimpleMail(EmailId);
+
+        return status;
+    }
+
+    @GetMapping("/verfication/{EmailId}")
+    public String verifyCode(@PathVariable ("EmailId") String EmailId, @RequestBody EmailVerficationInput emailVerficationInput){
+        String status =emailService.verifyingCode(EmailId,emailVerficationInput);
+
+        return status;
+    }
+    @GetMapping("/getEducationDetail/{emailid}")
+    public ResponseEntity<?> getUserEducationDetails(@PathVariable("emailid") String emailid) {
+        return userService.getEducation_Details(emailid);
+    }
+
+    @PutMapping("/updateUserEducationDetails/{emailid}")
+    public ResponseEntity<?> updateUserEducationDetails(@PathVariable("emailid") String emailid, @RequestBody Education userEducation) {
+        return userService.updateEduction_Details(emailid, userEducation);
     }
 
 }

@@ -39,5 +39,10 @@ public class User {
 	@JsonIgnore
 	private Account account;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private EmailVerfication emailVerfication;
+
+
 
 }

@@ -2,6 +2,7 @@ package com.example.RegisterLogin.Service;
 
 
 import com.example.RegisterLogin.modals.Account;
+import com.example.RegisterLogin.modals.Education;
 import com.example.RegisterLogin.modals.User;
 import org.springframework.http.ResponseEntity;
 
@@ -13,6 +14,8 @@ public interface UserService {
 	public User findUserProfileByJwt(String jwt) throws Exception;
 	public List<User> findAllUsers();
 	public ResponseEntity<?> getAccount_Details(String email);
-
 	ResponseEntity<?> updateAccount_Details(String email, Account userAccount);
+	public int generateSixDigitNumber();
+	public ResponseEntity<?> updateEduction_Details(String email, Education userEducation);
+	public ResponseEntity<?> getEducation_Details(String email);
 }
