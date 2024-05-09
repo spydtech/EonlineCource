@@ -1,5 +1,8 @@
 package com.Eonline.Education.modals;
 
+import lombok.Data;
+
+@Data
 public class OrderRequest {
     private Long amount;
     private String currency;

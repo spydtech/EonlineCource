@@ -1,6 +1,8 @@
 package com.Eonline.Education.modals;
 
+import com.Eonline.Education.user.OrderStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 import okhttp3.Address;
 
 import java.time.LocalDateTime;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name="orders")
+@Data
 public class Order {
 
 
@@ -27,11 +30,16 @@ public class Order {
 
     private LocalDateTime orderDate;
 
+    private OrderStatus orderStatus;
+
+
+
+
 
 
 
     @Embedded
-   // private PaymentDetails paymentDetails=new PaymentDetails();
+   private PaymentDetails paymentDetails=new PaymentDetails();
 
     private double totalPrice;
 

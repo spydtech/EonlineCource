@@ -1,6 +1,10 @@
 package com.Eonline.Education.Service;
 
+import com.Eonline.Education.exceptions.OrderException;
+import com.Eonline.Education.modals.Order;
 import com.Eonline.Education.modals.User;
+
+import java.util.List;
 
 public interface OrderService {
     public Order createOrder(User user);

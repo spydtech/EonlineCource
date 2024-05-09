@@ -2,10 +2,16 @@ package com.Eonline.Education.Service;
 
 
 import com.Eonline.Education.exceptions.OrderException;
+import com.Eonline.Education.modals.Order;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.OrderRepository;
+import com.Eonline.Education.user.OrderStatus;
+import com.Eonline.Education.user.PaymentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImplementation implements OrderService{
@@ -37,6 +43,7 @@ public class OrderServiceImplementation implements OrderService{
     @Override
     public Order placedOrder(Long orderId) throws OrderException {
         Order order=findOrderById(orderId);
+
         order.setOrderStatus(OrderStatus.PLACED);
         order.getPaymentDetails().setStatus(PaymentStatus.COMPLETED);
         return order;
@@ -44,7 +51,11 @@ public class OrderServiceImplementation implements OrderService{
 
     @Override
     public Order confirmedOrder(Long orderId) throws OrderException {
-        return null;
+        Order order=findOrderById(orderId);
+        order.setOrderStatus(OrderStatus.CONFIRMED);
+
+
+        return orderRepository.save(order);
     }
 
     @Override
