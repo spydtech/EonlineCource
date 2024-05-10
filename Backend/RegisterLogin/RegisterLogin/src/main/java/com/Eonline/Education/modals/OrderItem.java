@@ -23,7 +23,7 @@ public class OrderItem {
     private Order order;
 
     @ManyToOne
-    private String course;
+    private Course course;
 
     private Integer price;
 

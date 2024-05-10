@@ -9,12 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository  extends JpaRepository<Order, Long> {
-   // @Query("SELECT o FROM Order o WHERE o.user.id = :userId AND (o.orderStatus = PLACED OR o.orderStatus = CONFIRMED OR o.orderStatus = SHIPPED OR o.orderStatus = DELIVERED)")
-    public List<Order> getUsersOrders(@Param("userId") Long userId);
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    @Query("SELECT o FROM Order o WHERE o.user.id = :userId AND (o.orderStatus = 'PLACED' OR o.orderStatus = 'CONFIRMED' OR o.orderStatus = 'SHIPPED' OR o.orderStatus = 'DELIVERED')")
+    List<Order> getUsersOrders(@Param("userId") Long userId);
 
     List<Order> findAllByOrderByCreatedAtDesc();
-
-
-    //Optional<Order> findById(Long orderId);
+    List<Order> findByUserId(Long userId);
 }
