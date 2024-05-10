@@ -17,6 +17,9 @@ public class AuthResponse {
         this.status = status;
     }
 
+    public AuthResponse(Object o, boolean b, String s) {
+    }
+
     public String getJwt() {
         return jwt;
     }

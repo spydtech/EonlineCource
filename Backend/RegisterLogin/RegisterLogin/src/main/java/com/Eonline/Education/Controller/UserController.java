@@ -1,12 +1,9 @@
 package com.Eonline.Education.Controller;
 
-import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.UserService;
-import com.Eonline.Education.modals.Education;
-import com.Eonline.Education.response.EmailVerficationInput;
 import com.Eonline.Education.modals.Account;
+import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
-    @Autowired
-    private EmailService emailService;
 
     public UserController(UserService userService) {
         this.userService=userService;
@@ -41,21 +36,7 @@ public class UserController {
         return userService.updateAccount_Details(emailid, userAccount);
     }
     // Sending a simple Email
-    @PostMapping("/sendMail/{EmailId}")
-    public String sendMail(@PathVariable ("EmailId") String EmailId)
-    {
-        String status
-                = emailService.sendSimpleMail(EmailId);
 
-        return status;
-    }
-
-    @GetMapping("/verfication/{EmailId}")
-    public String verifyCode(@PathVariable ("EmailId") String EmailId, @RequestBody EmailVerficationInput emailVerficationInput){
-        String status =emailService.verifyingCode(EmailId,emailVerficationInput);
-
-        return status;
-    }
     @GetMapping("/getEducationDetail/{emailid}")
     public ResponseEntity<?> getUserEducationDetails(@PathVariable("emailid") String emailid) {
         return userService.getEducation_Details(emailid);

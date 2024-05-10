@@ -1,8 +1,14 @@
 package com.Eonline.Education.modals;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
 
 
@@ -24,6 +30,5 @@ public class Course {
 
     @Column(name="discount_persent")
     private int discountPersent;
-
 
 }

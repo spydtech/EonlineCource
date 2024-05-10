@@ -3,7 +3,6 @@ package com.Eonline.Education.modals;
 import com.Eonline.Education.user.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-import okhttp3.Address;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,11 +30,6 @@ public class Order {
     private LocalDateTime orderDate;
 
     private OrderStatus orderStatus;
-
-
-
-
-
 
 
     @Embedded
