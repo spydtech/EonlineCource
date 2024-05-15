@@ -44,6 +44,13 @@ public class User {
 	@JsonIgnore
 	private List<Order> orders;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Education education;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private BioData bioData;
 
 
 }
