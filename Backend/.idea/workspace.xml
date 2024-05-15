@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="application properties changed">
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OtpService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/OtpVerificationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java" afterDir="false" />
+    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Otp verification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/EmailServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/EmailVerfication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/OrderItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/OrderItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/EmailVerficationRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/AuthResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/EmailDetails.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/EmailVerficationInput.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714987129906</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Otp verification">
+      <created>1715342656676</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1715342656676</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -165,6 +157,7 @@
     <MESSAGE value="account_details added" />
     <MESSAGE value="user table changes" />
     <MESSAGE value="application properties changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="application properties changed" />
+    <MESSAGE value="Otp verification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Otp verification" />
   </component>
 </project>

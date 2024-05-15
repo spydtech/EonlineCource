@@ -79,6 +79,15 @@ public class AuthController {
         return ResponseEntity.ok("OTP sent successfully.");
     }
 
+//    @PostMapping("/checkEmail")
+//    public ResponseEntity<String> checkEmail(@RequestBody String email) {
+//        // Check if the email is already registered
+//        if (userRepository.existsByEmail(email)) {
+//            return ResponseEntity.badRequest().body("Email is already registered.");
+//        }
+//        return ResponseEntity.ok("Email is available."); // Email is not registered
+//    }
+
     @PostMapping("/verify-otp")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws UserException {
             if(generatedOtp !=null && request.getOtp().equals(generatedOtp)){
@@ -106,26 +115,6 @@ public class AuthController {
                 return ResponseEntity.badRequest().body(new AuthResponse(null, false, "Invalid OTP. Registration failed."));
             }
     }
-
-
-//        // Create new user
-//        User createdUser= new User();
-//        createdUser.setEmail(email);
-//        createdUser.setUserName(userName);
-//        createdUser.setPassword(passwordEncoder.encode(password));
-//
-//
-//        User savedUser= userRepository.save(createdUser);
-//
-//
-//        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String token = jwtTokenProvider.generateToken(authentication);
-//
-//        AuthResponse authResponse= new AuthResponse(token,true);
-//
-//        return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
 
 
 
