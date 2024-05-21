@@ -1,6 +1,5 @@
 package com.Eonline.Education.Service;
 
-
 import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.User;
@@ -10,12 +9,19 @@ import java.util.List;
 
 public interface UserService {
 
-	public User findUserById(Long userId) throws Exception;
-	public User findUserProfileByJwt(String jwt) throws Exception;
-	public List<User> findAllUsers();
-	public ResponseEntity<?> getAccount_Details(String email);
-	ResponseEntity<?> updateAccount_Details(String email, Account userAccount);
-	public int generateSixDigitNumber();
-	public ResponseEntity<?> updateEduction_Details(String email, Education userEducation);
-	public ResponseEntity<?> getEducation_Details(String email);
+	User findUserById(Long userId) throws Exception;
+
+	User findUserProfileByJwt(String jwt) throws Exception;
+
+	List<User> findAllUsers();
+
+	ResponseEntity<?> getAccountDetails(String email);
+
+	ResponseEntity<?> updateAccountDetails(String email, Account userAccount);
+
+	int generateSixDigitNumber();
+
+	ResponseEntity<?> updateEducationDetails(String email, Education userEducation);
+
+	ResponseEntity<?> getEducationDetails(String email);
 }

@@ -1,6 +1,5 @@
 package com.Eonline.Education.modals;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,23 +12,31 @@ import java.time.Year;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name="Education_Details")
+@Table(name = "Education_Details")
 public class Education {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name_of_institution")
     private String nameOfInstitution;
 
+    @Column(name = "degree")
     private String degree;
 
-    @JsonFormat(pattern="MM")
-    private   Month startMonth;
-    @JsonFormat(pattern="yyyy")
+    @Column(name = "start_month")
+    @Enumerated(EnumType.STRING)
+    private Month startMonth;
+
+    @Column(name = "start_year")
     private Year startYear;
-    @JsonFormat(pattern="MM")
-    private Month  graduationMonth;
-    @JsonFormat(pattern="yyyy")
+
+    @Column(name = "graduation_month")
+    @Enumerated(EnumType.STRING)
+    private Month graduationMonth;
+
+    @Column(name = "graduation_year")
     private Year graduationYear;
 
     @OneToOne

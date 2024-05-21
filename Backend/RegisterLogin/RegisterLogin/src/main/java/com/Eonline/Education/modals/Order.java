@@ -2,7 +2,9 @@ package com.Eonline.Education.modals;
 
 import com.Eonline.Education.user.OrderStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import okhttp3.Address;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,8 +29,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @NotNull
     private LocalDateTime orderDate;
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
 

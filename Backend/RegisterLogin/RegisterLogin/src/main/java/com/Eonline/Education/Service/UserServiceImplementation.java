@@ -1,6 +1,5 @@
 package com.Eonline.Education.Service;
 
-
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.Account;
@@ -18,183 +17,143 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
-
 
 @Service
 public class UserServiceImplementation implements UserService {
 
-    private UserRepository userRepository;
-    private JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AccountRepository accountRepository;
+    private final EducationRepository educationRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
-
-    @Autowired
-    private EducationRepository educationRepository;
-
-
-    public UserServiceImplementation(UserRepository userRepository,JwtTokenProvider jwtTokenProvider) {
-
-        this.userRepository=userRepository;
-        this.jwtTokenProvider=jwtTokenProvider;
-
+    public UserServiceImplementation(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, AccountRepository accountRepository, EducationRepository educationRepository) {
+        this.userRepository = userRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.accountRepository = accountRepository;
+        this.educationRepository = educationRepository;
     }
 
     @Override
     public User findUserById(Long userId) throws UserException {
-        Optional<User> user=userRepository.findById(userId);
-
-        if(user.isPresent()){
-            return user.get();
-        }
-        throw new UserException("user not found with id "+userId);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserException("User not found with id " + userId));
     }
 
     @Override
     public User findUserProfileByJwt(String jwt) throws UserException {
-        System.out.println("user service");
-        String email=jwtTokenProvider.getEmailFromJwtToken(jwt);
-
-        System.out.println("email"+email);
-
-        User user=userRepository.findByEmail(email);
-
-        if(user==null) {
-            throw new UserException("user not exist with email "+email);
+        String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserException("User not exist with email " + email);
         }
-        System.out.println("email user"+user.getEmail());
         return user;
     }
 
-
-
     @Override
     public List<User> findAllUsers() {
-        // TODO Auto-generated method stub
         return userRepository.findAllByOrderByCreatedAtDesc();
     }
 
-
     @Override
-    public ResponseEntity<?> getAccount_Details(String email) {
-        User UserDetails = userRepository.findByEmail(email);
-        Account AccountDetails = new Account();
-        long userAccID =UserDetails.getId();
+    public ResponseEntity<?> getAccountDetails(String email) {
+        User userDetails = userRepository.findByEmail(email);
+        long userAccID = userDetails.getId();
 
-        if(!accountRepository.existsByUserId(userAccID)){
-            AccountDetails.setUser(UserDetails);
-            AccountDetails.setUserEmail(UserDetails.getEmail());
-            AccountDetails.setFullName(UserDetails.getUserName());
-            accountRepository.save(AccountDetails);
+        if (!accountRepository.existsByUserId(userAccID)) {
+            Account accountDetails = new Account();
+            accountDetails.setUser(userDetails);
+            accountDetails.setUserEmail(userDetails.getEmail());
+            accountDetails.setFullName(userDetails.getFirstName() + " " + userDetails.getLastName());
+            accountRepository.save(accountDetails);
         }
-        Account account =accountRepository.findByUserId(userAccID);
-        AccountResponse accountResponse =new AccountResponse();
+
+        Account account = accountRepository.findByUserId(userAccID);
+        AccountResponse accountResponse = new AccountResponse();
         accountResponse.setFullName(account.getFullName());
         accountResponse.setUserEmail(account.getUserEmail());
         accountResponse.setLocation(account.getLocation());
         accountResponse.setPhoneNumber(account.getPhoneNumber());
+
         return ResponseEntity.ok(accountResponse);
     }
 
-
     @Override
-    public ResponseEntity<?> updateAccount_Details(String email,Account userAccount) {
-
+    public ResponseEntity<?> updateAccountDetails(String email, Account userAccount) {
         User currentUser = userRepository.findByEmail(email);
         long currentUserId = currentUser.getId();
 
-        try {
-            if (accountRepository.existsByUserId(currentUserId)) {
+        if (accountRepository.existsByUserId(currentUserId)) {
+            Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
+            currentAccountDetails.setFullName(userAccount.getFullName());
+            currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
+            currentAccountDetails.setLocation(userAccount.getLocation());
 
-                Account currentAccountDetails = accountRepository.findByUserId(currentUserId);
-
-                currentAccountDetails.setFullName(userAccount.getFullName());
-                currentAccountDetails.setPhoneNumber(userAccount.getPhoneNumber());
-                currentAccountDetails.setLocation(userAccount.getLocation());
-
-                if(!accountRepository.existsByUserEmail(userAccount.getUserEmail())){
-                    currentUser.setEmail(userAccount.getUserEmail());
-                    currentAccountDetails.setUserEmail(userAccount.getUserEmail());
-
-                }
-                accountRepository.save(currentAccountDetails);
-                userRepository.save(currentUser);
-                return getAccount_Details(userAccount.getUserEmail());
-            }
-            else{
-                return ResponseEntity.ok(new MessageResponse("Email already exists please enter new email ID"));
+            if (!accountRepository.existsByUserEmail(userAccount.getUserEmail())) {
+                currentUser.setEmail(userAccount.getUserEmail());
+                currentAccountDetails.setUserEmail(userAccount.getUserEmail());
             }
 
-        } catch (Exception e) {
-            return ResponseEntity.ok(e);
+            accountRepository.save(currentAccountDetails);
+            userRepository.save(currentUser);
+
+            return getAccountDetails(userAccount.getUserEmail());
+        } else {
+            return ResponseEntity.ok(new MessageResponse("Email already exists, please enter a new email ID"));
         }
     }
-
-
 
     @Override
     public int generateSixDigitNumber() {
         Random random = new Random();
-        int randomNumber = random.nextInt(900000) + 100000;
-        return randomNumber;
+        return random.nextInt(900000) + 100000;
+    }
+
+
+
+    @Override
+    public ResponseEntity<?> updateEducationDetails(String email, Education userEducation) {
+        User currentEduUser = userRepository.findByEmail(email);
+        long currentEduUserId = currentEduUser.getId();
+
+        if (educationRepository.existsByUserId(currentEduUserId)) {
+            Education currentEduDetails = educationRepository.findByUserId(currentEduUserId);
+            currentEduDetails.setNameOfInstitution(userEducation.getNameOfInstitution());
+            currentEduDetails.setDegree(userEducation.getDegree());
+            currentEduDetails.setStartMonth(userEducation.getStartMonth());
+            currentEduDetails.setStartYear(userEducation.getStartYear());
+            currentEduDetails.setGraduationMonth(userEducation.getGraduationMonth());
+            currentEduDetails.setGraduationYear(userEducation.getGraduationYear());
+            educationRepository.save(currentEduDetails);
+        } else {
+            Education currentEduDetailsNew = new Education();
+            currentEduDetailsNew.setUser(currentEduUser);
+            currentEduDetailsNew.setNameOfInstitution(userEducation.getNameOfInstitution());
+            currentEduDetailsNew.setDegree(userEducation.getDegree());
+            currentEduDetailsNew.setStartMonth(userEducation.getStartMonth());
+            currentEduDetailsNew.setStartYear(userEducation.getStartYear());
+            currentEduDetailsNew.setGraduationMonth(userEducation.getGraduationMonth());
+            currentEduDetailsNew.setGraduationYear(userEducation.getGraduationYear());
+            educationRepository.save(currentEduDetailsNew);
+        }
+
+        return getEducationDetails(email);
     }
 
     @Override
-    public ResponseEntity<?> updateEduction_Details(String email, Education userEducation) {
-        User currentEduUser =userRepository.findByEmail(email);
-        long currentEduUserId =currentEduUser.getId();
-        try {
-            if (educationRepository.existsByUserId(currentEduUserId ))
-            {
-                Education currentEduDetails = educationRepository.findByUserId(currentEduUserId);
-                currentEduDetails.setNameOfInstitution(userEducation.getNameOfInstitution());
-                currentEduDetails.setDegree(userEducation.getDegree());
-                currentEduDetails.setStartMonth(userEducation.getStartMonth());
-                currentEduDetails.setStartYear(userEducation.getStartYear());
-                currentEduDetails.setGraduationMonth(userEducation.getGraduationMonth());
-                currentEduDetails.setGraduationYear(userEducation.getGraduationYear());
-                educationRepository.save(currentEduDetails);
-
-            }else{
-                Education currentEduDetailsNew = new Education();
-                currentEduDetailsNew.setUser(currentEduUser);
-                currentEduDetailsNew.setNameOfInstitution(userEducation.getNameOfInstitution());
-                currentEduDetailsNew.setDegree(userEducation.getDegree());
-                currentEduDetailsNew.setStartMonth(userEducation.getStartMonth());
-                currentEduDetailsNew.setStartYear(userEducation.getStartYear());
-                currentEduDetailsNew.setGraduationMonth(userEducation.getGraduationMonth());
-                currentEduDetailsNew.setGraduationYear(userEducation.getGraduationYear());
-                educationRepository.save(currentEduDetailsNew);
-
-
-            }
-            return getEducation_Details(email);
-        }
-        catch(Exception e){
-            return ResponseEntity.ok(e);
-        }
-
-
-    }
-
-    @Override
-    public ResponseEntity<?> getEducation_Details(String email) {
-        User UserEducationDetails = userRepository.findByEmail(email);
-        long userEducationID =UserEducationDetails.getId();
+    public ResponseEntity<?> getEducationDetails(String email) {
+        User userEducationDetails = userRepository.findByEmail(email);
+        long userEducationID = userEducationDetails.getId();
         Education education = educationRepository.findByUserId(userEducationID);
 
-        if(education != null){
+        if (education != null) {
             EducationResponse educationResponse = getEducationResponse(education);
             return ResponseEntity.ok(educationResponse);
-
-        }
-        else{
-            MessageResponse messageResponse = new MessageResponse("Education Details are not updated ");
+        } else {
+            MessageResponse messageResponse = new MessageResponse("Education details are not updated");
             return ResponseEntity.ok(messageResponse);
         }
-
     }
 
     private static @NotNull EducationResponse getEducationResponse(Education education) {
@@ -207,8 +166,4 @@ public class UserServiceImplementation implements UserService {
         educationResponse.setGraduationYear(education.getGraduationYear());
         return educationResponse;
     }
-
 }
-
-
-

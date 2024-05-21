@@ -31,6 +31,7 @@ public class BioData {
 
     private String phoneNumber;
 
+    @Column(unique = true)
     private String email;
 
     private String website;

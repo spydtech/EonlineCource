@@ -1,12 +1,13 @@
 package com.Eonline.Education.modals;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+//import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -18,20 +19,29 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Ensure lazy loading for improved performance
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Ensure lazy loading for improved performance
+    @JoinColumn(name = "course_id")
     private Course course;
 
-    private Integer price;
+    @NotNull(message = "Price is required")
+    private BigDecimal price;
 
-    private Integer discountedPrice;
+    @NotNull(message = "Discounted price is required")
+    private BigDecimal discountedPrice;
 
+    @NotNull(message = "User ID is required")
     private Long userId;
-    private LocalDateTime deliveryDate;
 
-
-
+//    private LocalDateTime deliveryDate;
+//
+//    // Add fields for quantity, size, color, etc., as needed
+//
+//    // Add auditing fields
+//    private LocalDateTime createdAt;
+//    private LocalDateTime updatedAt;
+    // Constructor, getters, and setters
 }

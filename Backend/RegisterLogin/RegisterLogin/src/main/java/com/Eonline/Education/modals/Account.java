@@ -1,11 +1,15 @@
 package com.Eonline.Education.modals;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
-import java.math.BigInteger;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,19 +20,26 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Full name is required")
+    @Length(max = 100, message = "Full name must be less than 100 characters")
     @Column(name = "full_name")
     private String fullName;
 
+    @NotBlank(message = "Location is required")
     @Column(name = "location")
     private String location;
 
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "\\d{10,15}", message = "Phone number must be between 10 and 15 digits")
     @Column(name = "phone_number")
-    private BigInteger phoneNumber;
+    private String phoneNumber;
 
-    @Column(name = "user_email")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Column(name = "user_email", unique = true)
     private String userEmail;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

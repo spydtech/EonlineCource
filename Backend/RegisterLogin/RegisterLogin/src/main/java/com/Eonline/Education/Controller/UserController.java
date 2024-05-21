@@ -28,23 +28,23 @@ public class UserController {
 
     @GetMapping("/getAccountDetail/{emailid}")
     public ResponseEntity<?> getUserDetails(@PathVariable("emailid") String emailid) {
-        return userService.getAccount_Details(emailid);
+        return userService.getAccountDetails(emailid);
     }
 
     @PutMapping("/updateUserDetails/{emailid}")
     public ResponseEntity<?> updateUserDetails(@PathVariable("emailid") String emailid, @RequestBody Account userAccount) {
-        return userService.updateAccount_Details(emailid, userAccount);
+        return userService.updateAccountDetails(emailid,userAccount);
     }
     // Sending a simple Email
 
     @GetMapping("/getEducationDetail/{emailid}")
     public ResponseEntity<?> getUserEducationDetails(@PathVariable("emailid") String emailid) {
-        return userService.getEducation_Details(emailid);
+        return userService.getEducationDetails(emailid);
     }
 
     @PutMapping("/updateUserEducationDetails/{emailid}")
     public ResponseEntity<?> updateUserEducationDetails(@PathVariable("emailid") String emailid, @RequestBody Education userEducation) {
-        return userService.updateEduction_Details(emailid, userEducation);
+        return userService.updateEducationDetails(emailid,userEducation);
     }
 
 }

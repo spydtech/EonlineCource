@@ -92,7 +92,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws UserException {
             if(generatedOtp !=null && request.getOtp().equals(generatedOtp)){
                 User created = new User();
-                created.setUserName(registeredUserName);
+                created.setFirstName(registeredUserName);
                 created.setEmail(email);
                 created.setPassword(passwordEncoder.encode(registeredPassword));
                 userRepository.save(created);
