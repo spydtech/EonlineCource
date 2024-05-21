@@ -71,9 +71,8 @@ public class AuthController {
         // Store registered email for OTP verification
         email = request.getEmail();
 
-        registeredUserName = request.getUserName();
+        registeredUserName = request.getFirstName()+""+request.getLastName();
         registeredPassword = request.getPassword();
-
         User isEmailExist=userRepository.findByEmail(email);
 
         return ResponseEntity.ok("OTP sent successfully.");
