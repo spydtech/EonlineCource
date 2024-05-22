@@ -43,19 +43,15 @@ package com.Eonline.Education.modals;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 public class OtpVerificationRequest {
     @Id
     private String otp;
-
-    public String getOtp() {
-        return otp;
-    }
-
-    public void setOtp(String otp) {
-        this.otp = otp;
-    }
 
     // Getters and setters
 }

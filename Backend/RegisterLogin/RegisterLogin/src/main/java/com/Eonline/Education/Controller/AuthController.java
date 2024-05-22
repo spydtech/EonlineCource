@@ -71,7 +71,7 @@ public class AuthController {
         // Store registered email for OTP verification
         email = request.getEmail();
 
-        registeredUserName = request.getFirstName()+""+request.getLastName();
+        registeredUserName = request.getFirstName()+" "+request.getLastName();
         registeredPassword = request.getPassword();
         User isEmailExist=userRepository.findByEmail(email);
 
@@ -92,6 +92,7 @@ public class AuthController {
             if(generatedOtp !=null && request.getOtp().equals(generatedOtp)){
                 User created = new User();
                 created.setFirstName(registeredUserName);
+                created.setLastName(registeredUserName);
                 created.setEmail(email);
                 created.setPassword(passwordEncoder.encode(registeredPassword));
                 userRepository.save(created);
