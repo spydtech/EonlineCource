@@ -62,6 +62,11 @@ public class User {
 	@JsonIgnore
 	private BioData bioData;
 
+
+	@ManyToOne
+	@JoinColumn(name = "plan_id")
+	private Plan plan;
+
 	@Version
 	private int version; // Optimistic locking version field
 
