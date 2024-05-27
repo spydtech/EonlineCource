@@ -5,8 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Otp verification">
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserCourseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,15 +64,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/GANES/Desktop/GoogleSignInNew/ECourseOnilne/ECourseOnilne&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/GANES/Downloads/ecommerce java full stack v2/source/spring boot api",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.RegisterLogin.Configuration" />
@@ -137,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715342656676</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Otp verification">
+      <created>1715768503842</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1715768503842</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

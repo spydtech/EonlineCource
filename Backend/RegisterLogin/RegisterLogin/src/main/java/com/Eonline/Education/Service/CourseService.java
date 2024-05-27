@@ -19,11 +19,11 @@ public interface CourseService {
 
     Course findCourseById(Long id) throws CourseException;
 
-    List<Course> findProductByCategory(String category);
+    List<Course> findCourseByCategory(String category);
 
-    List<Course> searchProduct(String query);
+    List<Course> searchCourse(String query);
 
-    Page<Course> getAllProduct(String category, List<String> colors, List<String> sizes,
+    Page<Course> getAllCourse(String category,
                                Integer minPrice, Integer maxPrice, Integer minDiscount, String sort,
                                String stock, Integer pageNumber, Integer pageSize);
 

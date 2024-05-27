@@ -40,6 +40,7 @@ public class UserRegistrationRequest {
     private String LastName;
     private String email;
     private String password;
+    private String role;
 
     // Constructors, getters, and setters
 }

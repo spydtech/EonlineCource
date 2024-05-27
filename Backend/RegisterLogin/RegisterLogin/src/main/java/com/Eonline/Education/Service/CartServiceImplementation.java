@@ -7,10 +7,7 @@ import com.Eonline.Education.modals.CartItem;
 import com.Eonline.Education.modals.Course;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.CartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CartServiceImplementation implements CartService {
@@ -66,7 +63,7 @@ public class CartServiceImplementation implements CartService {
             CartItem cartItem = new CartItem();
             cartItem.setCourse(course);
             cartItem.setCart(cart);
-
+            cartItem.setQuantity(req.getQuantity());
             cartItem.setUserId(userId);
 
 

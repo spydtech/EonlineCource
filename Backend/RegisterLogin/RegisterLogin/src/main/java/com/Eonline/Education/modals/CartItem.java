@@ -2,13 +2,9 @@ package com.Eonline.Education.modals;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import java.math.BigDecimal;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -37,18 +33,11 @@ public class CartItem {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Size(max = 50, message = "Size must be less than or equal to 50 characters")
-    @Column(name = "size")
-    private String size;
-
-    @Positive(message = "Quantity must be positive")
-    @Column(name = "quantity")
-    private int quantity;
-
 
     private int price;
 
     private int discountedPrice;
+    private int quantity;
 
     @NotNull(message = "User ID is required")
     @Column(name = "user_id")
@@ -72,7 +61,7 @@ public class CartItem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, price, course, size);
+        return Objects.hash(id, price, course);
     }
 
     @Override
@@ -82,24 +71,21 @@ public class CartItem {
         CartItem other = (CartItem) obj;
         return Objects.equals(id, other.id) &&
                 Objects.equals(price, other.price) &&
-                Objects.equals(course, other.course) &&
-                Objects.equals(size, other.size);
+                Objects.equals(course, other.course);
+    }
+
+    public CartItem(Long id, Cart cart,int quantity, Course course,Integer price, Long userId) {
+        super();
+        this.id = id;
+        this.cart = cart;
+        this.course = course;
+        this.price = price;
+        this.quantity = quantity;
+        this.userId = userId;
     }
 }
 
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj)
-//            return true;
-//        if (obj == null)
-//            return false;
-//        if (getClass() != obj.getClass())
-//            return false;
-//        CartItem other = (CartItem) obj;
-//        return Objects.equals(id, other.id) && Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
-//                && Objects.equals(course, other.course) && Objects.equals(size, other.size);
-//    }
 
 
 

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImplementation implements CourseService {
@@ -73,31 +72,23 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public List<Course> findProductByCategory(String category) {
+    public List<Course> findCourseByCategory(String category) {
         // Implement category-based filtering if needed
         return List.of();
     }
 
     @Override
-    public List<Course> searchProduct(String query) {
+    public List<Course> searchCourse(String query) {
         return courseRepository.searchProduct(query);
     }
 
     @Override
-    public Page<Course> getAllProduct(String category, List<String> colors, List<String> sizes,
+    public Page<Course> getAllCourse(String category,
                                       Integer minPrice, Integer maxPrice, Integer minDiscount,
                                       String sort, String stock, Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<Course> courses = courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort);
 
-        // If stock filtering is required, uncomment and implement accordingly
-        // if (stock != null) {
-        //     if (stock.equals("in_stock")) {
-        //         courses = courses.stream().filter(c -> c.getQuantity() > 0).collect(Collectors.toList());
-        //     } else if (stock.equals("out_of_stock")) {
-        //         courses = courses.stream().filter(c -> c.getQuantity() < 1).collect(Collectors.toList());
-        //     }
-        // }
 
         int startIndex = (int) pageable.getOffset();
         int endIndex = Math.min(startIndex + pageable.getPageSize(), courses.size());

@@ -26,6 +26,8 @@ public class CreateCourseRequest {
     @Max(value = 100, message = "Discount percentage cannot exceed 100")
     private int discountPercent;
 
+    private String imageUrl;
+
     // Getters and Setters
 
 }

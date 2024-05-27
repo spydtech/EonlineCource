@@ -1,14 +1,16 @@
 package com.Eonline.Education.modals;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -42,6 +44,8 @@ public class Course {
     @Max(value = 100, message = "Discount percentage cannot exceed 100")
     @Column(name = "discount_percent", nullable = false)
     private int discountPercent;
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -52,10 +56,13 @@ public class Course {
     private LocalDateTime updatedAt;
 
     // Custom constructor
-    public Course(String title, String description, int price, int discountedPrice, int discountPercent) {
+    public Course(Long id,String title, String description,String imageUrl, int price, int discountedPrice, int discountPercent) {
+        super();
+        this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
+        this.imageUrl = imageUrl;
         this.discountedPrice = discountedPrice;
         this.discountPercent = discountPercent;
     }

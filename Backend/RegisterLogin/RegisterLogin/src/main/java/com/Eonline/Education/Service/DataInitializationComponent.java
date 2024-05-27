@@ -44,13 +44,11 @@ public class DataInitializationComponent implements CommandLineRunner {
                 adminUser.setLastName("tech");
                 adminUser.setEmail(adminUsername);
                 adminUser.setPassword(passwordEncoder.encode("Spyd@1234"));
-                adminUser.setRole(UserRole.ROLE_ADMIN);
+                adminUser.setRole(String.valueOf(UserRole.ROLE_ADMIN));
 
                 User admin = userRepository.save(adminUser);
 
                 cartService.createCart(admin);
-
-
 
                 logger.info("Admin user initialized successfully.");
             } else {

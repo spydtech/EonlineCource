@@ -1,7 +1,6 @@
 package com.Eonline.Education.modals;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,10 +27,12 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "cart_items")
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "total_price")
     private double totalPrice;
+
 
     @Column(name = "total_item")
     private int totalItem;
@@ -42,17 +43,13 @@ public class Cart {
     @Column(name = "discount")
     private int discount;
 
-    /**
-     * Constructs a new Cart for a given user with default values.
-     *
-     * @param user the user associated with this cart
-     */
-    public Cart(User user) {
+    public Cart(Long id,User user, Set<CartItem> cartItems, double totalPrice, int totalItem){
+        super();
+        this.id = id;
         this.user = user;
-        this.totalPrice = 0;
-        this.totalItem = 0;
-        this.totalDiscountedPrice = 0;
-        this.discount = 0;
+        this.cartItems = cartItems;
+        this.totalPrice = totalPrice;
+        this.totalItem = totalItem;
     }
 
     // Getters and setters (if not using Lombok)

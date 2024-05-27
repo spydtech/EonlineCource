@@ -2,6 +2,7 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.LoginRequest;
+import com.Eonline.Education.Service.CartService;
 import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.OtpService;
@@ -34,6 +35,8 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
     private CustomUserDetails customUserDetails;
+
+    private CartService cartService;
     @Autowired
     private EmailService emailService;
 
@@ -42,21 +45,25 @@ public class AuthController {
 
     private String generatedOtp;
     private String email;
-    private String registeredUserName;
+    private String registeredFirstName;
+    private String registeredLastName;
 
     private String registeredPassword;
 
+    private String registeredRole;
 
-    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomUserDetails customUserDetails){
+
+    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomUserDetails customUserDetails,CartService cartService){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
         this.jwtTokenProvider=jwtTokenProvider;
         this.customUserDetails=customUserDetails;
+        this.cartService = cartService;
 
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request) throws MessagingException, jakarta.mail.MessagingException, UserException {
+    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request,User user) throws MessagingException, jakarta.mail.MessagingException, UserException {
         // Check if the email is already registered
         if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email is already registered.");
@@ -71,31 +78,28 @@ public class AuthController {
         // Store registered email for OTP verification
         email = request.getEmail();
 
-        registeredUserName = request.getFirstName()+" "+request.getLastName();
+        registeredFirstName = request.getFirstName();
+        registeredLastName=request.getLastName();
         registeredPassword = request.getPassword();
-        User isEmailExist=userRepository.findByEmail(email);
+        registeredRole= request.getRole();
+
+
 
         return ResponseEntity.ok("OTP sent successfully.");
     }
-
-//    @PostMapping("/checkEmail")
-//    public ResponseEntity<String> checkEmail(@RequestBody String email) {
-//        // Check if the email is already registered
-//        if (userRepository.existsByEmail(email)) {
-//            return ResponseEntity.badRequest().body("Email is already registered.");
-//        }
-//        return ResponseEntity.ok("Email is available."); // Email is not registered
-//    }
 
     @PostMapping("/verify-otp")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws UserException {
             if(generatedOtp !=null && request.getOtp().equals(generatedOtp)){
                 User created = new User();
-                created.setFirstName(registeredUserName);
-                created.setLastName(registeredUserName);
+                created.setFirstName(registeredFirstName);
+                created.setLastName(registeredLastName);
                 created.setEmail(email);
+                created.setRole(registeredRole);
                 created.setPassword(passwordEncoder.encode(registeredPassword));
-                userRepository.save(created);
+                User savedUser=userRepository.save(created);
+
+                cartService.createCart(savedUser);
 
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, registeredPassword);
@@ -106,8 +110,8 @@ public class AuthController {
                 // Clear stored OTP and registered email after successful registration
                 generatedOtp = null;
                 email = null;
-                registeredUserName = null;
-                registeredPassword = null;
+                registeredFirstName = null;
+                registeredLastName = null;
                 return new ResponseEntity<AuthResponse>(authResponse,HttpStatus.OK);
 
             }else {

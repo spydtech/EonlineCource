@@ -14,6 +14,8 @@ public class AddItemRequest {
     @NotNull(message = "Course ID is required")
     private Long courseId;
 
+    private int quantity;
+
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be non-negative")
     private Integer price;
