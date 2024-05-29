@@ -14,6 +14,7 @@ import com.Eonline.Education.response.MessageResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -165,5 +166,22 @@ public class UserServiceImplementation implements UserService {
         educationResponse.setGraduationMonth(education.getGraduationMonth());
         educationResponse.setGraduationYear(education.getGraduationYear());
         return educationResponse;
+    }
+
+
+        public User findByEmail(String email) {
+            User user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new UsernameNotFoundException("User not found with email: " + email);
+            }
+            return user;
+        }
+
+
+
+
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 }

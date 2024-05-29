@@ -44,7 +44,7 @@ public class DataInitializationComponent implements CommandLineRunner {
                 adminUser.setLastName("tech");
                 adminUser.setEmail(adminUsername);
                 adminUser.setPassword(passwordEncoder.encode("Spyd@1234"));
-                adminUser.setRole(String.valueOf(UserRole.ROLE_ADMIN));
+                adminUser.setRole("ADMIN");
 
                 User admin = userRepository.save(adminUser);
 

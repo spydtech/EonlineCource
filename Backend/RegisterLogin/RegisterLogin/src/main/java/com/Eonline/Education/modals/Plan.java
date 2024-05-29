@@ -22,6 +22,12 @@ public class Plan {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "price", nullable = false)
+    private int price;
+
+    public Plan(PlanType planType, String basicPlanDescription) {
+    }
+
     // Enum for Plan Types
     public enum PlanType {
         BASIC, PREMIUM, ADVANCED
@@ -32,9 +38,10 @@ public class Plan {
     private PlanType planType;
 
     // Custom constructor
-    public Plan(PlanType planType, String description) {
+    public Plan(PlanType planType, String description, int price) {
         this.planType = planType;
         this.name = planType.name();
         this.description = description;
+        this.price = price;
     }
 }
