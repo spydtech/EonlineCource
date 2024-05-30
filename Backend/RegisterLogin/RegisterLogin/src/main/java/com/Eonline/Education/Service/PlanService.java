@@ -16,7 +16,7 @@ public class PlanService {
     @Autowired
     private PlanRepository planRepository;
 
-    @PostConstruct
+    //@PostConstruct
     public void initPlans() {
         if (planRepository.count() == 0) {
             Plan basicPlan = new Plan(Plan.PlanType.BASIC, "Basic Plan Description");

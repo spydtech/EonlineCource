@@ -6,7 +6,9 @@ import com.Eonline.Education.repository.CalendarEventRepository;
 import com.Eonline.Education.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CalendarEventServiceImplementation implements CalendarEventService {
     @Autowired
     private  UserRepository userRepository;
