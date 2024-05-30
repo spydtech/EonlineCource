@@ -24,4 +24,8 @@ public interface UserService {
 	ResponseEntity<?> updateEducationDetails(String email, Education userEducation);
 
 	ResponseEntity<?> getEducationDetails(String email);
+
+	public User findByEmail(String email);
+
+	public User saveUser(User user);
 }

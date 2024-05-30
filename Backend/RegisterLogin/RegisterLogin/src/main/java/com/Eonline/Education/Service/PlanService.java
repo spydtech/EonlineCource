@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class PlanService {
@@ -24,4 +25,16 @@ public class PlanService {
             planRepository.saveAll(Arrays.asList(basicPlan, premiumPlan, advancedPlan));
         }
     }
+    public Optional<Plan> getPlanById(Long id) {
+        return planRepository.findById(id);
+    }
+    public Plan updatePlan(Long id, Plan planDetails) {
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Plan not found"));
+        plan.setName(planDetails.getName());
+        plan.setDescription(planDetails.getDescription());
+        plan.setPlanType(planDetails.getPlanType());
+        return planRepository.save(plan);
+    }
+
 }

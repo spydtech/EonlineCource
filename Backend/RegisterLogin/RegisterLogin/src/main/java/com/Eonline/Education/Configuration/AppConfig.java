@@ -27,7 +27,8 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/plans/**").permitAll()  // Restrict access to /api/plans/** to ADMIN role
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")// Restrict access to /api/plans/** to ADMIN role
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class).csrf().disable()
                 .cors().configurationSource(new CorsConfigurationSource() {
