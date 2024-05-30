@@ -62,6 +62,10 @@ public class User {
 	@JsonIgnore
 	private BioData bioData;
 
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private CalendarEvent calendarEvent;
+
 
 	@ManyToOne
 	@JoinColumn(name = "plan_id")
