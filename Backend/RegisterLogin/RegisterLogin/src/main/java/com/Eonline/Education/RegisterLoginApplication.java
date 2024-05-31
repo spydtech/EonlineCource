@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication(exclude= SecurityAutoConfiguration.class)
-public class  RegisterLoginApplication implements CommandLineRunner {
+public class RegisterLoginApplication implements CommandLineRunner {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 

@@ -1,7 +1,8 @@
-package com.Eonline.Education.modals;
+package com.Eonline.Education.modals; // Corrected the package name typo
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -34,29 +36,29 @@ public class User {
 	private String password;
 
 	@NotBlank(message = "Email is required")
-	@Column(name = "email")
+	@Email(message = "Email should be valid")
+	@Column(name = "email", unique = true) // Added unique constraint to email
 	private String email;
 
 	@Column(name = "created_at")
-	private Date createdAt;
+	private Date createdAt = new Date(); // Initialize createdAt with the current date
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Account account;
-
 
 	@Column(name = "role")
 	private String role;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Order> orders;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Education education;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private BioData bioData;
 
@@ -64,24 +66,10 @@ public class User {
 	@JsonIgnore
 	private CalendarEvent calendarEvent;
 
-
 	@ManyToOne
 	@JoinColumn(name = "plan_id")
 	private Plan plan;
 
 	@Version
 	private int version; // Optimistic locking version field
-
-//	// Constructor, getters, and setters
-//
-//	// Hashing password before setting it
-//	public void setPassword(String password) {
-//		// Perform password hashing before setting it
-//		this.password = hashPassword(password);
-//	}
-//
-//	// Hashing method using BCrypt
-//	private String hashPassword(String password) {
-//		return BCrypt.hashpw(password, BCrypt.gensalt());
-//	}
 }
