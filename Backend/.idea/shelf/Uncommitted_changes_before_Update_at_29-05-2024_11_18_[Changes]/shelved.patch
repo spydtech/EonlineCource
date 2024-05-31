@@ -1,0 +1,570 @@
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Controller;\r\n\r\nimport com.Eonline.Education.Request.CreateCourseRequest;\r\nimport com.Eonline.Education.Service.CourseService;\r\nimport com.Eonline.Education.exceptions.CourseException;\r\nimport com.Eonline.Education.modals.Course;\r\nimport com.Eonline.Education.response.ApiResponse;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(\"/api/admin/courses\")\r\npublic class AdminCourseController {\r\n\r\n    private CourseService courseService;\r\n\r\n    public AdminCourseController(CourseService courseService) {\r\n        this.courseService = courseService;\r\n    }\r\n\r\n    @PostMapping(\"/\")\r\n    public ResponseEntity<Course> createProductHandler(@RequestBody CreateCourseRequest req) throws CourseException {\r\n\r\n        Course createdCourse = courseService.createCourse(req);\r\n\r\n        return new ResponseEntity<Course>(createdCourse, HttpStatus.ACCEPTED);\r\n\r\n    }\r\n\r\n    @DeleteMapping(\"/{courseId}/delete\")\r\n    public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable Long productId) throws CourseException{\r\n\r\n        System.out.println(\"dlete ccurse controller .... \");\r\n        String msg=courseService.deleteCourse(productId);\r\n        System.out.println(\"dlete course controller .... msg \"+msg);\r\n        ApiResponse res=new ApiResponse(msg,true);\r\n\r\n        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);\r\n\r\n    }\r\n\r\n    @GetMapping(\"/all\")\r\n    public ResponseEntity<List<Course>> findAllCourses(){\r\n\r\n        List<Course> courses = courseService.getAllCourses();\r\n\r\n        return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);\r\n    }\r\n\r\n    @GetMapping(\"/recent\")\r\n    public ResponseEntity<List<Course>> recentlyAddedCourse(){\r\n\r\n        List<Course> courses = courseService.recentlyAddedCourse();\r\n\r\n        return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);\r\n    }\r\n\r\n\r\n    @PutMapping(\"/{courseId}/update\")\r\n    public ResponseEntity<Course> updateCourseHandler(@RequestBody Course req,@PathVariable Long courseId) throws CourseException{\r\n\r\n        Course updatedCourse=courseService.updateCourse(courseId, req);\r\n\r\n        return new ResponseEntity<Course>(updatedCourse,HttpStatus.OK);\r\n    }\r\n\r\n    @PostMapping(\"/creates\")\r\n    public ResponseEntity<ApiResponse> createMultipleCourse(@RequestBody CreateCourseRequest[] reqs) throws CourseException{\r\n\r\n        for(CreateCourseRequest course:reqs) {\r\n            courseService.createCourse(course);\r\n        }\r\n\r\n        ApiResponse res=new ApiResponse(\"courses created successfully\",true);\r\n        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java	(date 1716914163013)
+@@ -15,67 +15,49 @@
+ @RequestMapping("/api/admin/courses")
+ public class AdminCourseController {
+ 
+-    private CourseService courseService;
++    private final CourseService courseService;
+ 
+     public AdminCourseController(CourseService courseService) {
+         this.courseService = courseService;
+     }
+ 
+-    @PostMapping("/")
+-    public ResponseEntity<Course> createProductHandler(@RequestBody CreateCourseRequest req) throws CourseException {
+-
++    @PostMapping("/addCourse")
++    public ResponseEntity<Course> createCourseHandler(@RequestBody CreateCourseRequest req) throws CourseException {
+         Course createdCourse = courseService.createCourse(req);
+-
+-        return new ResponseEntity<Course>(createdCourse, HttpStatus.ACCEPTED);
+-
++        return ResponseEntity.status(HttpStatus.CREATED).body(createdCourse);
+     }
+ 
+     @DeleteMapping("/{courseId}/delete")
+-    public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable Long productId) throws CourseException{
+-
+-        System.out.println("dlete ccurse controller .... ");
+-        String msg=courseService.deleteCourse(productId);
+-        System.out.println("dlete course controller .... msg "+msg);
+-        ApiResponse res=new ApiResponse(msg,true);
+-
+-        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
+-
++    public ResponseEntity<ApiResponse> deleteCourseHandler(@PathVariable Long courseId) throws CourseException {
++        String message = courseService.deleteCourse(courseId);
++        ApiResponse response = new ApiResponse(message, true);
++        return ResponseEntity.status(HttpStatus.OK).body(response);
+     }
+ 
+     @GetMapping("/all")
+-    public ResponseEntity<List<Course>> findAllCourses(){
+-
++    public ResponseEntity<List<Course>> getAllCourses() {
+         List<Course> courses = courseService.getAllCourses();
+-
+-        return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
++        return ResponseEntity.status(HttpStatus.OK).body(courses);
+     }
+ 
+     @GetMapping("/recent")
+-    public ResponseEntity<List<Course>> recentlyAddedCourse(){
+-
++    public ResponseEntity<List<Course>> getRecentlyAddedCourses() {
+         List<Course> courses = courseService.recentlyAddedCourse();
+-
+-        return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
++        return ResponseEntity.status(HttpStatus.OK).body(courses);
+     }
+-
+ 
+     @PutMapping("/{courseId}/update")
+-    public ResponseEntity<Course> updateCourseHandler(@RequestBody Course req,@PathVariable Long courseId) throws CourseException{
+-
+-        Course updatedCourse=courseService.updateCourse(courseId, req);
+-
+-        return new ResponseEntity<Course>(updatedCourse,HttpStatus.OK);
++    public ResponseEntity<Course> updateCourseHandler(@RequestBody Course req, @PathVariable Long courseId) throws CourseException {
++        Course updatedCourse = courseService.updateCourse(courseId, req);
++        return ResponseEntity.status(HttpStatus.OK).body(updatedCourse);
+     }
+ 
+     @PostMapping("/creates")
+-    public ResponseEntity<ApiResponse> createMultipleCourse(@RequestBody CreateCourseRequest[] reqs) throws CourseException{
+-
+-        for(CreateCourseRequest course:reqs) {
++    public ResponseEntity<ApiResponse> createMultipleCourses(@RequestBody CreateCourseRequest[] reqs) throws CourseException {
++        for (CreateCourseRequest course : reqs) {
+             courseService.createCourse(course);
+         }
+-
+-        ApiResponse res=new ApiResponse("courses created successfully",true);
+-        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
++        ApiResponse response = new ApiResponse("Courses created successfully", true);
++        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+     }
+-
+-}
+\ No newline at end of file
++}
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Request;\r\n\r\nimport jakarta.validation.constraints.Min;\r\nimport jakarta.validation.constraints.NotNull;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\n@Data\r\n@NoArgsConstructor\r\n@AllArgsConstructor\r\npublic class AddItemRequest {\r\n\r\n    @NotNull(message = \"Course ID is required\")\r\n    private Long courseId;\r\n\r\n    private int quantity;\r\n\r\n    @NotNull(message = \"Price is required\")\r\n    @Min(value = 0, message = \"Price must be non-negative\")\r\n    private Integer price;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java	(date 1716913876311)
+@@ -19,4 +19,6 @@
+     @NotNull(message = "Price is required")
+     @Min(value = 0, message = "Price must be non-negative")
+     private Integer price;
++
++    // Getters and Setters
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Request;\r\n\r\nimport jakarta.validation.constraints.*;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\n\r\n@Setter\r\n@Getter\r\npublic class CreateCourseRequest {\r\n\r\n    @NotBlank(message = \"Title is required\")\r\n    private String title;\r\n\r\n    @NotBlank(message = \"Description is required\")\r\n    private String description;\r\n\r\n    @NotNull(message = \"Price is required\")\r\n    @Positive(message = \"Price must be positive\")\r\n    private int price;\r\n\r\n    @PositiveOrZero(message = \"Discounted price must be non-negative\")\r\n    private int discountedPrice;\r\n\r\n    @NotNull(message = \"Discount percentage is required\")\r\n    @PositiveOrZero(message = \"Discount percentage must be non-negative\")\r\n    @Max(value = 100, message = \"Discount percentage cannot exceed 100\")\r\n    private int discountPercent;\r\n\r\n    private String imageUrl;\r\n\r\n    // Getters and Setters\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java	(date 1716913845290)
+@@ -28,6 +28,9 @@
+ 
+     private String imageUrl;
+ 
+-    // Getters and Setters
+-
++    // Custom constructor to set default values for optional fields
++    public CreateCourseRequest() {
++        this.discountedPrice = 0; // Default value for discounted price
++        this.imageUrl = ""; // Default value for image URL
++    }
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Service;\r\n\r\nimport com.Eonline.Education.Request.CreateCourseRequest;\r\nimport com.Eonline.Education.exceptions.CourseException;\r\nimport com.Eonline.Education.modals.Course;\r\nimport com.Eonline.Education.repository.CourseRepository;\r\nimport org.springframework.data.domain.Page;\r\nimport org.springframework.data.domain.PageImpl;\r\nimport org.springframework.data.domain.PageRequest;\r\nimport org.springframework.data.domain.Pageable;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.time.LocalDateTime;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@Service\r\npublic class CourseServiceImplementation implements CourseService {\r\n    private CourseRepository courseRepository;\r\n    private UserService userService;\r\n\r\n    public CourseServiceImplementation(CourseRepository courseRepository, UserService userService) {\r\n        this.courseRepository = courseRepository;\r\n        this.userService = userService;\r\n    }\r\n\r\n    @Override\r\n    public Course createCourse(CreateCourseRequest req) {\r\n        Course course = new Course();\r\n        course.setTitle(req.getTitle());\r\n        course.setDescription(req.getDescription());\r\n        course.setDiscountedPrice(req.getDiscountedPrice());\r\n        course.setDiscountPercent(req.getDiscountPercent());\r\n        course.setPrice(req.getPrice());\r\n        course.setCreatedAt(LocalDateTime.now());\r\n\r\n        Course savedCourse = courseRepository.save(course);\r\n        System.out.println(\"courses - \" + course);\r\n\r\n        return savedCourse;\r\n    }\r\n\r\n    @Override\r\n    public String deleteCourse(Long courseId) throws CourseException {\r\n        Course course = findCourseById(courseId);\r\n        System.out.println(\"delete course \" + course.getId() + \" - \" + courseId);\r\n        courseRepository.delete(course);\r\n        return \"course deleted Successfully\";\r\n    }\r\n\r\n    @Override\r\n    public Course updateCourse(Long courseId, Course req) throws CourseException {\r\n        Course course = findCourseById(courseId);\r\n        if (req.getDescription() != null) {\r\n            course.setDescription(req.getDescription());\r\n        }\r\n        return courseRepository.save(course);\r\n    }\r\n\r\n    @Override\r\n    public List<Course> getAllCourses() {\r\n        return courseRepository.findAll();\r\n    }\r\n\r\n    @Override\r\n    public Course findCourseById(Long id) throws CourseException {\r\n        Optional<Course> opt = courseRepository.findById(id);\r\n        if (opt.isPresent()) {\r\n            return opt.get();\r\n        }\r\n        throw new CourseException(\"course not found with id \" + id);\r\n    }\r\n\r\n    @Override\r\n    public List<Course> findCourseByCategory(String category) {\r\n        // Implement category-based filtering if needed\r\n        return List.of();\r\n    }\r\n\r\n    @Override\r\n    public List<Course> searchCourse(String query) {\r\n        return courseRepository.searchProduct(query);\r\n    }\r\n\r\n    @Override\r\n    public Page<Course> getAllCourse(String category,\r\n                                      Integer minPrice, Integer maxPrice, Integer minDiscount,\r\n                                      String sort, String stock, Integer pageNumber, Integer pageSize) {\r\n        Pageable pageable = PageRequest.of(pageNumber, pageSize);\r\n        List<Course> courses = courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort);\r\n\r\n\r\n        int startIndex = (int) pageable.getOffset();\r\n        int endIndex = Math.min(startIndex + pageable.getPageSize(), courses.size());\r\n\r\n        List<Course> pageContent = courses.subList(startIndex, endIndex);\r\n        return new PageImpl<>(pageContent, pageable, courses.size());\r\n    }\r\n\r\n    @Override\r\n    public List<Course> recentlyAddedCourse() {\r\n        return courseRepository.findTop10ByOrderByCreatedAtDesc();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java	(date 1716914059956)
+@@ -5,7 +5,6 @@
+ import com.Eonline.Education.modals.Course;
+ import com.Eonline.Education.repository.CourseRepository;
+ import org.springframework.data.domain.Page;
+-import org.springframework.data.domain.PageImpl;
+ import org.springframework.data.domain.PageRequest;
+ import org.springframework.data.domain.Pageable;
+ import org.springframework.stereotype.Service;
+@@ -16,36 +15,34 @@
+ 
+ @Service
+ public class CourseServiceImplementation implements CourseService {
+-    private CourseRepository courseRepository;
+-    private UserService userService;
++    private final CourseRepository courseRepository;
+ 
+-    public CourseServiceImplementation(CourseRepository courseRepository, UserService userService) {
++    public CourseServiceImplementation(CourseRepository courseRepository) {
+         this.courseRepository = courseRepository;
+-        this.userService = userService;
+     }
+ 
+     @Override
+     public Course createCourse(CreateCourseRequest req) {
++        // Validate request data
++        // Example: if (req.getTitle() == null || req.getTitle().isEmpty()) { throw new IllegalArgumentException("Title is required"); }
++
+         Course course = new Course();
+         course.setTitle(req.getTitle());
+         course.setDescription(req.getDescription());
+         course.setDiscountedPrice(req.getDiscountedPrice());
+         course.setDiscountPercent(req.getDiscountPercent());
+         course.setPrice(req.getPrice());
++        course.setImageUrl(req.getImageUrl());
+         course.setCreatedAt(LocalDateTime.now());
+ 
+-        Course savedCourse = courseRepository.save(course);
+-        System.out.println("courses - " + course);
+-
+-        return savedCourse;
++        return courseRepository.save(course);
+     }
+ 
+     @Override
+     public String deleteCourse(Long courseId) throws CourseException {
+         Course course = findCourseById(courseId);
+-        System.out.println("delete course " + course.getId() + " - " + courseId);
+         courseRepository.delete(course);
+-        return "course deleted Successfully";
++        return "Course deleted successfully";
+     }
+ 
+     @Override
+@@ -65,10 +62,7 @@
+     @Override
+     public Course findCourseById(Long id) throws CourseException {
+         Optional<Course> opt = courseRepository.findById(id);
+-        if (opt.isPresent()) {
+-            return opt.get();
+-        }
+-        throw new CourseException("course not found with id " + id);
++        return opt.orElseThrow(() -> new CourseException("Course not found with ID: " + id));
+     }
+ 
+     @Override
+@@ -83,18 +77,10 @@
+     }
+ 
+     @Override
+-    public Page<Course> getAllCourse(String category,
+-                                      Integer minPrice, Integer maxPrice, Integer minDiscount,
+-                                      String sort, String stock, Integer pageNumber, Integer pageSize) {
++    public Page<Course> getAllCourse(String category, Integer minPrice, Integer maxPrice, Integer minDiscount,
++                                     String sort, String stock, Integer pageNumber, Integer pageSize) {
+         Pageable pageable = PageRequest.of(pageNumber, pageSize);
+-        List<Course> courses = courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort);
+-
+-
+-        int startIndex = (int) pageable.getOffset();
+-        int endIndex = Math.min(startIndex + pageable.getPageSize(), courses.size());
+-
+-        List<Course> pageContent = courses.subList(startIndex, endIndex);
+-        return new PageImpl<>(pageContent, pageable, courses.size());
++        return (Page<Course>) courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort, pageable);
+     }
+ 
+     @Override
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Controller;\r\n\r\nimport java.util.List;\r\n\r\nimport com.Eonline.Education.Service.UserService;\r\nimport com.Eonline.Education.exceptions.UserException;\r\nimport com.Eonline.Education.modals.User;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.HttpStatus;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.RequestHeader;\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n\r\n\r\n\r\n@RestController\r\n@RequestMapping(\"/api/admin\")\r\npublic class AdminUserController {\r\n\r\n    @Autowired\r\n    private UserService userService;\r\n\r\n    @GetMapping(\"/users\")\r\n    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(\"Authorization\") String jwt) throws UserException {\r\n\r\n        System.out.println(\"/api/users/profile\");\r\n        List<User> user=userService.findAllUsers();\r\n        return new ResponseEntity<>(user,HttpStatus.ACCEPTED);\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java	(date 1716895282586)
+@@ -1,7 +1,5 @@
+ package com.Eonline.Education.Controller;
+ 
+-import java.util.List;
+-
+ import com.Eonline.Education.Service.UserService;
+ import com.Eonline.Education.exceptions.UserException;
+ import com.Eonline.Education.modals.User;
+@@ -13,6 +11,8 @@
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RestController;
+ 
++import java.util.List;
++
+ 
+ 
+ @RestController
+@@ -29,6 +29,4 @@
+         List<User> user=userService.findAllUsers();
+         return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
+     }
+-
+-
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.repository;\r\n\r\nimport com.Eonline.Education.modals.Course;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.data.repository.query.Param;\r\nimport org.springframework.stereotype.Repository;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\n\r\nimport java.util.List;\r\n\r\n@Repository\r\npublic interface CourseRepository extends JpaRepository<Course, Long> {\r\n\r\n    @Query(\"SELECT c FROM Course c WHERE \" +\r\n            \"((:minPrice IS NULL AND :maxPrice IS NULL) OR (c.discountedPrice BETWEEN :minPrice AND :maxPrice)) AND \" +\r\n            \"(:minDiscount IS NULL OR c.discountPercent >= :minDiscount) \" +\r\n            \"ORDER BY CASE WHEN :sort = 'price_low' THEN c.discountedPrice END ASC, \" +\r\n            \"CASE WHEN :sort = 'price_high' THEN c.discountedPrice END DESC, \" +\r\n            \"c.createdAt DESC\")\r\n    List<Course> filterCourses(@Param(\"minPrice\") Integer minPrice,\r\n                               @Param(\"maxPrice\") Integer maxPrice,\r\n                               @Param(\"minDiscount\") Integer minDiscount,\r\n                               @Param(\"sort\") String sort);\r\n\r\n    List<Course> findTop10ByOrderByCreatedAtDesc();\r\n\r\n    @Query(\"SELECT c FROM Course c WHERE c.title LIKE %:query% OR c.description LIKE %:query%\")\r\n    List<Course> searchProduct(@Param(\"query\") String query);\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java	(date 1716914059936)
+@@ -1,6 +1,7 @@
+ package com.Eonline.Education.repository;
+ 
+ import com.Eonline.Education.modals.Course;
++import org.springframework.data.domain.Pageable;
+ import org.springframework.data.jpa.repository.Query;
+ import org.springframework.data.repository.query.Param;
+ import org.springframework.stereotype.Repository;
+@@ -11,6 +12,7 @@
+ @Repository
+ public interface CourseRepository extends JpaRepository<Course, Long> {
+ 
++    // Custom query to filter courses based on price, discount, and sorting criteria
+     @Query("SELECT c FROM Course c WHERE " +
+             "((:minPrice IS NULL AND :maxPrice IS NULL) OR (c.discountedPrice BETWEEN :minPrice AND :maxPrice)) AND " +
+             "(:minDiscount IS NULL OR c.discountPercent >= :minDiscount) " +
+@@ -20,10 +22,12 @@
+     List<Course> filterCourses(@Param("minPrice") Integer minPrice,
+                                @Param("maxPrice") Integer maxPrice,
+                                @Param("minDiscount") Integer minDiscount,
+-                               @Param("sort") String sort);
++                               @Param("sort") String sort, Pageable pageable);
+ 
++    // Custom query to fetch top 10 courses by creation date
+     List<Course> findTop10ByOrderByCreatedAtDesc();
+ 
++    // Custom query to search for courses based on a query string in title or description
+     @Query("SELECT c FROM Course c WHERE c.title LIKE %:query% OR c.description LIKE %:query%")
+     List<Course> searchProduct(@Param("query") String query);
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Service;\r\n\r\nimport com.Eonline.Education.Request.CreateCourseRequest;\r\nimport com.Eonline.Education.exceptions.CourseException;\r\nimport com.Eonline.Education.modals.Course;\r\nimport org.springframework.data.domain.Page;\r\n\r\nimport java.util.List;\r\n\r\npublic interface CourseService {\r\n\r\n    Course createCourse(CreateCourseRequest req);\r\n\r\n    String deleteCourse(Long courseId) throws CourseException;\r\n\r\n    Course updateCourse(Long courseId, Course req) throws CourseException;\r\n\r\n    List<Course> getAllCourses();\r\n\r\n    Course findCourseById(Long id) throws CourseException;\r\n\r\n    List<Course> findCourseByCategory(String category);\r\n\r\n    List<Course> searchCourse(String query);\r\n\r\n    Page<Course> getAllCourse(String category,\r\n                               Integer minPrice, Integer maxPrice, Integer minDiscount, String sort,\r\n                               String stock, Integer pageNumber, Integer pageSize);\r\n\r\n    List<Course> recentlyAddedCourse();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java	(date 1716913935992)
+@@ -9,23 +9,32 @@
+ 
+ public interface CourseService {
+ 
++    // Create a new course
+     Course createCourse(CreateCourseRequest req);
+ 
++    // Delete a course by ID
+     String deleteCourse(Long courseId) throws CourseException;
+ 
++    // Update a course by ID
+     Course updateCourse(Long courseId, Course req) throws CourseException;
+ 
++    // Get all courses
+     List<Course> getAllCourses();
+ 
++    // Find a course by ID
+     Course findCourseById(Long id) throws CourseException;
+ 
++    // Find courses by category
+     List<Course> findCourseByCategory(String category);
+ 
++    // Search for courses
+     List<Course> searchCourse(String query);
+ 
++    // Get all courses with pagination and filtering options
+     Page<Course> getAllCourse(String category,
+-                               Integer minPrice, Integer maxPrice, Integer minDiscount, String sort,
+-                               String stock, Integer pageNumber, Integer pageSize);
++                              Integer minPrice, Integer maxPrice, Integer minDiscount, String sort,
++                              String stock, Integer pageNumber, Integer pageSize);
+ 
++    // Get recently added courses
+     List<Course> recentlyAddedCourse();
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.modals;\r\n\r\nimport jakarta.persistence.*;\r\nimport jakarta.validation.constraints.Max;\r\nimport jakarta.validation.constraints.NotBlank;\r\nimport jakarta.validation.constraints.NotNull;\r\nimport jakarta.validation.constraints.PositiveOrZero;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\nimport org.springframework.data.annotation.CreatedDate;\r\nimport org.springframework.data.annotation.LastModifiedDate;\r\nimport org.springframework.data.jpa.domain.support.AuditingEntityListener;\r\n\r\nimport java.time.LocalDateTime;\r\n\r\n@Entity\r\n@Data\r\n@NoArgsConstructor\r\n@EntityListeners(AuditingEntityListener.class)\r\n@Table(name = \"courses\")\r\npublic class Course {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long id;\r\n\r\n    @NotBlank(message = \"Title is required\")\r\n    @Column(name = \"title\", nullable = false)\r\n    private String title;\r\n\r\n    @NotBlank(message = \"Description is required\")\r\n    @Column(name = \"description\", nullable = false)\r\n    private String description;\r\n\r\n    @NotNull(message = \"Price is required\")\r\n    @Column(name = \"price\", nullable = false)\r\n    private int price;\r\n\r\n    @Column(name = \"discounted_price\")\r\n    private int discountedPrice;\r\n\r\n    @NotNull(message = \"Discount percentage is required\")\r\n    @PositiveOrZero(message = \"Discount percentage must be non-negative\")\r\n    @Max(value = 100, message = \"Discount percentage cannot exceed 100\")\r\n    @Column(name = \"discount_percent\", nullable = false)\r\n    private int discountPercent;\r\n    @Column(name = \"image_url\")\r\n    private String imageUrl;\r\n\r\n    @CreatedDate\r\n    @Column(name = \"created_at\", updatable = false, nullable = false)\r\n    private LocalDateTime createdAt;\r\n\r\n    @LastModifiedDate\r\n    @Column(name = \"updated_at\", nullable = false)\r\n    private LocalDateTime updatedAt;\r\n\r\n    // Custom constructor\r\n    public Course(Long id,String title, String description,String imageUrl, int price, int discountedPrice, int discountPercent) {\r\n        super();\r\n        this.id = id;\r\n        this.title = title;\r\n        this.description = description;\r\n        this.price = price;\r\n        this.imageUrl = imageUrl;\r\n        this.discountedPrice = discountedPrice;\r\n        this.discountPercent = discountPercent;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java	(date 1716913685133)
+@@ -8,7 +8,6 @@
+ import lombok.Data;
+ import lombok.NoArgsConstructor;
+ import org.springframework.data.annotation.CreatedDate;
+-import org.springframework.data.annotation.LastModifiedDate;
+ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+ 
+ import java.time.LocalDateTime;
+@@ -44,6 +43,7 @@
+     @Max(value = 100, message = "Discount percentage cannot exceed 100")
+     @Column(name = "discount_percent", nullable = false)
+     private int discountPercent;
++
+     @Column(name = "image_url")
+     private String imageUrl;
+ 
+@@ -51,19 +51,14 @@
+     @Column(name = "created_at", updatable = false, nullable = false)
+     private LocalDateTime createdAt;
+ 
+-    @LastModifiedDate
+-    @Column(name = "updated_at", nullable = false)
+-    private LocalDateTime updatedAt;
+-
+     // Custom constructor
+-    public Course(Long id,String title, String description,String imageUrl, int price, int discountedPrice, int discountPercent) {
+-        super();
+-        this.id = id;
++    public Course(String title, String description, int price, int discountPercent, String imageUrl) {
+         this.title = title;
+         this.description = description;
+         this.price = price;
+-        this.imageUrl = imageUrl;
+-        this.discountedPrice = discountedPrice;
+         this.discountPercent = discountPercent;
++        this.imageUrl = imageUrl;
+     }
++
++    // Getters and setters (generated by Lombok's @Data annotation)
+ }
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.Configuration;\r\n\r\nimport java.util.Arrays;\r\nimport java.util.Collections;\r\n\r\n\r\nimport org.springframework.context.annotation.Bean;\r\nimport org.springframework.context.annotation.Configuration;\r\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\r\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\r\nimport org.springframework.security.config.http.SessionCreationPolicy;\r\nimport org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\r\nimport org.springframework.security.crypto.password.PasswordEncoder;\r\nimport org.springframework.security.web.SecurityFilterChain;\r\nimport org.springframework.security.web.authentication.www.BasicAuthenticationFilter;\r\nimport org.springframework.web.cors.CorsConfiguration;\r\nimport org.springframework.web.cors.CorsConfigurationSource;\r\n\r\nimport jakarta.servlet.http.HttpServletRequest;\r\n\r\n@Configuration\r\n@EnableWebSecurity\r\npublic class AppConfig {\r\n\r\n    @Bean\r\n    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {\r\n        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()\r\n                .authorizeHttpRequests(Authorize->Authorize.requestMatchers(\"/api/**\").authenticated().anyRequest().permitAll())\r\n                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class).csrf().disable()\r\n                .cors().configurationSource(new CorsConfigurationSource() {\r\n                    @Override\r\n                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {\r\n                        CorsConfiguration cfg = new CorsConfiguration();\r\n\r\n                        cfg.setAllowedOrigins(Arrays.asList(\r\n                                \"http://localhost:3000\",\r\n                                \"http://localhost:4200\"\r\n\r\n                        ));\r\n                        cfg.setAllowedMethods(Collections.singletonList(\"*\"));\r\n                        cfg.setAllowCredentials(true);\r\n                        cfg.setAllowedHeaders(Collections.singletonList(\"*\"));\r\n                        cfg.setExposedHeaders(Arrays.asList(\"Authorization\"));\r\n                        cfg.setMaxAge(3600L);\r\n                        return cfg;\r\n                    }\r\n                })\r\n                .and()\r\n                .httpBasic()\r\n                .and()\r\n                .formLogin();\r\n\r\n        return http.build();\r\n\r\n    }\r\n\r\n    @Bean\r\n    public PasswordEncoder passwordEncoder() {\r\n        return new BCryptPasswordEncoder();\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java	(date 1716885911057)
+@@ -1,9 +1,6 @@
+ package com.Eonline.Education.Configuration;
+ 
+-import java.util.Arrays;
+-import java.util.Collections;
+-
+-
++import jakarta.servlet.http.HttpServletRequest;
+ import org.springframework.context.annotation.Bean;
+ import org.springframework.context.annotation.Configuration;
+ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+@@ -16,7 +13,8 @@
+ import org.springframework.web.cors.CorsConfiguration;
+ import org.springframework.web.cors.CorsConfigurationSource;
+ 
+-import jakarta.servlet.http.HttpServletRequest;
++import java.util.Arrays;
++import java.util.Collections;
+ 
+ @Configuration
+ @EnableWebSecurity
+@@ -34,6 +32,7 @@
+ 
+                         cfg.setAllowedOrigins(Arrays.asList(
+                                 "http://localhost:3000",
++                                "http://localhost:3001",
+                                 "http://localhost:4200"
+ 
+                         ));
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9d93ec75-e980-4a26-905b-79f7f0acd1b0\" name=\"Changes\" comment=\"Otp verification\">\r\n      <change afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserCourseController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35_[Changes]1/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35__Changes_1.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"CodeInsightWorkspaceSettings\">\r\n    <option name=\"optimizeImportsOnTheFly\" value=\"true\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2fBsaeFzM8ItSD9GnBc9VdQGftd\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/GANES/Downloads/ecommerce java full stack v2/source/spring boot api\",\r\n    \"settings.editor.selected.configurable\": \"reference.settings.project.maven.repository.indices\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"ExtractSuperBase.RECENT_KEYS\">\r\n      <recent name=\"com.example.RegisterLogin.Configuration\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.com.Eonline.Education.RegisterLoginApplication\">\r\n    <configuration name=\"RegisterLoginApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.example.RegisterLogin.RegisterLoginApplication\" />\r\n      <module name=\"RegisterLogin\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.example.RegisterLogin.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"com.Eonline.Education.RegisterLoginApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.Eonline.Education.RegisterLoginApplication\" />\r\n      <module name=\"RegisterLogin\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.Eonline.Education.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.com.Eonline.Education.RegisterLoginApplication\" />\r\n        <item itemvalue=\"Application.RegisterLoginApplication\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9d93ec75-e980-4a26-905b-79f7f0acd1b0\" name=\"Changes\" comment=\"\" />\r\n      <created>1713285869820</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1713285869820</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Razorpay Completed in backend\">\r\n      <created>1713286434429</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713286434429</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Razorpay Completed in backend\">\r\n      <created>1713286592667</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713286592667</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"account_details added\">\r\n      <created>1714466281385</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714466281385</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"user table changes\">\r\n      <created>1714985916201</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714985916201</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"application properties changed\">\r\n      <created>1714987129906</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714987129906</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Otp verification\">\r\n      <created>1715342656676</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715342656676</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Otp verification\">\r\n      <created>1715768503842</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715768503842</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"8\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Razorpay Completed in backend\" />\r\n    <MESSAGE value=\"account_details added\" />\r\n    <MESSAGE value=\"user table changes\" />\r\n    <MESSAGE value=\"application properties changed\" />\r\n    <MESSAGE value=\"Otp verification\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Otp verification\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/.idea/workspace.xml	(date 1716916734818)
+@@ -4,35 +4,18 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="Otp verification">
+-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserCourseController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35_[Changes]1/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_12_35__Changes_1.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09-05-2024_16_45__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_14_42__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-05-2024_17_34__Changes_.xml" beforeDir="false" />
++    <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="updated code">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminUserController.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CustomUserDetails.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/UserRegistrationRequest.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -64,15 +47,15 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "last_opened_file_path": "C:/Users/GANES/Downloads/ecommerce java full stack v2/source/spring boot api",
+-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/GANES/Downloads/ecommerce java full stack v2/source/spring boot api&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="ExtractSuperBase.RECENT_KEYS">
+       <recent name="com.example.RegisterLogin.Configuration" />
+@@ -170,7 +153,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1715768503842</updated>
+     </task>
+-    <option name="localTasksCounter" value="8" />
++    <task id="LOCAL-00008" summary="updated code">
++      <created>1716789198526</created>
++      <option name="number" value="00008" />
++      <option name="presentableId" value="LOCAL-00008" />
++      <option name="project" value="LOCAL" />
++      <updated>1716789198526</updated>
++    </task>
++    <option name="localTasksCounter" value="9" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -191,6 +181,7 @@
+     <MESSAGE value="user table changes" />
+     <MESSAGE value="application properties changed" />
+     <MESSAGE value="Otp verification" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Otp verification" />
++    <MESSAGE value="updated code" />
++    <option name="LAST_COMMIT_MESSAGE" value="updated code" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.Eonline.Education.modals;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonIgnore;\r\nimport jakarta.persistence.*;\r\nimport jakarta.validation.constraints.NotBlank;\r\nimport jakarta.validation.constraints.Size;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\n@Data\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Entity\r\n@Table(name = \"users\")\r\npublic class User {\r\n\r\n\t@Id\r\n\t@GeneratedValue(strategy = GenerationType.IDENTITY)\r\n\tprivate Long id;\r\n\r\n\t@NotBlank(message = \"First name is required\")\r\n\t@Column(name = \"first_name\")\r\n\tprivate String firstName;\r\n\r\n\t@NotBlank(message = \"Last name is required\")\r\n\t@Column(name = \"last_name\")\r\n\tprivate String lastName;\r\n\r\n\t@NotBlank(message = \"Password is required\")\r\n\t@Size(min = 6, message = \"Password must be at least 6 characters\")\r\n\t@Column(name = \"password\")\r\n\tprivate String password;\r\n\r\n\t@NotBlank(message = \"Email is required\")\r\n\t@Column(name = \"email\")\r\n\tprivate String email;\r\n\r\n\t@Column(name = \"created_at\")\r\n\tprivate Date createdAt;\r\n\r\n\t@OneToOne(mappedBy = \"user\", cascade = CascadeType.ALL)\r\n\t@JsonIgnore\r\n\tprivate Account account;\r\n\r\n\r\n\t@Column(name = \"role\")\r\n\tprivate String role;\r\n\r\n\t@OneToMany(mappedBy = \"user\", cascade = CascadeType.ALL)\r\n\t@JsonIgnore\r\n\tprivate List<Order> orders;\r\n\r\n\t@OneToOne(mappedBy = \"user\", cascade = CascadeType.ALL)\r\n\t@JsonIgnore\r\n\tprivate Education education;\r\n\r\n\t@OneToOne(mappedBy = \"user\", cascade = CascadeType.ALL)\r\n\t@JsonIgnore\r\n\tprivate BioData bioData;\r\n\r\n\t@Version\r\n\tprivate int version; // Optimistic locking version field\r\n\r\n//\t// Constructor, getters, and setters\r\n//\r\n//\t// Hashing password before setting it\r\n//\tpublic void setPassword(String password) {\r\n//\t\t// Perform password hashing before setting it\r\n//\t\tthis.password = hashPassword(password);\r\n//\t}\r\n//\r\n//\t// Hashing method using BCrypt\r\n//\tprivate String hashPassword(String password) {\r\n//\t\treturn BCrypt.hashpw(password, BCrypt.gensalt());\r\n//\t}\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java
+--- a/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java	(revision 65523ca1d1a302cdc84d10d2471ba8b46d5231ca)
++++ b/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java	(date 1716879838052)
+@@ -3,7 +3,6 @@
+ import com.fasterxml.jackson.annotation.JsonIgnore;
+ import jakarta.persistence.*;
+ import jakarta.validation.constraints.NotBlank;
+-import jakarta.validation.constraints.Size;
+ import lombok.AllArgsConstructor;
+ import lombok.Data;
+ import lombok.NoArgsConstructor;
+@@ -31,7 +30,6 @@
+ 	private String lastName;
+ 
+ 	@NotBlank(message = "Password is required")
+-	@Size(min = 6, message = "Password must be at least 6 characters")
+ 	@Column(name = "password")
+ 	private String password;
+ 
