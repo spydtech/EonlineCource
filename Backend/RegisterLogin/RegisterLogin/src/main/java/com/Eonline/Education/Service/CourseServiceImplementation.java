@@ -5,7 +5,6 @@ import com.Eonline.Education.exceptions.CourseException;
 import com.Eonline.Education.modals.Course;
 import com.Eonline.Education.repository.CourseRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,36 +15,34 @@ import java.util.Optional;
 
 @Service
 public class CourseServiceImplementation implements CourseService {
-    private CourseRepository courseRepository;
-    private UserService userService;
+    private final CourseRepository courseRepository;
 
-    public CourseServiceImplementation(CourseRepository courseRepository, UserService userService) {
+    public CourseServiceImplementation(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.userService = userService;
     }
 
     @Override
     public Course createCourse(CreateCourseRequest req) {
+        // Validate request data
+        // Example: if (req.getTitle() == null || req.getTitle().isEmpty()) { throw new IllegalArgumentException("Title is required"); }
+
         Course course = new Course();
         course.setTitle(req.getTitle());
         course.setDescription(req.getDescription());
         course.setDiscountedPrice(req.getDiscountedPrice());
         course.setDiscountPercent(req.getDiscountPercent());
         course.setPrice(req.getPrice());
+        course.setImageUrl(req.getImageUrl());
         course.setCreatedAt(LocalDateTime.now());
 
-        Course savedCourse = courseRepository.save(course);
-        System.out.println("courses - " + course);
-
-        return savedCourse;
+        return courseRepository.save(course);
     }
 
     @Override
     public String deleteCourse(Long courseId) throws CourseException {
         Course course = findCourseById(courseId);
-        System.out.println("delete course " + course.getId() + " - " + courseId);
         courseRepository.delete(course);
-        return "course deleted Successfully";
+        return "Course deleted successfully";
     }
 
     @Override
@@ -65,10 +62,7 @@ public class CourseServiceImplementation implements CourseService {
     @Override
     public Course findCourseById(Long id) throws CourseException {
         Optional<Course> opt = courseRepository.findById(id);
-        if (opt.isPresent()) {
-            return opt.get();
-        }
-        throw new CourseException("course not found with id " + id);
+        return opt.orElseThrow(() -> new CourseException("Course not found with ID: " + id));
     }
 
     @Override
@@ -83,18 +77,10 @@ public class CourseServiceImplementation implements CourseService {
     }
 
     @Override
-    public Page<Course> getAllCourse(String category,
-                                      Integer minPrice, Integer maxPrice, Integer minDiscount,
-                                      String sort, String stock, Integer pageNumber, Integer pageSize) {
+    public Page<Course> getAllCourse(String category, Integer minPrice, Integer maxPrice, Integer minDiscount,
+                                     String sort, String stock, Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<Course> courses = courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort);
-
-
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = Math.min(startIndex + pageable.getPageSize(), courses.size());
-
-        List<Course> pageContent = courses.subList(startIndex, endIndex);
-        return new PageImpl<>(pageContent, pageable, courses.size());
+        return (Page<Course>) courseRepository.filterCourses(minPrice, maxPrice, minDiscount, sort, pageable);
     }
 
     @Override

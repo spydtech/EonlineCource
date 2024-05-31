@@ -15,67 +15,49 @@ import java.util.List;
 @RequestMapping("/api/admin/courses")
 public class AdminCourseController {
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     public AdminCourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Course> createProductHandler(@RequestBody CreateCourseRequest req) throws CourseException {
-
+    @PostMapping("/addCourse")
+    public ResponseEntity<Course> createCourseHandler(@RequestBody CreateCourseRequest req) throws CourseException {
         Course createdCourse = courseService.createCourse(req);
-
-        return new ResponseEntity<Course>(createdCourse, HttpStatus.ACCEPTED);
-
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCourse);
     }
 
     @DeleteMapping("/{courseId}/delete")
-    public ResponseEntity<ApiResponse> deleteProductHandler(@PathVariable Long productId) throws CourseException{
-
-        System.out.println("dlete ccurse controller .... ");
-        String msg=courseService.deleteCourse(productId);
-        System.out.println("dlete course controller .... msg "+msg);
-        ApiResponse res=new ApiResponse(msg,true);
-
-        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
-
+    public ResponseEntity<ApiResponse> deleteCourseHandler(@PathVariable Long courseId) throws CourseException {
+        String message = courseService.deleteCourse(courseId);
+        ApiResponse response = new ApiResponse(message, true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Course>> findAllCourses(){
-
+    public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
-
-        return new ResponseEntity<List<Course>>(courses,HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(courses);
     }
 
     @GetMapping("/recent")
-    public ResponseEntity<List<Course>> recentlyAddedCourse(){
-
+    public ResponseEntity<List<Course>> getRecentlyAddedCourses() {
         List<Course> courses = courseService.recentlyAddedCourse();
-
-        return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(courses);
     }
 
-
     @PutMapping("/{courseId}/update")
-    public ResponseEntity<Course> updateCourseHandler(@RequestBody Course req,@PathVariable Long courseId) throws CourseException{
-
-        Course updatedCourse=courseService.updateCourse(courseId, req);
-
-        return new ResponseEntity<Course>(updatedCourse,HttpStatus.OK);
+    public ResponseEntity<Course> updateCourseHandler(@RequestBody Course req, @PathVariable Long courseId) throws CourseException {
+        Course updatedCourse = courseService.updateCourse(courseId, req);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedCourse);
     }
 
     @PostMapping("/creates")
-    public ResponseEntity<ApiResponse> createMultipleCourse(@RequestBody CreateCourseRequest[] reqs) throws CourseException{
-
-        for(CreateCourseRequest course:reqs) {
+    public ResponseEntity<ApiResponse> createMultipleCourses(@RequestBody CreateCourseRequest[] reqs) throws CourseException {
+        for (CreateCourseRequest course : reqs) {
             courseService.createCourse(course);
         }
-
-        ApiResponse res=new ApiResponse("courses created successfully",true);
-        return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
+        ApiResponse response = new ApiResponse("Courses created successfully", true);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
 }

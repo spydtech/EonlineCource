@@ -1,7 +1,5 @@
 package com.Eonline.Education.Controller;
 
-import java.util.List;
-
 import com.Eonline.Education.Service.UserService;
 import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.User;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 
@@ -29,6 +29,4 @@ public class AdminUserController {
         List<User> user=userService.findAllUsers();
         return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
     }
-
-
 }

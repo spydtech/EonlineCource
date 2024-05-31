@@ -19,4 +19,6 @@ public class AddItemRequest {
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be non-negative")
     private Integer price;
+
+    // Getters and Setters
 }

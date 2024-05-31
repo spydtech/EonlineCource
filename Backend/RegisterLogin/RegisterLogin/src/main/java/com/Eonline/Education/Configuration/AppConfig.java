@@ -1,8 +1,6 @@
 package com.Eonline.Education.Configuration;
 
-import java.util.Arrays;
-import java.util.Collections;
-
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,7 +14,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -27,9 +26,8 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/users/**").hasRole("ADMIN")// Restrict access to /api/plans/** to ADMIN role
-                        .anyRequest().authenticated())
+                        .requestMatchers("/api/**").authenticated()
+                        .anyRequest().permitAll())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class).csrf().disable()
                 .cors().configurationSource(new CorsConfigurationSource() {
                     @Override
@@ -37,6 +35,7 @@ public class AppConfig {
                         CorsConfiguration cfg = new CorsConfiguration();
                         cfg.setAllowedOrigins(Arrays.asList(
                                 "http://localhost:3000",
+                                "http://localhost:3001",
                                 "http://localhost:4200"
                         ));
                         cfg.setAllowedMethods(Collections.singletonList("*"));

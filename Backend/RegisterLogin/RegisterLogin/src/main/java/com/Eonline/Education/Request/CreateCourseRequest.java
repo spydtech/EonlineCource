@@ -28,6 +28,9 @@ public class CreateCourseRequest {
 
     private String imageUrl;
 
-    // Getters and Setters
-
+    // Custom constructor to set default values for optional fields
+    public CreateCourseRequest() {
+        this.discountedPrice = 0; // Default value for discounted price
+        this.imageUrl = ""; // Default value for image URL
+    }
 }
