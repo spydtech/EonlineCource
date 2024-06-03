@@ -2,7 +2,6 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.LoginRequest;
-import com.Eonline.Education.Service.CartService;
 import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.OtpService;
@@ -36,7 +35,7 @@ public class AuthController {
     private JwtTokenProvider jwtTokenProvider;
     private CustomUserDetails customUserDetails;
 
-    private CartService cartService;
+//    private CartService cartService;
     @Autowired
     private EmailService emailService;
 
@@ -53,12 +52,12 @@ public class AuthController {
     private String registeredRole;
 
 
-    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomUserDetails customUserDetails,CartService cartService){
+    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,JwtTokenProvider jwtTokenProvider,CustomUserDetails customUserDetails){
         this.userRepository=userRepository;
         this.passwordEncoder=passwordEncoder;
         this.jwtTokenProvider=jwtTokenProvider;
         this.customUserDetails=customUserDetails;
-        this.cartService = cartService;
+//        this.cartService = cartService;
 
     }
 
@@ -99,7 +98,7 @@ public class AuthController {
                 created.setPassword(passwordEncoder.encode(registeredPassword));
                 User savedUser=userRepository.save(created);
 
-                cartService.createCart(savedUser);
+//                cartService.createCart(savedUser);
 
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, registeredPassword);

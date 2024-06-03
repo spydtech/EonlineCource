@@ -2,7 +2,6 @@ package com.Eonline.Education.Service;
 
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.UserRepository;
-import com.Eonline.Education.user.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +16,16 @@ public class DataInitializationComponent implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DataInitializationComponent.class);
 
     private final UserRepository userRepository;
-    private final CartService cartService;
+//    private final CartService cartService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public DataInitializationComponent(UserRepository userRepository,
-                                       PasswordEncoder passwordEncoder,
-                                       CartService cartService) {
+                                       PasswordEncoder passwordEncoder
+                                       ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.cartService = cartService;
+
     }
 
     @Override
@@ -48,7 +47,7 @@ public class DataInitializationComponent implements CommandLineRunner {
 
                 User admin = userRepository.save(adminUser);
 
-                cartService.createCart(admin);
+//                cartService.createCart(admin);
 
                 logger.info("Admin user initialized successfully.");
             } else {
