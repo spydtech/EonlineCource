@@ -5,15 +5,21 @@ import com.Eonline.Education.Service.UserService;
 import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.User;
+import com.Eonline.Education.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/users")
 @Validated
 public class UserController {
+    @Autowired
+    UserRepository userRepository;
 
     private final UserService userService;
     private final NotificationService notificationService;
@@ -51,6 +57,13 @@ public class UserController {
         ResponseEntity<?> response = userService.updateEducationDetails(emailid, userEducation);
         notificationService.sendNotification(emailid, "Your education details have been updated.");
         return response;
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userUpdate) {
+        return new ResponseEntity<>(userService.updateDetails(id,userUpdate),HttpStatus.OK);
+
     }
 }
 

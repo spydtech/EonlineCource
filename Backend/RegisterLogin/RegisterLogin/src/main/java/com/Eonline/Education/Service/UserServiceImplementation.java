@@ -13,11 +13,13 @@ import com.Eonline.Education.response.EducationResponse;
 import com.Eonline.Education.response.MessageResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -184,4 +186,28 @@ public class UserServiceImplementation implements UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    public User updateDetails(long id,User userUpdate){
+        Optional<User> existingUser = userRepository.findById(id);
+
+        if(existingUser.isPresent()){
+            User existingUser1=existingUser.get();
+            existingUser1.setFirstName(userUpdate.getFirstName());
+            existingUser1.setLastName(userUpdate.getLastName());
+            existingUser1.setEmail(userUpdate.getEmail());
+            existingUser1.setPassword(userUpdate.getPassword());
+            existingUser1.setBio(userUpdate.getBio());
+            existingUser1.setDateOfBirth(userUpdate.getDateOfBirth());
+            existingUser1.setGender(userUpdate.getGender());
+            existingUser1.setLocation(userUpdate.getLocation());
+            existingUser1.setPhoneNumber(userUpdate.getPhoneNumber());
+            existingUser1.setWebsite(userUpdate.getWebsite());
+            return userRepository.save(existingUser1);
+        }else{
+            throw new RuntimeException("id not found");
+        }
+
+    }
+
+
 }

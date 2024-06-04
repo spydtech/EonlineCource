@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,21 +24,21 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "First name is required")
-	@Column(name = "first_name")
+//	@NotBlank(message = "First name is required")
+//	@Column(name = "first_name")
 	private String firstName;
 
-	@NotBlank(message = "Last name is required")
-	@Column(name = "last_name")
+//	@NotBlank(message = "Last name is required")
+//	@Column(name = "last_name")
 	private String lastName;
 
-	@NotBlank(message = "Password is required")
-	@Column(name = "password")
+//	@NotBlank(message = "Password is required")
+//	@Column(name = "password")
 	private String password;
 
-	@NotBlank(message = "Email is required")
-	@Email(message = "Email should be valid")
-	@Column(name = "email", unique = true) // Added unique constraint to email
+//	@NotBlank(message = "Email is required")
+//	@Email(message = "Email should be valid")
+//	@Column(name = "email", unique = true) // Added unique constraint to email
 	private String email;
 
 	@Column(name = "created_at")
@@ -58,9 +59,7 @@ public class User {
 	@JsonIgnore
 	private Education education;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private BioData bioData;
+
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -72,4 +71,16 @@ public class User {
 
 	@Version
 	private int version; // Optimistic locking version field
+
+	private String bio;
+
+	private LocalDate dateOfBirth;
+
+	private String gender;
+
+	private String location;
+
+	private String phoneNumber;
+
+	private String website;
 }
