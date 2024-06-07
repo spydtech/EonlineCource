@@ -4,6 +4,7 @@ import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
+import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.AccountRepository;
 import com.Eonline.Education.repository.EducationRepository;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +31,8 @@ public class UserServiceImplementation implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
     private final EducationRepository educationRepository;
-
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     public UserServiceImplementation(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, AccountRepository accountRepository, EducationRepository educationRepository) {
         this.userRepository = userRepository;
@@ -195,7 +198,7 @@ public class UserServiceImplementation implements UserService {
             existingUser1.setFirstName(userUpdate.getFirstName());
             existingUser1.setLastName(userUpdate.getLastName());
             existingUser1.setEmail(userUpdate.getEmail());
-            existingUser1.setPassword(userUpdate.getPassword());
+            //existingUser1.setPassword(userUpdate.getPassword());
             existingUser1.setBio(userUpdate.getBio());
             existingUser1.setDateOfBirth(userUpdate.getDateOfBirth());
             existingUser1.setGender(userUpdate.getGender());
@@ -206,6 +209,23 @@ public class UserServiceImplementation implements UserService {
         }else{
             throw new RuntimeException("id not found");
         }
+
+    }
+    public String updatePassword(long userId,PasswordChange passwordChange){
+        Optional<User> user=userRepository.findById(userId);
+        if(user.isPresent()){
+            User user1=user.get();
+            if(passwordEncoder.matches(passwordChange.getOldPassword(), user1.getPassword())){
+                user1.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
+                userRepository.save(user1);
+                return "password updated successfully";
+            }else{
+                return "password not matches with the old password";
+            }
+        }else{
+            return "user is not found";
+        }
+
 
     }
 

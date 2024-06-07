@@ -4,6 +4,7 @@ import com.Eonline.Education.Service.NotificationService;
 import com.Eonline.Education.Service.UserService;
 import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
+import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,10 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userUpdate) {
         return new ResponseEntity<>(userService.updateDetails(id,userUpdate),HttpStatus.OK);
 
+    }
+    @PutMapping("/password/{id}")
+    public ResponseEntity<String> updatePassword(@PathVariable Long id,@RequestBody PasswordChange passwordChange){
+        return new ResponseEntity<>(userService.updatePassword(id,passwordChange),HttpStatus.CREATED);
     }
 }
 

@@ -12,6 +12,7 @@ import javax.sql.rowset.serial.SerialException;
 import com.Eonline.Education.modals.Post;
 import com.Eonline.Education.repository.CommentRepository;
 import com.Eonline.Education.repository.PostRepository;
+import com.Eonline.Education.repository.SaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,8 @@ public class PostServiceImpl implements PostService {
 	PostRepository postRepository;
 	@Autowired
 	CommentRepository commentRepository;
+	@Autowired
+	SaveRepository saveRepository;
 	
 	public Post savePpost(Post post) {
 		post.setLikeCount(0);
@@ -97,6 +100,7 @@ public class PostServiceImpl implements PostService {
 	public String deletePostById(long id) {
 		Optional<Post> findById = postRepository.findById(id);
 		if(findById.isPresent()) {
+			//saveRepository.deleteByPostId(findById);
 			//commentRepository.deleteById(id);
 			postRepository.deleteById(id);
 			

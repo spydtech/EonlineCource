@@ -2,6 +2,7 @@ package com.Eonline.Education.Service;
 
 import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
+import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import org.springframework.http.ResponseEntity;
 
@@ -30,6 +31,8 @@ public interface UserService {
 	public User saveUser(User user);
 
 	public User updateDetails(long id,User userUpdate);
+
+	public String updatePassword(long userId, PasswordChange passwordChange);
 
 
 }
