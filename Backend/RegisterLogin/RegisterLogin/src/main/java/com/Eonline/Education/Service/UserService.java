@@ -32,7 +32,7 @@ public interface UserService {
 
 	public User updateDetails(long id,User userUpdate);
 
-	public String updatePassword(long userId, PasswordChange passwordChange);
+	public String updatePassword(String email, PasswordChange passwordChange);
 
 
 

@@ -66,9 +66,9 @@ public class UserController {
         return new ResponseEntity<>(userService.updateDetails(id,userUpdate),HttpStatus.OK);
 
     }
-    @PutMapping("/password/{id}")
-    public ResponseEntity<String> updatePassword(@PathVariable Long id,@RequestBody PasswordChange passwordChange){
-        return new ResponseEntity<>(userService.updatePassword(id,passwordChange),HttpStatus.CREATED);
+    @PutMapping("/password/{email}")
+    public ResponseEntity<String> updatePassword(@PathVariable String email,@RequestBody PasswordChange passwordChange){
+        return new ResponseEntity<>(userService.updatePassword(email,passwordChange),HttpStatus.CREATED);
     }
 }
 

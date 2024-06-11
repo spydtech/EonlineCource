@@ -198,7 +198,7 @@ public class UserServiceImplementation implements UserService {
             existingUser1.setFirstName(userUpdate.getFirstName());
             existingUser1.setLastName(userUpdate.getLastName());
             existingUser1.setEmail(userUpdate.getEmail());
-            //existingUser1.setPassword(userUpdate.getPassword());
+
             existingUser1.setBio(userUpdate.getBio());
             existingUser1.setDateOfBirth(userUpdate.getDateOfBirth());
             existingUser1.setGender(userUpdate.getGender());
@@ -211,17 +211,23 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
-    public String updatePassword(long userId,PasswordChange passwordChange){
-        Optional<User> user=userRepository.findById(userId);
+    public String updatePassword(String email,PasswordChange passwordChange){
+        Optional<User> user= Optional.ofNullable(userRepository.findByEmail(email));
         if(user.isPresent()){
             User user1=user.get();
-            if(passwordEncoder.matches(passwordChange.getOldPassword(), user1.getPassword())){
-                user1.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
-                userRepository.save(user1);
-                return "password updated successfully";
+            if(passwordChange.getNewPassword().equals(passwordChange.getConfirmPassword())){
+                if(passwordEncoder.matches(passwordChange.getOldPassword(), user1.getPassword())){
+                    user1.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
+                    userRepository.save(user1);
+                    return "password updated successfully";
+                }else{
+                    return "password not matches with the old password";
+                }
+
             }else{
-                return "password not matches with the old password";
+                return "new Password and confirm Password are not equal";
             }
+
         }else{
             return "user is not found";
         }

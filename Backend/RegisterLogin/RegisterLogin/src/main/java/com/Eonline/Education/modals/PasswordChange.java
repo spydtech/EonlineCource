@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class PasswordChange {
     private String oldPassword;
     private String newPassword;
+    private String confirmPassword;
 
 }
