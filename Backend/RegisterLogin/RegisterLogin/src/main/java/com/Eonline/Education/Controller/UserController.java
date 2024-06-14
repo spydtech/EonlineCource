@@ -8,11 +8,14 @@ import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @RestController
@@ -69,6 +72,37 @@ public class UserController {
     @PutMapping("/password/{email}")
     public ResponseEntity<String> updatePassword(@PathVariable String email,@RequestBody PasswordChange passwordChange){
         return new ResponseEntity<>(userService.updatePassword(email,passwordChange),HttpStatus.CREATED);
+    }
+    @PostMapping("/{email}/profile-photo")
+    public String uploadProfilePhoto(@PathVariable String email, @RequestParam("file") MultipartFile file) throws IOException {
+        return userService.saveProfilePhoto(email, file);
+    }
+
+    @PostMapping("/{email}/cover-photo")
+    public String uploadCoverPhoto(@PathVariable String email, @RequestParam("file") MultipartFile file) throws IOException {
+        return userService.saveCoverPhoto(email, file);
+    }
+
+    @GetMapping("/{email}/profile-photo")
+    public ResponseEntity<byte[]> getProfilePhoto(@PathVariable String email) {
+        byte[] photo = userService.getProfilePhoto(email);
+        return getFileResponseEntity(photo);
+    }
+
+    @GetMapping("/{email}/cover-photo")
+    public ResponseEntity<byte[]> getCoverPhoto(@PathVariable String email) {
+        byte[] photo = userService.getCoverPhoto(email);
+        return getFileResponseEntity(photo);
+    }
+
+    private ResponseEntity<byte[]> getFileResponseEntity(byte[] fileContent) {
+        if (fileContent != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=image.jpg");
+            return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }
 

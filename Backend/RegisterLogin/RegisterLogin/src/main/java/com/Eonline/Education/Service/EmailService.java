@@ -21,4 +21,15 @@ public class EmailService {
         helper.setText("Your OTP for registration is: " + otp);
         mailSender.send(message);
     }
+
+    public void sendEmployeeID(String toEmail, String employeeId) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(toEmail);
+        helper.setSubject("Employee Registration Is Successfully Completed");
+        helper.setText("Your Employee ID : " + employeeId);
+        mailSender.send(message);
+    }
+
+
 }

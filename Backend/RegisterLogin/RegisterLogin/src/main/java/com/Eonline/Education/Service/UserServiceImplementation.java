@@ -19,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -233,6 +235,43 @@ public class UserServiceImplementation implements UserService {
         }
 
 
+    }
+    //saving profile photo and cover photo in database
+    @Override
+    public String saveProfilePhoto(String email, MultipartFile file) throws IOException {
+        return saveFile(email, file, "profile");
+    }
+
+    @Override
+    public String saveCoverPhoto(String email, MultipartFile file)  throws IOException {
+        return saveFile(email, file, "cover");
+    }
+
+    @Override
+    public String saveFile(String email, MultipartFile file, String type)throws IOException {
+        User user = userRepository.findByEmail(email);
+
+        byte[] fileContent = file.getBytes();
+        if ("profile".equals(type)) {
+            user.setProfilePhoto(fileContent);
+        } else if ("cover".equals(type)) {
+            user.setCoverPhoto(fileContent);
+        }
+
+        userRepository.save(user);
+        return "File uploaded successfully: " + file.getOriginalFilename();
+    }
+
+    @Override
+    public byte[] getProfilePhoto(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null ? user.getProfilePhoto() : null;
+    }
+
+    @Override
+    public byte[] getCoverPhoto(String email) {
+        User user = userRepository.findByEmail(email);;
+        return user != null ? user.getCoverPhoto() : null;
     }
 
 

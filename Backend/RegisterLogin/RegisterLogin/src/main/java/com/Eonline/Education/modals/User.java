@@ -69,6 +69,16 @@ public class User {
 	@JoinColumn(name = "plan_id")
 	private Plan plan;
 
+	@Lob
+	private byte[] profilePhoto;
+
+	@Lob
+	private byte[] coverPhoto;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Task> task;
+
+
 	@Version
 	private int version; // Optimistic locking version field
 
