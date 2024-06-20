@@ -31,5 +31,16 @@ public class EmailService {
         mailSender.send(message);
     }
 
+    public void sendUserNameAndPassword(String toEmail, String userName,String password ) throws MessagingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(toEmail);
+        helper.setSubject("Sending Username And Password");
+        //  helper.setText("Your username for registration is: " + userName);
+        helper.setText("Your userName for registration is: "+userName+" Your password for registration is: " + password);
+
+        mailSender.send(message);
+
+    }
 
 }
