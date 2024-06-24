@@ -1,7 +1,8 @@
 package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
-import com.Eonline.Education.Service.CustomerTraineeDeatils;
+import com.Eonline.Education.Service.CustomerTraineeDetails;
+import com.Eonline.Education.Service.TraineeActivityService;
 import com.Eonline.Education.Service.TraineeService;
 import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import com.Eonline.Education.response.AuthResponse;
@@ -17,54 +18,105 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+
 @RestController
 @RequestMapping("/trainee")
 public class TraineeController {
 
+    private static final Logger logger = LoggerFactory.getLogger(TraineeController.class);
+
     @Autowired
-    TraineeService traineeService;
+    private TraineeService traineeService;
+
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    CustomerTraineeDeatils customerTraineeDeatils;
+    private CustomerTraineeDetails customerTraineeDetails;
+
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    private TraineeActivityService traineeActivityService;
+
+    // Endpoint for registering new trainees
     @PostMapping("/register")
-    public ResponseEntity<?> creatingLoginCredentials(@RequestBody TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException {
-        return new ResponseEntity<>(traineeService.creatingUserName(traineeCredentialGenerator), HttpStatus.CREATED);
+    public ResponseEntity<?> createLoginCredentials(@RequestBody TraineeCredentialGenerator traineeCredentialGenerator) {
+        try {
+            String response = traineeService.createUserName(traineeCredentialGenerator);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (MessagingException e) {
+            logger.error("Error sending email for user registration: {}", e.getMessage());
+            return new ResponseEntity<>("Error sending email for user registration.", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            logger.error("Registration error: {}", e.getMessage());
+            return new ResponseEntity<>("An error occurred during registration.", HttpStatus.BAD_REQUEST);
+        }
     }
 
+    // Endpoint for trainee signin (authentication)
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody TraineeCredentialGenerator traineeCredentialGenerator) {
+        try {
+            // Authenticate trainee
+            Authentication authentication = authenticate(traineeCredentialGenerator.getUserName(), traineeCredentialGenerator.getPassword());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        System.out.println(traineeCredentialGenerator.getUserName() + " ----- " + traineeCredentialGenerator.getPassword());
+            // Generate JWT token
+            String token = jwtTokenProvider.generateToken(authentication);
+            AuthResponse authResponse = new AuthResponse(token, true);
 
-        Authentication authentication = authenticate(traineeCredentialGenerator.getUserName(), traineeCredentialGenerator.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Log trainee login event
+            traineeService.logInTrainee(traineeCredentialGenerator);
 
-        String token = jwtTokenProvider.generateToken(authentication);
-        AuthResponse authResponse = new AuthResponse();
-
-        authResponse.setStatus(true);
-        authResponse.setJwt(token);
-
-        return new ResponseEntity<>(authResponse, HttpStatus.OK);
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+        } catch (BadCredentialsException e) {
+            logger.error("Authentication error: {}", e.getMessage());
+            return new ResponseEntity<>(new AuthResponse("Invalid username or password", false), HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            logger.error("Signin error: {}", e.getMessage());
+            return new ResponseEntity<>(new AuthResponse("An error occurred during signin", false), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
+    // Endpoint for trainee logout
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestParam String username) {
+        traineeService.logOutTrainee(username);
+        return new ResponseEntity<>("Trainee logged out successfully", HttpStatus.OK);
+    }
+
+    // Endpoint to get active trainees
+    @GetMapping("/active-trainees")
+    public ResponseEntity<Map<String, TraineeCredentialGenerator>> getActiveTrainees() {
+        return new ResponseEntity<>(traineeActivityService.getActiveTrainees(), HttpStatus.OK);
+    }
+
+    // Endpoint to get count of active trainees
+    @GetMapping("/active-trainees-count")
+    public ResponseEntity<Integer> getActiveTraineeCount() {
+        return new ResponseEntity<>(traineeActivityService.getActiveTraineeCount(), HttpStatus.OK);
+    }
+
+    // Endpoint to get count of inactive trainees
+    @GetMapping("/inactive-trainees-count")
+    public ResponseEntity<Integer> getInactiveTraineeCount() {
+        return new ResponseEntity<>(traineeActivityService.getInactiveTraineeCount(), HttpStatus.OK);
+    }
+
+    // Helper method to authenticate trainee
     private Authentication authenticate(String username, String password) {
-        UserDetails userDetails = customerTraineeDeatils.loadUserByUsername(username);
+        UserDetails userDetails = customerTraineeDetails.loadUserByUsername(username);
 
-        System.out.println("sign in traineeDetails - " + userDetails);
-
-        if (userDetails == null) {
-            System.out.println("sign in traineeDetails - null " + userDetails);
+        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid username or password");
         }
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            System.out.println("sign in traineeDetails - password not match " + userDetails);
-            throw new BadCredentialsException("Invalid username or password");
-        }
+
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }
