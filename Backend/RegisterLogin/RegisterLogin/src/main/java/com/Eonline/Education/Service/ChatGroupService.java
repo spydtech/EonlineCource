@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatGroupService {
@@ -81,5 +82,31 @@ public class ChatGroupService {
         } else {
             return null;
         }
+    }
+
+    public ChatGroup removeUsersFromChatGroup(Long groupId, List<String> userEmailsToRemove) {
+        Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(groupId);
+        if (optionalChatGroup.isPresent()) {
+            ChatGroup chatGroup = optionalChatGroup.get();
+            List<User> usersToRemove = chatGroup.getMembers().stream()
+                    .filter(user -> userEmailsToRemove.contains(user.getEmail()))
+                    .collect(Collectors.toList());
+            chatGroup.getMembers().removeAll(usersToRemove);
+            return chatGroupRepository.save(chatGroup);
+        }
+        return null;
+    }
+
+    public ChatGroup removeTraineesFromChatGroup(Long groupId, List<String> traineeEmailsToRemove) {
+        Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(groupId);
+        if (optionalChatGroup.isPresent()) {
+            ChatGroup chatGroup = optionalChatGroup.get();
+            List<TraineeCredentialGenerator> traineesToRemove = chatGroup.getTrainees().stream()
+                    .filter(trainee -> traineeEmailsToRemove.contains(trainee.getEmail()))
+                    .collect(Collectors.toList());
+            chatGroup.getTrainees().removeAll(traineesToRemove);
+            return chatGroupRepository.save(chatGroup);
+        }
+        return null;
     }
 }

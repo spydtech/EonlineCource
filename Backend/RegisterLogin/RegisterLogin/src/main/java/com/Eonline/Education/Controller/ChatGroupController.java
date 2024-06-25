@@ -70,4 +70,32 @@ public class ChatGroupController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/{groupId}/remove-users")
+    public ResponseEntity<ChatGroup> removeUsersFromChatGroup(
+            @PathVariable("groupId") Long groupId,
+            @RequestBody List<String> userEmailsToRemove) {
+
+        ChatGroup chatGroup = chatGroupService.removeUsersFromChatGroup(groupId, userEmailsToRemove);
+
+        if (chatGroup != null) {
+            return ResponseEntity.ok(chatGroup);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{groupId}/remove-trainees")
+    public ResponseEntity<ChatGroup> removeTraineesFromChatGroup(
+            @PathVariable("groupId") Long groupId,
+            @RequestBody List<String> traineeEmailsToRemove) {
+
+        ChatGroup chatGroup = chatGroupService.removeTraineesFromChatGroup(groupId, traineeEmailsToRemove);
+
+        if (chatGroup != null) {
+            return ResponseEntity.ok(chatGroup);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
