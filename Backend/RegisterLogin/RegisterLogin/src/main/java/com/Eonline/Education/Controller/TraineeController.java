@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -118,5 +119,10 @@ public class TraineeController {
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    @GetMapping("/getAllTrainee")
+    public ResponseEntity<List<TraineeCredentialGenerator>> getAllTrainess(){
+        return new ResponseEntity<>(traineeService.getAllTrainees(),HttpStatus.OK);
     }
 }

@@ -273,6 +273,9 @@ public class UserServiceImplementation implements UserService {
         User user = userRepository.findByEmail(email);;
         return user != null ? user.getCoverPhoto() : null;
     }
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 
 
 }

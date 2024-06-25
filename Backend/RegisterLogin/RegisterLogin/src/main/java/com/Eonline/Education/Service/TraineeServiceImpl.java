@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TraineeServiceImpl implements TraineeService {
 
@@ -43,6 +45,10 @@ public class TraineeServiceImpl implements TraineeService {
 
     public void logOutTrainee(String username) {
         traineeActivityService.traineeLoggedOut(username);
+    }
+
+    public List<TraineeCredentialGenerator> getAllTrainees(){
+        return traineeRepository.findAll();
     }
 }
 
