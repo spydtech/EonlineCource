@@ -11,6 +11,7 @@ public class ContactUsServiceImpl implements ContactUsService{
     ContactUsRepository contactUsRepository;
     @Override
     public ContactUs saveContactDetails(ContactUs contactUs) {
+
         return contactUsRepository.save(contactUs);
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,4 +92,6 @@ public class User {
 	private String website;
 
 	private String confirmPassword;
+
+
 }
