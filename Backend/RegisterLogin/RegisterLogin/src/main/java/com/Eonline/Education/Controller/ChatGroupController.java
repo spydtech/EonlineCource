@@ -2,6 +2,7 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Service.ChatGroupService;
 import com.Eonline.Education.modals.ChatGroup;
+import com.Eonline.Education.response.ChatGroupResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class ChatGroupController {
     private ChatGroupService chatGroupService;
 
     @GetMapping
-    public ResponseEntity<List<ChatGroup>> getAllChatGroups() {
-        List<ChatGroup> chatGroups = chatGroupService.getAllChatGroups();
+    public ResponseEntity<List<ChatGroupResponse>> getAllChatGroups() {
+        List<ChatGroupResponse> chatGroups = chatGroupService.getAllChatGroups();
         return ResponseEntity.ok(chatGroups);
     }
 

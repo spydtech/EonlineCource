@@ -6,9 +6,12 @@ import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.ChatGroupRepository;
 import com.Eonline.Education.repository.TraineeRepository;
 import com.Eonline.Education.repository.UserRepository;
+import com.Eonline.Education.response.ChatGroupResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,9 +32,45 @@ public class ChatGroupService {
         return chatGroupRepository.save(chatGroup);
     }
 
-    public List<ChatGroup> getAllChatGroups() {
-        return chatGroupRepository.findAll();
-    }
+    public List<ChatGroupResponse> getAllChatGroups() {
+
+            List<ChatGroupResponse> chatGroupResponses = new ArrayList<>();
+            List<ChatGroup> chatGroups = chatGroupRepository.findAll();
+            List<User> users = userRepository.findAll();
+
+            for (ChatGroup chatGroup : chatGroups) {
+                ChatGroupResponse chatGroupResponse = new ChatGroupResponse();
+                chatGroupResponse.setId(chatGroup.getId());
+                chatGroupResponse.setName(chatGroup.getName());
+
+                List<String> userDetails = new ArrayList<>();
+
+                for (User member : chatGroup.getMembers()) {
+                    String userName = member.getFirstName() + " " + member.getLastName();
+                    String email = member.getEmail();
+                    String resUserDetail = "username is: " + userName + ", email is: " + email;
+                    userDetails.add(resUserDetail);
+                }
+
+                List<String> traineeDetails = new ArrayList<>();
+
+                for (TraineeCredentialGenerator member : chatGroup.getTrainees()) {
+                    String userName = member.getFirstName() + " " + member.getLastName();
+                    String email = member.getEmail();
+                    String resUserDetail = "username is: " + userName + ", email is: " + email;
+                    traineeDetails.add(resUserDetail);
+                }
+
+                chatGroupResponse.setUsers(userDetails);
+               // chatGroupResponses.add(chatGroupResponse);
+                chatGroupResponse.setTrainees(traineeDetails);
+                chatGroupResponses.add(chatGroupResponse);
+            }
+
+            return chatGroupResponses;
+        }
+
+
 
     public Optional<ChatGroup> getChatGroupById(Long id) {
         return chatGroupRepository.findById(id);
