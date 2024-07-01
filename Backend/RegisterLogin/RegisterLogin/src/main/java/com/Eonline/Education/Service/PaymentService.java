@@ -40,4 +40,8 @@ public class PaymentService {
         course.setCoursePrice(courseRequest.getCoursePrice());
         return course;
     }
+
+    public List<Payment> getAllPayments(){
+        return paymentRepository.findAll();
+    }
 }
