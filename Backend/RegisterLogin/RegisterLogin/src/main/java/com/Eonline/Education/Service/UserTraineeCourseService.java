@@ -20,8 +20,8 @@ public interface UserTraineeCourseService {
 
      ResponseEntity addUserTraineeCourseDetails(UserTraineeCourseRequest userTraineeCourseRequest);
 
-     List<CourseResponse> getFullStackWebDevelopmentDetailsByEmail(String email);
+    List<CourseResponse> getFullStackWebDevelopmentDetailsByEmail(String email);
 
-     List<CourseResponse> getFullStackWebDevelopmentDetailsByCourse(String courseName);
+    List<CourseResponse> getFullStackWebDevelopmentDetailsByCourse(String courseName);
 
 }

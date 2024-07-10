@@ -141,6 +141,16 @@ public class UserTraineeCourseServiceImplementation implements UserTraineeCourse
         return currentCourseResponse;
     }
 
+    @Override
+    public List<CourseResponse> getFullStackWebDevelopmentDetailsByEmail(String email) {
+        return List.of();
+    }
+
+    @Override
+    public List<CourseResponse> getFullStackWebDevelopmentDetailsByCourse(String courseName) {
+        return List.of();
+    }
+
 
     //FullStackWebDevelopment Table Saving Data
     public ResponseEntity savingFullStackWebDevelopmentDetails(UserTraineeCourseRequest userTraineeCourseRequest) {
