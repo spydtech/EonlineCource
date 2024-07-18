@@ -26,4 +26,10 @@ public class PaymentController {
     public ResponseEntity<List<Payment>> getAllPayments(){
         return new ResponseEntity<>(paymentService.getAllPayments(), HttpStatus.OK);
     }
+
+
+    @GetMapping("/user/{userId}")
+    public List<Payment> getUserPayments(@PathVariable Long userId) {
+        return paymentService.getUserPayments(userId);
+    }
 }

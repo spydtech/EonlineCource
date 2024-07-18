@@ -9,10 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -94,9 +91,13 @@ public class User {
 
 	private String confirmPassword;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private FullStackWebDevelopmentDetails fullStackWebDevelopmentDetails;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Enrollment> enrollments;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Payment> payments;
+
+
 
 
 }

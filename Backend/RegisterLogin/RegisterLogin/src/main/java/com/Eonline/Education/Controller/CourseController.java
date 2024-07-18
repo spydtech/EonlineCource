@@ -1,3 +1,125 @@
+package com.Eonline.Education.Controller;
+
+import com.Eonline.Education.Service.CourseService;
+import com.Eonline.Education.modals.Course;
+
+import com.Eonline.Education.user.CourseList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/courses")
+public class CourseController {
+
+    @Autowired
+    private CourseService courseService;
+
+    // Get all courses
+    @GetMapping
+    public List<Course> getAllCourses() {
+        return courseService.getAllCourses();
+    }
+
+    // Get course by ID
+    @GetMapping("/{id}")
+    public Course getCourseById(@PathVariable Long id) {
+        return courseService.getCourseById(id);
+    }
+
+    // Create a new course
+//    @PostMapping()
+//    public Course createCourse(@RequestBody Course course) {
+//        return courseService.saveCourse(course);
+//    }
+
+    // Update an existing course
+    @PutMapping("/{id}")
+    public Course updateCourse(@PathVariable Long id, @RequestBody Course course) {
+        course.setId(id);
+        return courseService.saveCourse(course);
+    }
+
+    // Delete a course
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable Long id) {
+        courseService.deleteCourse(id);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public List<Course> getCoursesByCategory(@PathVariable Long categoryId) {
+        return courseService.getCoursesByCategory(categoryId);
+    }
+
+    @PostMapping("/{categoryId}")
+    public ResponseEntity<Course> createCourse(@PathVariable Long categoryId, @RequestBody Course course) {
+        Course course1 = courseService.saveCourse(course, categoryId);
+        return new ResponseEntity<>(course, HttpStatus.CREATED);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //package com.Eonline.Education.Controller;
 //
 //import com.Eonline.Education.Service.CourseService;

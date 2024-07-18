@@ -2,6 +2,8 @@ package com.Eonline.Education.Request;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class CourseRequest {
     private Long courseId;

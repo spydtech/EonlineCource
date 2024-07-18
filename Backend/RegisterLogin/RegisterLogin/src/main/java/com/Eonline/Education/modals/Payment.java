@@ -12,7 +12,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+//    private Long userId;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
@@ -23,4 +23,8 @@ public class Payment {
     private String razorpayPaymentId;
 
     // Getters and setters, constructors, and other methods
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
 }

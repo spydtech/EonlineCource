@@ -4,27 +4,40 @@ import com.Eonline.Education.Request.CourseRequest;
 import com.Eonline.Education.Request.PaymentRequest;
 import com.Eonline.Education.modals.Course;
 import com.Eonline.Education.modals.Payment;
+import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.PaymentRepository;
+import com.Eonline.Education.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PaymentService {
 
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public void processPayment(PaymentRequest paymentRequest) {
+        Payment payment = mapPaymentRequestToEntity(paymentRequest);
+        paymentRepository.save(payment);
+    }
+
+    private Payment mapPaymentRequestToEntity(PaymentRequest paymentRequest) {
         Payment payment = new Payment();
-        payment.setUserId(paymentRequest.getUserId());
+        User user = userRepository.findById(paymentRequest.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + paymentRequest.getUserId()));
+        payment.setUser(user);
         payment.setCourses(mapCourseRequests(paymentRequest.getCourses()));
         payment.setTotalAmount(paymentRequest.getTotalAmount());
         payment.setRazorpayPaymentId(paymentRequest.getRazorpayPaymentId());
-
-        paymentRepository.save(payment);
+        return payment;
     }
 
     private List<Course> mapCourseRequests(List<CourseRequest> courseRequests) {
@@ -35,13 +48,17 @@ public class PaymentService {
 
     private Course mapCourseRequest(CourseRequest courseRequest) {
         Course course = new Course();
-        course.setCourseId(courseRequest.getCourseId());
-        course.setCourseName(courseRequest.getCourseName());
-        course.setCoursePrice(courseRequest.getCoursePrice());
+        course.setId(courseRequest.getCourseId());
+        course.setName(courseRequest.getCourseName());
+        course.setPrice(courseRequest.getCoursePrice());
         return course;
     }
 
-    public List<Payment> getAllPayments(){
+    public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
+    }
+
+    public List<Payment> getUserPayments(Long userId) {
+        return paymentRepository.findByUserId(userId);
     }
 }

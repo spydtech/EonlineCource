@@ -1,21 +1,23 @@
+
 package com.Eonline.Education.modals;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Entity
 @Data
+@Table(name="courses")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
+   // @Column(name = "course_price", nullable = false, columnDefinition = "DECIMAL(10, 2) DEFAULT 0.00")
+    private double price;
 
-    private Long courseId;
-    private String courseName;
-    private double coursePrice;
-
-    // Getters and setters, constructors, and other methods
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private CourseCategory category;
 }

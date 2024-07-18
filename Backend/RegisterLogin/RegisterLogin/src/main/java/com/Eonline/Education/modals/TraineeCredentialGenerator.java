@@ -24,9 +24,7 @@ public class TraineeCredentialGenerator {
     private String userName;
     private String password;
 
-    @OneToOne(mappedBy = "traineeCredentialGenerator", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private FullStackWebDevelopmentDetails fullStackWebDevelopmentDetails;
+
 
 
 }

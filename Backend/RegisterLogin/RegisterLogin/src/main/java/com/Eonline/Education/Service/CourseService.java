@@ -1,3 +1,55 @@
+package com.Eonline.Education.Service;
+
+
+import com.Eonline.Education.modals.Course;
+import com.Eonline.Education.user.CourseList;
+
+import java.util.List;
+
+public interface CourseService {
+    List<Course> getAllCourses();
+    Course getCourseById(Long id);
+    public Course saveCourse(Course course);
+    void deleteCourse(Long id);
+    public List<Course> getCoursesByCategory(Long categoryId);
+    public Course saveCourse(Course courseDTO, Long categoryId);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //package com.Eonline.Education.Service;
 //
 //import com.Eonline.Education.Request.CreateCourseRequest;
