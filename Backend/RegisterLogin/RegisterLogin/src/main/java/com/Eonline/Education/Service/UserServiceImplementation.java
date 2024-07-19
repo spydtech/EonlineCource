@@ -66,10 +66,10 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findAllByOrderByCreatedAtDesc();
     }
 
-    @Override
-    public List<User> getAllUsers() {
-        return null;
-    }
+//    @Override
+//    public List<User> getAllUsers() {
+//        return null;
+//    }
 
     @Override
     public void deleteUser(Long userId) {

@@ -3,7 +3,7 @@ package com.Eonline.Education.modals;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Data
@@ -13,14 +13,16 @@ public class Payment {
     private Long id;
 
     private Long userId;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id")
-    private List<Course> courses;
+    private String userName; // Concatenated firstName and lastName
+    private String userEmail;
+    private String courseDetails;
 
     private double totalAmount;
 
     private String razorpayPaymentId;
+
+    @Column(name = "created_at")
+    private Date createdAt = new Date();
 
     // Getters and setters, constructors, and other methods
 }

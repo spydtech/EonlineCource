@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class PaymentRequest {
-    private String userId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String userEmail;

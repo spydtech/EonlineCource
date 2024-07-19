@@ -52,7 +52,6 @@ public interface UserService {
 
 	public byte[] getCoverPhoto(String email);
 
-	public List<User> getAllUsers();
 
 
 }
