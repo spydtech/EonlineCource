@@ -16,7 +16,6 @@ public class DataInitializationComponent implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(DataInitializationComponent.class);
 
     private final UserRepository userRepository;
-//    private final CartService cartService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -47,7 +46,6 @@ public class DataInitializationComponent implements CommandLineRunner {
 
                 User admin = userRepository.save(adminUser);
 
-//                cartService.createCart(admin);
 
                 logger.info("Admin user initialized successfully.");
             } else {

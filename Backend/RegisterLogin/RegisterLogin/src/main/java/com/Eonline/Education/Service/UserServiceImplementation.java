@@ -14,7 +14,6 @@ import com.Eonline.Education.response.EducationResponse;
 import com.Eonline.Education.response.MessageResponse;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,14 +32,17 @@ public class UserServiceImplementation implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
     private final EducationRepository educationRepository;
+
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    public UserServiceImplementation(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, AccountRepository accountRepository, EducationRepository educationRepository) {
+    public UserServiceImplementation(UserRepository userRepository, JwtTokenProvider jwtTokenProvider, AccountRepository
+            accountRepository, EducationRepository educationRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.accountRepository = accountRepository;
         this.educationRepository = educationRepository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @Override
@@ -62,6 +64,16 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return null;
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+
     }
 
     @Override
@@ -200,7 +212,7 @@ public class UserServiceImplementation implements UserService {
             existingUser1.setFirstName(userUpdate.getFirstName());
             existingUser1.setLastName(userUpdate.getLastName());
             existingUser1.setEmail(userUpdate.getEmail());
-
+//            existingUser1.setPassword(userUpdate.getPassword());
             existingUser1.setBio(userUpdate.getBio());
             existingUser1.setDateOfBirth(userUpdate.getDateOfBirth());
             existingUser1.setGender(userUpdate.getGender());
@@ -213,6 +225,12 @@ public class UserServiceImplementation implements UserService {
         }
 
     }
+
+    @Override
+    public User getUserById(Long userId) {
+        return null;
+    }
+
     public String updatePassword(String email,PasswordChange passwordChange){
         Optional<User> user= Optional.ofNullable(userRepository.findByEmail(email));
         if(user.isPresent()){
@@ -273,6 +291,5 @@ public class UserServiceImplementation implements UserService {
         User user = userRepository.findByEmail(email);;
         return user != null ? user.getCoverPhoto() : null;
     }
-
 
 }

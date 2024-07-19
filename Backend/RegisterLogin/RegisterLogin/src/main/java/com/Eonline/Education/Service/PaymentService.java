@@ -1,15 +1,15 @@
 package com.Eonline.Education.Service;
 
-import com.Eonline.Education.Request.CourseRequest;
 import com.Eonline.Education.Request.PaymentRequest;
-import com.Eonline.Education.modals.Course;
 import com.Eonline.Education.modals.Payment;
 import com.Eonline.Education.repository.PaymentRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class PaymentService {
@@ -20,24 +20,28 @@ public class PaymentService {
     public void processPayment(PaymentRequest paymentRequest) {
         Payment payment = new Payment();
         payment.setUserId(paymentRequest.getUserId());
-        payment.setCourses(mapCourseRequests(paymentRequest.getCourses()));
+        payment.setUserName(paymentRequest.getFirstName() + " " + paymentRequest.getLastName());
+        payment.setUserEmail(paymentRequest.getUserEmail());
+
+        // Convert course names and prices to JSON string
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> courseDetails = new HashMap<>();
+            courseDetails.put("courseNames", paymentRequest.getCourseNames());
+            courseDetails.put("coursePrices", paymentRequest.getCoursePrices());
+            payment.setCourseDetails(objectMapper.writeValueAsString(courseDetails));
+        } catch (Exception e) {
+            // Handle JSON serialization exception
+            e.printStackTrace();
+        }
+
         payment.setTotalAmount(paymentRequest.getTotalAmount());
         payment.setRazorpayPaymentId(paymentRequest.getRazorpayPaymentId());
 
         paymentRepository.save(payment);
     }
 
-    private List<Course> mapCourseRequests(List<CourseRequest> courseRequests) {
-        return courseRequests.stream()
-                .map(this::mapCourseRequest)
-                .collect(Collectors.toList());
-    }
-
-    private Course mapCourseRequest(CourseRequest courseRequest) {
-        Course course = new Course();
-        course.setCourseId(courseRequest.getCourseId());
-        course.setCourseName(courseRequest.getCourseName());
-        course.setCoursePrice(courseRequest.getCoursePrice());
-        return course;
+    public List<Payment> getAllPayments() {
+        return paymentRepository.findAll();
     }
 }

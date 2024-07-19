@@ -17,6 +17,8 @@ public interface UserService {
 	User findUserProfileByJwt(String jwt) throws Exception;
 
 	List<User> findAllUsers();
+	List<User> getAllUsers();
+	void deleteUser(Long userId);
 
 	ResponseEntity<?> getAccountDetails(String email);
 
@@ -33,6 +35,8 @@ public interface UserService {
 	public User saveUser(User user);
 
 	public User updateDetails(long id,User userUpdate);
+	// Method to get user by ID
+	public User getUserById(Long userId);
 
 	public String updatePassword(String email, PasswordChange passwordChange);
 

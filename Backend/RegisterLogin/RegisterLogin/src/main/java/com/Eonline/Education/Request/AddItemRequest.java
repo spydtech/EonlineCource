@@ -10,15 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddItemRequest {
-
-    @NotNull(message = "Course ID is required")
     private Long courseId;
 
-    private int quantity;
+    private String courseName;
 
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be non-negative")
-    private Integer price;
+    private Integer coursePrice;
 
     // Getters and Setters
 }

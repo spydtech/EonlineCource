@@ -5,43 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d93ec75-e980-4a26-905b-79f7f0acd1b0" name="Changes" comment="updated code">
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CourseRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/PaymentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/PaymentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/PaymentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CartItemRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/test/java/com/Eonline/Education/Controller/CartItemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29-05-2024_11_18_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29-05-2024_11_18__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_31-05-2024_13_46_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_31-05-2024_13_46__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminCourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AdminOrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Configuration/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/BioDataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/BioDataController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/RatingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/RatingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/CartItemController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Controller/UserCourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/RatingRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/RatingRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/ReviewRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/ReviewRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/AddItemRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/CreateCourseRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/DeleteCourseRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/PaymentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/RatingRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Request/ReviewRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CalendarEventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CalendarEventService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartItemService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartItemServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartItemServiceImplementation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CartServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CategoryService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ContactUsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ContactUsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/CourseServiceImplementation.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/DataInitializationComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewServiceImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderItemServiceImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/OrderServiceImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServiceImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/RatingServices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/ReviewServiceImplementation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/UserServiceImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/Service/UserServiceImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Cart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/CartItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/PaymentDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/PaymentDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/modals/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CartItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CartItemRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CartRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CartRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/repository/CourseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/java/com/Eonline/Education/response/ApiResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/RegisterLogin/RegisterLogin/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,16 +88,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/GANES/Downloads/ecommerce java full stack v2/source/spring boot api&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_directory_selection": "C:/Users/GANES/Desktop/ECourse/EonlineCource/Backend/RegisterLogin/RegisterLogin/src/test/java",
+    "last_opened_file_path": "C:/Users/GANES/Desktop/HRMS_SPYD/Backend2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.RegisterLogin.Configuration" />
@@ -202,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1717143489347</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="updated code">
+      <created>1717413851116</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1717413851116</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

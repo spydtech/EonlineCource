@@ -16,6 +16,10 @@ public class ApiResponse {
     public ApiResponse() {
 
     }
+
+    public ApiResponse(int i, String userNotAuthenticated, Object o) {
+    }
+
     public String getMessage() {
         return message;
     }

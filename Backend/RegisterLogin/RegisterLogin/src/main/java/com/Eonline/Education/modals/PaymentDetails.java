@@ -16,7 +16,7 @@ public class PaymentDetails {
     private String razorpayPaymentLinkId;
     private String razorpayPaymentLinkReferenceId;
     private String razorpayPaymentLinkStatus;
-    private String razorpayPaymentId​;
+    private String razorpayPaymentId;
 
     public PaymentDetails() {
         // TODO Auto-generated constructor stub
