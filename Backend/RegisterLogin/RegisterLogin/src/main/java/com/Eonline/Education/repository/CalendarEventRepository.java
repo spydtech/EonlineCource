@@ -12,4 +12,8 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, Lo
     CalendarEvent findByUserId(long userAccID);
 
     void deleteByUserId(long userAccID);
+
+    boolean existsByAdminEmail(String email);
+
+    CalendarEvent findByAdminEmail(String email);
 }

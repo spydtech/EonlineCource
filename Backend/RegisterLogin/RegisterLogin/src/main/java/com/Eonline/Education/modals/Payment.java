@@ -3,26 +3,24 @@ package com.Eonline.Education.modals;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
 public class Payment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
-    private String userName; // Concatenated firstName and lastName
-    private String userEmail;
+    private Long userId;
 
-    private String courseDetails; // JSON string containing course names and prices
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private List<Course> courses;
 
-    private Double totalAmount;
+    private double totalAmount;
+
     private String razorpayPaymentId;
-    @Column(name = "created_at")
-    private Date createdAt = new Date();
 
-    // Getters and Setters
+    // Getters and setters, constructors, and other methods
 }

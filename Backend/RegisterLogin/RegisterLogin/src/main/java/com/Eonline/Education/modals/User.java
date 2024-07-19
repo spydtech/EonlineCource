@@ -1,15 +1,15 @@
-package com.Eonline.Education.modals; // Corrected the package name typo
+package com.Eonline.Education.modals;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -36,11 +36,11 @@ public class User {
 
 //	@NotBlank(message = "Email is required")
 //	@Email(message = "Email should be valid")
-//	@Column(name = "email", unique = true) // Added unique constraint to email
+//	@Column(name = "email", unique = true)
 	private String email;
 
 	@Column(name = "created_at")
-	private Date createdAt = new Date(); // Initialize createdAt with the current date
+	private Date createdAt = new Date();
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -57,8 +57,6 @@ public class User {
 	@JsonIgnore
 	private Education education;
 
-
-
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private CalendarEvent calendarEvent;
@@ -67,17 +65,21 @@ public class User {
 	@JoinColumn(name = "plan_id")
 	private Plan plan;
 
-	@Version
-	private int version; // Optimistic locking version field
-
-	private String bio;
-
-	private LocalDate dateOfBirth;
 	@Lob
 	private byte[] profilePhoto;
 
 	@Lob
 	private byte[] coverPhoto;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Task> task;
+
+	@Version
+	private int version;
+
+	private String bio;
+
+	private LocalDate dateOfBirth;
 
 	private String gender;
 
@@ -88,5 +90,14 @@ public class User {
 	private String website;
 
 	private String confirmPassword;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Enrollment> enrollments;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Payment> payments;
+
+
+
 
 }

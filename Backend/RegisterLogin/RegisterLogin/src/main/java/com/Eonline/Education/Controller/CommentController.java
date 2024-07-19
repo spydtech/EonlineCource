@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/comments")
 public class CommentController {
 	@Autowired
 	CommentService commentService;
-	@PostMapping("/comments/create")
+	@PostMapping("/create")
 	public ResponseEntity<?> createComment(@RequestParam long postId,@RequestParam String postedBy,@RequestParam String content){
 		try {
 			return ResponseEntity.ok(commentService.createComment(postId, postedBy, content));
@@ -26,7 +26,7 @@ public class CommentController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
 		}
 	}
-	@GetMapping("comments/{postId}")
+	@GetMapping("/{postId}")
 	public ResponseEntity<?> getCommentsByPostId(@PathVariable long postId){
 		try {
 			return ResponseEntity.ok(commentService.getCommentsByPostId(postId));

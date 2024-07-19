@@ -8,6 +8,7 @@ import com.Eonline.Education.modals.SaveEntity;
 import com.Eonline.Education.repository.PostRepository;
 import com.Eonline.Education.repository.SaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -39,16 +40,18 @@ public class SaveServiceImpl implements SaveService {
 	}
 
 	@Override
-	public String deleteSavedPost(int id) {
-		// TODO Auto-generated method stub
-		Optional<SaveEntity> optional = saveRepository.findById(id);
-		if(optional.isPresent()) {
-			saveRepository.deleteById(id);
-			return "deleted the saved post successfully";
-			
+	public ResponseEntity<?> deleteSavedPost(int id) {
+
+		try {
+			if (saveRepository.existsById(id)) {
+				saveRepository.deleteById(id);
+				return ResponseEntity.ok().build();
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body("Internal Server Error: " + e.getMessage());
 		}
-		
-		throw new RuntimeException("id is not found");
 	}
 
 }

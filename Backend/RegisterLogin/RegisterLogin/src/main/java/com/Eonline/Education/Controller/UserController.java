@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -31,18 +32,6 @@ public class UserController {
     public UserController(UserService userService, NotificationService notificationService) {
         this.userService = userService;
         this.notificationService = notificationService;
-    }
-
-    @GetMapping("/all-users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
 
     @GetMapping("/profile")
@@ -78,13 +67,12 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userUpdate) {
-        return new ResponseEntity<>(userService.updateDetails(id, userUpdate), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateDetails(id,userUpdate),HttpStatus.OK);
 
     }
-
     @PutMapping("/password/{email}")
-    public ResponseEntity<String> updatePassword(@PathVariable String email, @RequestBody PasswordChange passwordChange) {
-        return new ResponseEntity<>(userService.updatePassword(email, passwordChange), HttpStatus.CREATED);
+    public ResponseEntity<String> updatePassword(@PathVariable String email,@RequestBody PasswordChange passwordChange){
+        return new ResponseEntity<>(userService.updatePassword(email,passwordChange),HttpStatus.CREATED);
     }
     @PostMapping("/{email}/profile-photo")
     public String uploadProfilePhoto(@PathVariable String email, @RequestParam("file") MultipartFile file) throws IOException {
@@ -117,4 +105,62 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers(){
+        return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
+
+    }
 }
+
+
+
+//package com.Eonline.Education.Controller;
+//
+//import com.Eonline.Education.Service.UserService;
+//import com.Eonline.Education.modals.Account;
+//import com.Eonline.Education.modals.Education;
+//import com.Eonline.Education.modals.User;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.*;
+//
+//@RestController
+//@RequestMapping("/api/users")
+//public class UserController {
+//
+//    private UserService userService;
+//
+//    public UserController(UserService userService) {
+//        this.userService=userService;
+//    }
+//
+//    @GetMapping("/profile")
+//    public ResponseEntity<User> getUserProfileHandler(@RequestHeader("Authorization") String jwt) throws Exception {
+//
+//        System.out.println("/api/users/profile");
+//        User user=userService.findUserProfileByJwt(jwt);
+//        return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+//    }
+//
+//    @GetMapping("/getAccountDetail/{emailid}")
+//    public ResponseEntity<?> getUserDetails(@PathVariable("emailid") String emailid) {
+//        return userService.getAccountDetails(emailid);
+//    }
+//
+//    @PutMapping("/updateUserDetails/{emailid}")
+//    public ResponseEntity<?> updateUserDetails(@PathVariable("emailid") String emailid, @RequestBody Account userAccount) {
+//        return userService.updateAccountDetails(emailid,userAccount);
+//    }
+//    // Sending a simple Email
+//
+//    @GetMapping("/getEducationDetail/{emailid}")
+//    public ResponseEntity<?> getUserEducationDetails(@PathVariable("emailid") String emailid) {
+//        return userService.getEducationDetails(emailid);
+//    }
+//
+//    @PutMapping("/updateUserEducationDetails/{emailid}")
+//    public ResponseEntity<?> updateUserEducationDetails(@PathVariable("emailid") String emailid, @RequestBody Education userEducation) {
+//        return userService.updateEducationDetails(emailid,userEducation);
+//    }
+//
+//}

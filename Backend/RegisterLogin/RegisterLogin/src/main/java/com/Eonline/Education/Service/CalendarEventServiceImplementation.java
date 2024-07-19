@@ -1,5 +1,6 @@
 package com.Eonline.Education.Service;
 
+import com.Eonline.Education.Request.CalendarEventRequest;
 import com.Eonline.Education.modals.CalendarEvent;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.CalendarEventRepository;
@@ -36,7 +37,7 @@ public class CalendarEventServiceImplementation implements CalendarEventService 
     }
 
     @Override
-    public CalendarEvent addEvent(CalendarEvent event ,String Email) {
+    public CalendarEvent addEvent(CalendarEventRequest event , String Email) {
         User userDetails = userRepository.findByEmail(Email);
         long userAccID = userDetails.getId();
         if (!calendarEventRepository.existsByUserId(userAccID)) {

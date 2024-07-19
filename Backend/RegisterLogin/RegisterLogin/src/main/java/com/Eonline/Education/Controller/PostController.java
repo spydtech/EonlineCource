@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.persistence.EntityNotFoundException;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/posts")
 public class PostController {
 	@Autowired
 	private PostService postService;
@@ -100,15 +100,15 @@ public class PostController {
 		}
 	}
 	@DeleteMapping("/deletePost/{id}")
-	public ResponseEntity<String> deletePostById(@PathVariable long id){
+	public ResponseEntity<?> deletePostById(@PathVariable long id){
 		try {
 			return new ResponseEntity<>(postService.deletePostById(id),HttpStatus.OK);
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			
+
 		}
-		
-		
+
+
 	}
 	@GetMapping("/getSavedPost/{id}")
 	public ResponseEntity<String> savingThePost(@PathVariable long id){
@@ -133,14 +133,15 @@ public class PostController {
 		
 	}
 	@DeleteMapping("deleteSavePost/{id}")
-	public ResponseEntity<String> deleteSavedPost(@PathVariable int id){
+	public ResponseEntity<?> deleteSavedPost(@PathVariable int id){
 		try {
 			return new ResponseEntity<>(saveService.deleteSavedPost(id),HttpStatus.OK);
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			
+
 		}
 	}
-	
-	
+
+
+
 }

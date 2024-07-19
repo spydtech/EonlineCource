@@ -14,6 +14,7 @@ import com.Eonline.Education.repository.CommentRepository;
 import com.Eonline.Education.repository.PostRepository;
 import com.Eonline.Education.repository.SaveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -97,18 +98,19 @@ public class PostServiceImpl implements PostService {
 		return content+ "updated successfully by" + postedBY;
 	}
 	@Override
-	public String deletePostById(long id) {
-		Optional<Post> findById = postRepository.findById(id);
-		if(findById.isPresent()) {
-			//saveRepository.deleteByPostId(findById);
-			//commentRepository.deleteById(id);
-			postRepository.deleteById(id);
-			
-			
-			return "deleted successFully";
+	public ResponseEntity<?> deletePostById(long id) {
+
+		try {
+			if (postRepository.existsById(id)) {
+				saveRepository.deleteByPostId(id);
+				postRepository.deleteById(id);
+				return ResponseEntity.ok().build();
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body("Internal Server Error: " + e.getMessage());
 		}
-	
-		throw new RuntimeException("id is not found");
 	}
 	
 

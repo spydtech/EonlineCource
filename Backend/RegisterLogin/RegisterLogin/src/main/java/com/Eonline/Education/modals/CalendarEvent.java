@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "calendar_event")
 public class CalendarEvent {
 
     @Id
@@ -20,10 +21,16 @@ public class CalendarEvent {
     private String Date;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String adminEmail;
+    private String meetingLink;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_email", referencedColumnName = "email")
     private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trainee_email", referencedColumnName = "email")
+    private TraineeCredentialGenerator traineeCredentialGenerator;
 
 
 }
