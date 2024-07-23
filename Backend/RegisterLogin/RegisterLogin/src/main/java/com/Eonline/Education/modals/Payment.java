@@ -21,6 +21,8 @@ public class Payment {
 
     private String razorpayPaymentId;
 
+    private String paymentMethod;
+
     @Column(name = "created_at")
     private Date createdAt = new Date();
 

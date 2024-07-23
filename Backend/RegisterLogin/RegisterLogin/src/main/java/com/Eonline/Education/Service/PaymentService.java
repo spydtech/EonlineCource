@@ -22,6 +22,10 @@ public class PaymentService {
         payment.setUserId(paymentRequest.getUserId());
         payment.setUserName(paymentRequest.getFirstName() + " " + paymentRequest.getLastName());
         payment.setUserEmail(paymentRequest.getUserEmail());
+        payment.setRazorpayPaymentId(paymentRequest.getRazorpayPaymentId());
+        payment.setTotalAmount(paymentRequest.getTotalAmount());
+        payment.setPaymentMethod(paymentRequest.getPaymentMethod());
+
 
         // Convert course names and prices to JSON string
         try {

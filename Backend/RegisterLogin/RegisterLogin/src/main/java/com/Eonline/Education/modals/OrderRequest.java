@@ -17,14 +17,16 @@ public class OrderRequest {
 
     @NotBlank(message = "Receipt is required")
     private String receipt;
+    private String paymentMethod;
 
     // Add other necessary fields as needed
 
     // Constructor for initializing fields
-    public OrderRequest(Long amount, String currency, String receipt) {
+    public OrderRequest(Long amount, String currency, String receipt, String paymentMethod) {
         this.amount = amount;
         this.currency = currency;
         this.receipt = receipt;
+        this.paymentMethod = paymentMethod;
     }
 
     // Add getters and setters if needed
@@ -35,6 +37,7 @@ public class OrderRequest {
                 "amount=" + amount +
                 ", currency='" + currency + '\'' +
                 ", receipt='" + receipt + '\'' +
+                ". paymentMethod='" + paymentMethod + '\'' +
                 // Add other fields here for toString() representation
                 '}';
     }

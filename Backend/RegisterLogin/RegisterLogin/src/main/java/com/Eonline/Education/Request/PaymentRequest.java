@@ -14,6 +14,7 @@ public class PaymentRequest {
     private List<Double> coursePrices;
     private Double totalAmount;
     private String razorpayPaymentId;
+    private String paymentMethod;
 
     // Getters and Setters
 }
