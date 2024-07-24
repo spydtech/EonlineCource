@@ -6,13 +6,14 @@ import jakarta.mail.MessagingException;
 import java.util.List;
 
 public interface TraineeService {
-    String createUserName(TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException;
+    String createUserId(TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException;
 
     void logInTrainee(TraineeCredentialGenerator trainee);
 
-    void logOutTrainee(String username);
+    void logOutTrainee(String userId);
 
     public List<TraineeCredentialGenerator> getAllTrainees();
+    TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws Exception;
 }
 
 

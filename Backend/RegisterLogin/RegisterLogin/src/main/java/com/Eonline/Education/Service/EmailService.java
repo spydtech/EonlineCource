@@ -31,13 +31,13 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendUserNameAndPassword(String toEmail, String userName,String password ) throws MessagingException {
+    public void sendUserIdAndPassword(String toEmail, String userId,String password ) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(toEmail);
         helper.setSubject("Sending Username And Password");
         //  helper.setText("Your username for registration is: " + userName);
-        helper.setText("Your userName for registration is: "+userName+" Your password for registration is: " + password);
+        helper.setText("Your userId for Login is: "+userId+" Your password for Login is: " + password);
 
         mailSender.send(message);
 

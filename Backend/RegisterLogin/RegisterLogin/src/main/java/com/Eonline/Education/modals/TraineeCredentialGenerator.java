@@ -1,13 +1,12 @@
 package com.Eonline.Education.modals;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,10 +20,7 @@ public class TraineeCredentialGenerator {
     private String lastName;
     private String phoneNumber;
     private String email;
-    private String userName;
     private String password;
-
-
-
+    private String userId;
 
 }

@@ -24,7 +24,7 @@ public class CustomerTraineeDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TraineeCredentialGenerator trainee = traineeRepository.findByUserName(username);
+        TraineeCredentialGenerator trainee = traineeRepository.findByUserId(username);
 
         if (trainee == null) {
             throw new UsernameNotFoundException("Trainee not found with username: " + username);
@@ -32,7 +32,7 @@ public class CustomerTraineeDetails implements UserDetailsService {
 
         List<GrantedAuthority> authorities = new ArrayList<>(); // You can add authorities if needed
 
-        return new org.springframework.security.core.userdetails.User(trainee.getUserName(), trainee.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(trainee.getUserId(), trainee.getPassword(), authorities);
     }
 }
 

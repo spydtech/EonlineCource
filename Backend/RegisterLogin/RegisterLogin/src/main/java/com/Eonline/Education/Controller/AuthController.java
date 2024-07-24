@@ -6,9 +6,9 @@ import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.OtpService;
 import com.Eonline.Education.exceptions.UserException;
-import com.Eonline.Education.modals.*;
-import com.Eonline.Education.repository.AccountRepository;
-import com.Eonline.Education.repository.BioDataRepository;
+import com.Eonline.Education.modals.OtpVerificationRequest;
+import com.Eonline.Education.modals.User;
+import com.Eonline.Education.modals.UserRegistrationRequest;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.AuthResponse;
 import jakarta.mail.MessagingException;
@@ -22,8 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")

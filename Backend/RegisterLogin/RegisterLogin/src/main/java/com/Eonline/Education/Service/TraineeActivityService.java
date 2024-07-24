@@ -19,7 +19,7 @@ public class TraineeActivityService {
     private TraineeRepository traineeRepository;
 
     public void traineeLoggedIn(TraineeCredentialGenerator trainee) {
-        activeTrainees.put(trainee.getUserName(), trainee);
+        activeTrainees.put(trainee.getUserId(), trainee);
     }
 
     public void traineeLoggedOut(String username) {

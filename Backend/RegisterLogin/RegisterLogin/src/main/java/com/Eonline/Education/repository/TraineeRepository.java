@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TraineeRepository extends JpaRepository<TraineeCredentialGenerator, Long> {
-    TraineeCredentialGenerator findByUserName(String userName);
+    TraineeCredentialGenerator findByUserId(String userId);
     boolean existsByEmail(String email);
     TraineeCredentialGenerator findByEmail(String email);
 }

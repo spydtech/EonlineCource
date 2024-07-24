@@ -1,5 +1,7 @@
 package com.Eonline.Education.Service;
 
+import com.Eonline.Education.Configuration.JwtTokenProvider;
+import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import com.Eonline.Education.repository.TraineeRepository;
 import jakarta.mail.MessagingException;
@@ -23,9 +25,15 @@ public class TraineeServiceImpl implements TraineeService {
 
     @Autowired
     private TraineeActivityService traineeActivityService;
+    @Autowired
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public  TraineeServiceImpl(JwtTokenProvider jwtTokenProvider){
+        this.jwtTokenProvider=jwtTokenProvider;
+    }
 
     @Override
-    public String createUserName(TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException {
+    public String createUserId(TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException {
         if (traineeRepository.existsByEmail(traineeCredentialGenerator.getEmail())) {
             return "Email is already registered.";
         }
@@ -34,7 +42,7 @@ public class TraineeServiceImpl implements TraineeService {
         traineeCredentialGenerator.setPassword(passwordEncoder.encode(password));
 
         traineeRepository.save(traineeCredentialGenerator);
-        emailService.sendUserNameAndPassword(traineeCredentialGenerator.getEmail(), traineeCredentialGenerator.getUserName(), password);
+        emailService.sendUserIdAndPassword(traineeCredentialGenerator.getEmail(), traineeCredentialGenerator.getUserId(), password);
 
         return "UserName and password are sent successfully";
     }
@@ -43,8 +51,17 @@ public class TraineeServiceImpl implements TraineeService {
         traineeActivityService.traineeLoggedIn(trainee);
     }
 
-    public void logOutTrainee(String username) {
-        traineeActivityService.traineeLoggedOut(username);
+    public void logOutTrainee(String userId) {
+        traineeActivityService.traineeLoggedOut(userId);
+    }
+    @Override
+    public TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws UserException {
+        String userId = jwtTokenProvider.getUserIdFromJwtToken(jwt);
+        TraineeCredentialGenerator trainee = traineeRepository.findByUserId(userId);
+        if (trainee == null) {
+            throw new UserException("User not exist with email " + userId);
+        }
+        return trainee;
     }
 
     public List<TraineeCredentialGenerator> getAllTrainees(){

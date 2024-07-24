@@ -1,19 +1,17 @@
 package com.Eonline.Education.Configuration;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.crypto.SecretKey;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import javax.crypto.SecretKey;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class JwtTokenProvider {
@@ -25,6 +23,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime()+86400000))
+                .claim("userId",auth.getName())
                 .claim("email",auth.getName())
               //.claim("authorities", authorities)
                 .signWith(key)
@@ -37,6 +36,14 @@ public class JwtTokenProvider {
         Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
         return String.valueOf(claims.get("email"));
+    }
+
+    public String getUserIdFromJwtToken(String jwt) {
+        jwt=jwt.substring(7);
+
+        Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+
+        return String.valueOf(claims.get("userId"));
     }
 
     public String populateAuthorities(Collection<? extends GrantedAuthority> collection) {
