@@ -65,7 +65,9 @@ public class User {
 	private Plan plan;
 
 	@Lob
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] profilePhoto;
+
 
 	@Lob
 	private byte[] coverPhoto;

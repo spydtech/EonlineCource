@@ -64,6 +64,11 @@ public class TraineeServiceImpl implements TraineeService {
         return trainee;
     }
 
+    @Override
+    public void logInTraineeEmail(TraineeCredentialGenerator traineeCredentialGenerator) {
+        traineeActivityService.traineeLoggedInEmail(traineeCredentialGenerator);
+    }
+
     public List<TraineeCredentialGenerator> getAllTrainees(){
         return traineeRepository.findAll();
     }

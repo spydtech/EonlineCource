@@ -14,6 +14,8 @@ public interface TraineeService {
 
     public List<TraineeCredentialGenerator> getAllTrainees();
     TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws Exception;
+
+    void logInTraineeEmail(TraineeCredentialGenerator traineeCredentialGenerator);
 }
 
 

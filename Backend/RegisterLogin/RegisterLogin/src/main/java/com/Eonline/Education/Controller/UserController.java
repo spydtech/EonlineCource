@@ -7,6 +7,7 @@ import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.UserRepository;
+import com.Eonline.Education.response.AdminProfileResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -70,10 +71,12 @@ public class UserController {
         return new ResponseEntity<>(userService.updateDetails(id,userUpdate),HttpStatus.OK);
 
     }
+
     @PutMapping("/password/{email}")
-    public ResponseEntity<String> updatePassword(@PathVariable String email,@RequestBody PasswordChange passwordChange){
-        return new ResponseEntity<>(userService.updatePassword(email,passwordChange),HttpStatus.CREATED);
+    public ResponseEntity<String> updatePassword(@PathVariable String email, @RequestBody PasswordChange passwordChange) {
+        return new ResponseEntity<>(userService.updatePassword(email, passwordChange), HttpStatus.CREATED);
     }
+
     @PostMapping("/{email}/profile-photo")
     public String uploadProfilePhoto(@PathVariable String email, @RequestParam("file") MultipartFile file) throws IOException {
         return userService.saveProfilePhoto(email, file);
@@ -105,13 +108,20 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
 
+
+
+    @PutMapping("/profile/update/{id}")
+    public ResponseEntity<AdminProfileResponse> adminProfileUpdate(@PathVariable Long id, @RequestParam("file") MultipartFile file, @RequestParam String firstName, @RequestParam String lastName,@RequestParam  String email, @RequestParam String phoneNumber) throws IOException {
+        return userService.adminProfileUpdate(id,file,firstName,lastName,email,phoneNumber);
+    }
+
+
+        @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 }
-
 
 
 //package com.Eonline.Education.Controller;

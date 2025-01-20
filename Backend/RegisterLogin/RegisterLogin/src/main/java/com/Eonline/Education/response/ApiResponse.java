@@ -6,11 +6,23 @@ public class ApiResponse {
 
     private String message;
     private boolean status;
+    private Object payload;
+
+
 
     public ApiResponse(String message, boolean status) {
-        super();
         this.message = message;
         this.status = status;
+    }
+    public ApiResponse(String message) {
+        this.message = message;
+    }
+    public ApiResponse(String message, Object payload) {
+        this.message = message;
+        this.payload = payload;
+    }
+    public ApiResponse( Object payload) {
+        this.payload = payload;
     }
 
     public ApiResponse() {
@@ -31,6 +43,13 @@ public class ApiResponse {
     }
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    public Object getPayload() {
+        return payload;
+    }
+
+    public void setPayload(Object payload) {
+        this.payload = payload;
     }
 
 

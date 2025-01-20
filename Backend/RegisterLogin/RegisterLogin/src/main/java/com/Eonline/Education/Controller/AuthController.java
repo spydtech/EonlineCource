@@ -11,6 +11,7 @@ import com.Eonline.Education.modals.User;
 import com.Eonline.Education.modals.UserRegistrationRequest;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.AuthResponse;
+import com.Eonline.Education.user.UserRole;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class AuthController {
 
     private String registeredPassword;
 
-    private String registeredRole;
+    private UserRole registeredRole;
 
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, CustomUserDetails customUserDetails) {
@@ -78,7 +79,7 @@ public class AuthController {
         registeredFirstName = request.getFirstName();
         registeredLastName = request.getLastName();
         registeredPassword = request.getPassword();
-        registeredRole = request.getRole();
+        registeredRole = UserRole.CUSTOMER;
 
 
         return ResponseEntity.ok("OTP sent successfully.");
@@ -91,7 +92,7 @@ public class AuthController {
             created.setFirstName(registeredFirstName);
             created.setLastName(registeredLastName);
             created.setEmail(email);
-            created.setRole(registeredRole);
+            created.setRole(String.valueOf(registeredRole));
             created.setPassword(passwordEncoder.encode(registeredPassword));
             User savedUser = userRepository.save(created);
 
@@ -119,20 +120,15 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-
         System.out.println(username + " ----- " + password);
-
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-
+        User user=userRepository.findByEmail(username);
         String token = jwtTokenProvider.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
-
+        authResponse.setRole(user.getRole());
         authResponse.setStatus(true);
         authResponse.setJwt(token);
-
-
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
     }
 

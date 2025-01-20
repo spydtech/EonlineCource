@@ -2,14 +2,13 @@ package com.Eonline.Education.Service;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.exceptions.UserException;
-import com.Eonline.Education.modals.Account;
-import com.Eonline.Education.modals.Education;
-import com.Eonline.Education.modals.PasswordChange;
-import com.Eonline.Education.modals.User;
+import com.Eonline.Education.modals.*;
 import com.Eonline.Education.repository.AccountRepository;
 import com.Eonline.Education.repository.EducationRepository;
+import com.Eonline.Education.repository.ReportRepository;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.AccountResponse;
+import com.Eonline.Education.response.AdminProfileResponse;
 import com.Eonline.Education.response.EducationResponse;
 import com.Eonline.Education.response.MessageResponse;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,6 +32,8 @@ public class UserServiceImplementation implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
     private final EducationRepository educationRepository;
+
+
 
     private PasswordEncoder passwordEncoder;
 
@@ -79,15 +81,20 @@ public class UserServiceImplementation implements UserService {
     @Override
     public ResponseEntity<?> getAccountDetails(String email) {
         User userDetails = userRepository.findByEmail(email);
-        long userAccID = userDetails.getId();
+
+        Long userAccID = userDetails.getId();
 
         if (!accountRepository.existsByUserId(userAccID)) {
             Account accountDetails = new Account();
             accountDetails.setUser(userDetails);
             accountDetails.setUserEmail(userDetails.getEmail());
             accountDetails.setFullName(userDetails.getFirstName() + " " + userDetails.getLastName());
-            accountRepository.save(accountDetails);
-        }
+//            accountDetails.setLocation(userDetails.getLocation());
+//            accountDetails.setPhoneNumber(userDetails.getPhoneNumber());
+           accountRepository.save(accountDetails);
+            return ResponseEntity.ok(accountDetails);
+
+        }else{
 
         Account account = accountRepository.findByUserId(userAccID);
         AccountResponse accountResponse = new AccountResponse();
@@ -95,8 +102,8 @@ public class UserServiceImplementation implements UserService {
         accountResponse.setUserEmail(account.getUserEmail());
         accountResponse.setLocation(account.getLocation());
         accountResponse.setPhoneNumber(account.getPhoneNumber());
-
-        return ResponseEntity.ok(accountResponse);
+            return ResponseEntity.ok(accountResponse);
+        }
     }
 
     @Override
@@ -206,7 +213,6 @@ public class UserServiceImplementation implements UserService {
 
     public User updateDetails(long id,User userUpdate){
         Optional<User> existingUser = userRepository.findById(id);
-
         if(existingUser.isPresent()){
             User existingUser1=existingUser.get();
             existingUser1.setFirstName(userUpdate.getFirstName());
@@ -275,7 +281,6 @@ public class UserServiceImplementation implements UserService {
         } else if ("cover".equals(type)) {
             user.setCoverPhoto(fileContent);
         }
-
         userRepository.save(user);
         return "File uploaded successfully: " + file.getOriginalFilename();
     }
@@ -291,8 +296,52 @@ public class UserServiceImplementation implements UserService {
         User user = userRepository.findByEmail(email);;
         return user != null ? user.getCoverPhoto() : null;
     }
+
+    @Override
+    public ResponseEntity<Account> accountSave(String jwt,Account account) {
+        Account account1=new Account();
+        String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        User user = userRepository.findByEmail(email);
+        account1.setPhoneNumber(account.getPhoneNumber());
+        account1.setUserEmail(account.getUserEmail());
+        account1.setLocation(account.getLocation());
+        account1.setFullName(account.getFullName());
+        account1.setUser(user);
+        accountRepository.save(account1);
+        return ResponseEntity.ok(account1);
+    }
+
+    @Override
+    public ResponseEntity<AdminProfileResponse> adminProfileUpdate(Long id,MultipartFile file, String firstName,String lastName, String email, String phoneNumber) throws IOException {
+        Optional<User> existingUser = userRepository.findById(id);
+        User user=new User();
+        if(existingUser.isPresent()) {
+            user=existingUser.get();
+            user.setProfilePhoto(file.getBytes());
+            user.setEmail(email);
+            user.setPhoneNumber(phoneNumber);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            userRepository.save(user);
+            }
+            return ResponseEntity.ok(userToAdminDetails(user, file));
+    }
+
+    private AdminProfileResponse userToAdminDetails(User user,MultipartFile file){
+        AdminProfileResponse ad=new AdminProfileResponse();
+        ad.setEmail(user.getEmail());
+        ad.setPhoneNumber(user.getPhoneNumber());
+        ad.setProfilePhoto(file.getOriginalFilename());
+        ad.setFirstName(user.getFirstName());
+        ad.setLastName(user.getLastName());
+        return ad;
+    }
+
+
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+
 
 }

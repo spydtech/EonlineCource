@@ -4,7 +4,9 @@ import com.Eonline.Education.modals.Account;
 import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
+import com.Eonline.Education.response.AdminProfileResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -53,5 +55,7 @@ public interface UserService {
 	public byte[] getCoverPhoto(String email);
 
 
+	ResponseEntity<Account> accountSave(String jwt,Account account);
 
+	ResponseEntity<AdminProfileResponse> adminProfileUpdate(Long id, MultipartFile file, String firstName, String lastName, String email, String mobileNumber) throws IOException;
 }
