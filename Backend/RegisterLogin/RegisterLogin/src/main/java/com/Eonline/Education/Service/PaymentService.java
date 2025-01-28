@@ -16,17 +16,18 @@ public class PaymentService {
 
     @Autowired
     private PaymentRepository paymentRepository;
+    @Autowired
+    OtpService otpService;
 
-    public void processPayment(PaymentRequest paymentRequest) {
+    public Payment processPayment(PaymentRequest paymentRequest) {
         Payment payment = new Payment();
-        payment.setUserId(paymentRequest.getUserId());
+        String userId= otpService.generateUserId();
+        payment.setUserId(Long.valueOf(userId));
         payment.setUserName(paymentRequest.getFirstName() + " " + paymentRequest.getLastName());
         payment.setUserEmail(paymentRequest.getUserEmail());
         payment.setRazorpayPaymentId(paymentRequest.getRazorpayPaymentId());
         payment.setTotalAmount(paymentRequest.getTotalAmount());
         payment.setPaymentMethod(paymentRequest.getPaymentMethod());
-
-
         // Convert course names and prices to JSON string
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -38,11 +39,10 @@ public class PaymentService {
             // Handle JSON serialization exception
             e.printStackTrace();
         }
-
         payment.setTotalAmount(paymentRequest.getTotalAmount());
         payment.setRazorpayPaymentId(paymentRequest.getRazorpayPaymentId());
-
         paymentRepository.save(payment);
+        return payment;
     }
 
     public List<Payment> getAllPayments() {

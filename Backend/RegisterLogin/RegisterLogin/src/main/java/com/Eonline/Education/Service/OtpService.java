@@ -8,6 +8,7 @@ import java.util.Random;
 public class OtpService {
 
     private static final int OTP_LENGTH = 6;
+    private static final int USER_ID_LENGTH=3;
     public String generateOtp() {
         Random random = new Random();
         StringBuilder otp = new StringBuilder();
@@ -16,4 +17,15 @@ public class OtpService {
         }
         return otp.toString();
     }
+
+    public String generateUserId() {
+        Random random = new Random();
+        StringBuilder userId = new StringBuilder();
+        for (int i = 0; i < USER_ID_LENGTH; i++) {
+            userId.append(random.nextInt(10));
+        }
+        return userId.toString();
+    }
+
+
 }

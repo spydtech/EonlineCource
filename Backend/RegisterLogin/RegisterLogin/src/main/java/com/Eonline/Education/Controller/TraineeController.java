@@ -59,6 +59,11 @@ public class TraineeController {
         }
     }
 
+    @PutMapping("update/trainee/{email}")
+    public ResponseEntity<TraineeCredentialGenerator> update(@RequestBody TraineeCredentialGenerator traineeCredentialGenerator){
+        return ResponseEntity.ok(traineeService.update(traineeCredentialGenerator));
+    }
+
     // Endpoint for trainee signin (authentication)
     @PostMapping("/signin")
     public ResponseEntity<AuthResponse> signin(@RequestBody TraineeCredentialGenerator traineeCredentialGenerator) {
@@ -146,5 +151,10 @@ public class TraineeController {
     @GetMapping("/getAllTrainee")
     public ResponseEntity<List<TraineeCredentialGenerator>> getAllTrainess(){
         return new ResponseEntity<>(traineeService.getAllTrainees(),HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{email}")
+    public String delete(@PathVariable String email){
+        return traineeService.delete(email);
+
     }
 }

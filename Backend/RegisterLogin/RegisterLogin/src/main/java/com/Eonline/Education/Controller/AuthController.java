@@ -12,6 +12,7 @@ import com.Eonline.Education.modals.UserRegistrationRequest;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.AuthResponse;
 import com.Eonline.Education.user.UserRole;
+import com.Eonline.Education.user.UserStatus;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -93,6 +94,7 @@ public class AuthController {
             created.setLastName(registeredLastName);
             created.setEmail(email);
             created.setRole(String.valueOf(registeredRole));
+            created.setStatus(UserStatus.INACTIVE);
             created.setPassword(passwordEncoder.encode(registeredPassword));
             User savedUser = userRepository.save(created);
 
@@ -124,6 +126,7 @@ public class AuthController {
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user=userRepository.findByEmail(username);
+        user.setStatus(UserStatus.ACTIVE);
         String token = jwtTokenProvider.generateToken(authentication);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setRole(user.getRole());

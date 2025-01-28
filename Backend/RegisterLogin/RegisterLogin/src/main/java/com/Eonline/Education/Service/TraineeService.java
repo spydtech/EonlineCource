@@ -16,6 +16,10 @@ public interface TraineeService {
     TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws Exception;
 
     void logInTraineeEmail(TraineeCredentialGenerator traineeCredentialGenerator);
+
+    TraineeCredentialGenerator update(TraineeCredentialGenerator traineeCredentialGenerator);
+
+    String delete(String email);
 }
 
 

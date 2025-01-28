@@ -30,21 +30,29 @@ public class ChatGroup {
             joinColumns = @JoinColumn(name = "chat_group_id"),
             inverseJoinColumns = @JoinColumn(name = "trainee_id"))
     private List<TraineeCredentialGenerator> trainees = new ArrayList<TraineeCredentialGenerator>();
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Meeting> meetings = new ArrayList<>();
 
     // Constructors, getters, and setters
 
     public ChatGroup() {
     }
 
+    public void addUser(User user) {
+        if (!this.members.contains(user)) {
+            this.members.add(user);
+        }
+    }
+
+
+    public void addTrainee(TraineeCredentialGenerator trainee) {
+        if (!this.trainees.contains(trainee)) {
+            this.trainees.add(trainee);
+        }
+    }
+
     public ChatGroup(String name) {
         this.name = name;
     }
 
-    public void addUser(User user) {
-        this.members.add(user);
-    }
-
-    public void addTrainee(TraineeCredentialGenerator trainee) {
-        this.trainees.add(trainee);
-    }
 }

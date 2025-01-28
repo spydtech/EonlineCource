@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface ChatGroupRepository extends JpaRepository<ChatGroup, Long> {
 
     Optional<ChatGroup> findByNameIgnoreCase(String group);
+
+    Optional<ChatGroup> findByName(String groupName);
+
 }

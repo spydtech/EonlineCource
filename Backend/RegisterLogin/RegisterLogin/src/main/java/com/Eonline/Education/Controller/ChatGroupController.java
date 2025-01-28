@@ -1,8 +1,12 @@
 package com.Eonline.Education.Controller;
 
+import com.Eonline.Education.Request.ChatGroupRequest;
 import com.Eonline.Education.Service.ChatGroupService;
 import com.Eonline.Education.modals.ChatGroup;
+import com.Eonline.Education.modals.TraineeCredentialGenerator;
+import com.Eonline.Education.modals.User;
 import com.Eonline.Education.response.ChatGroupResponse;
+import com.Eonline.Education.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +35,8 @@ public class ChatGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<ChatGroup> createChatGroup(@RequestBody ChatGroup chatGroup) {
-        ChatGroup createdChatGroup = chatGroupService.createChatGroup(chatGroup);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdChatGroup);
+    public ResponseEntity<ChatGroupResponse> createChatGroup(@RequestBody ChatGroupRequest chatGroupRequest) {
+        return ResponseEntity.ok(chatGroupService.createChatGroup(chatGroupRequest));
     }
 
     @PutMapping("/{id}")
@@ -53,23 +56,17 @@ public class ChatGroupController {
     }
 
     @PostMapping("/{id}/add-users")
-    public ResponseEntity<ChatGroup> addUsersToChatGroup(@PathVariable Long id, @RequestBody List<String> userEmails) {
-        ChatGroup chatGroup = chatGroupService.addUsersToChatGroup(id, userEmails);
-        if (chatGroup != null) {
-            return ResponseEntity.ok(chatGroup);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ChatGroupResponse> addUsersToChatGroup(@PathVariable Long id, @RequestBody List<String> userEmails) {
+      return ResponseEntity.ok(chatGroupService.addUsersToChatGroup(id, userEmails));
     }
 
     @PostMapping("/{id}/add-trainees")
-    public ResponseEntity<ChatGroup> addTraineesToChatGroup(@PathVariable Long id, @RequestBody List<String> traineeEmails) {
-        ChatGroup chatGroup = chatGroupService.addTraineesToChatGroup(id, traineeEmails);
-        if (chatGroup != null) {
-            return ResponseEntity.ok(chatGroup);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ChatGroupResponse> addTraineesToChatGroup(@PathVariable Long id, @RequestBody List<String> traineeEmails) {
+       return ResponseEntity.ok( chatGroupService.addTraineesToChatGroup(id, traineeEmails));
+    }
+    @GetMapping("/get/user/trainee/{groupName}")
+    public ChatGroupResponse usersByGroupName(@PathVariable String groupName){
+        return chatGroupService.getUsersByGroupName(groupName);
     }
 
     @DeleteMapping("/{groupId}/remove-users")

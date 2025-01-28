@@ -1,5 +1,6 @@
 package com.Eonline.Education.modals;
 
+import com.Eonline.Education.user.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -89,6 +90,8 @@ public class User {
 	private String phoneNumber;
 
 	private String website;
+	@Enumerated(EnumType.STRING)
+	private UserStatus status;
 
 	private String confirmPassword;
 

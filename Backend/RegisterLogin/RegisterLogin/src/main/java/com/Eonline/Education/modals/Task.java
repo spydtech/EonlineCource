@@ -1,5 +1,6 @@
 package com.Eonline.Education.modals;
 
+import com.Eonline.Education.user.TaskStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,14 +18,19 @@ public class Task {
 
     private String type;
 
-    private String taskName;
+    private String description;
 
     @Lob
-    private byte[] data;
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] file;
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+
 
 }
 

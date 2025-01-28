@@ -1,6 +1,9 @@
-package com.Eonline.Education.modals;
+package com.Eonline.Education.Request;
 
-import jakarta.persistence.*;
+import com.Eonline.Education.modals.ChatGroup;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Meeting {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MeetingRequest {
     private String  title;
     private LocalDate fromDate;
     private LocalDate toDate;
@@ -26,10 +25,5 @@ public class Meeting {
     private String phone;
     private String pin;
     private String organizer;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_group_id", nullable = false)
-    private ChatGroup group;
-
-
-
+    private String groupName;
 }
