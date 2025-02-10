@@ -44,6 +44,9 @@ public class PaymentController {
             Map<String, Object> userCourseMap = new HashMap<>();
             userCourseMap.put("userName", payment.getUserName());
             userCourseMap.put("email",payment.getUserEmail());
+            userCourseMap.put("courseDetails",payment.getCourseDetails());
+            userCourseMap.put("createdAt",payment.getCreatedAt());
+            userCourseMap.put("userId",payment.getUserId());
 
             try {
                 Map<String, Object> courseDetails = objectMapper.readValue(payment.getCourseDetails(), new TypeReference<Map<String, Object>>() {});

@@ -11,4 +11,9 @@ public class NotificationService {
         // Implementation for sending notifications asynchronously
         System.out.println("Sending notification to " + email + ": " + message);
     }
+
+    @Async
+    public void sendNotificationMessage(String message) {
+        System.out.println(message);
+    }
 }

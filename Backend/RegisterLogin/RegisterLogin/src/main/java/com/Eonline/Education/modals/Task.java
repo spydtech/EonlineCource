@@ -19,16 +19,17 @@ public class Task {
     private String type;
 
     private String description;
+    private Long traineeId;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] file;
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
 
 
 

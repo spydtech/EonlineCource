@@ -3,12 +3,9 @@ package com.Eonline.Education.Controller;
 import com.Eonline.Education.Request.ChatGroupRequest;
 import com.Eonline.Education.Service.ChatGroupService;
 import com.Eonline.Education.modals.ChatGroup;
-import com.Eonline.Education.modals.TraineeCredentialGenerator;
-import com.Eonline.Education.modals.User;
 import com.Eonline.Education.response.ChatGroupResponse;
-import com.Eonline.Education.response.UserResponse;
+import com.Eonline.Education.response.GroupUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/chat-groups")
+@RequestMapping("/api/chat-groups")
 public class ChatGroupController {
 
     @Autowired
@@ -40,8 +37,8 @@ public class ChatGroupController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChatGroup> updateChatGroup(@PathVariable Long id, @RequestBody ChatGroup updatedChatGroup) {
-        ChatGroup chatGroup = chatGroupService.updateChatGroup(id, updatedChatGroup);
+    public ResponseEntity<ChatGroupResponse> updateChatGroup(@PathVariable Long id, @RequestBody ChatGroupRequest updatedChatGroup) {
+        ChatGroupResponse chatGroup = chatGroupService.updateChatGroup(id, updatedChatGroup);
         if (chatGroup != null) {
             return ResponseEntity.ok(chatGroup);
         } else {
@@ -65,35 +62,28 @@ public class ChatGroupController {
        return ResponseEntity.ok( chatGroupService.addTraineesToChatGroup(id, traineeEmails));
     }
     @GetMapping("/get/user/trainee/{groupName}")
-    public ChatGroupResponse usersByGroupName(@PathVariable String groupName){
-        return chatGroupService.getUsersByGroupName(groupName);
+    public ChatGroupResponse usersAndTraineeListByGroupName(@PathVariable String groupName){
+        return chatGroupService.usersAndTraineeListByGroupName(groupName);
     }
 
     @DeleteMapping("/{groupId}/remove-users")
-    public ResponseEntity<ChatGroup> removeUsersFromChatGroup(
+    public String removeUsersFromChatGroup(
             @PathVariable("groupId") Long groupId,
             @RequestBody List<String> userEmailsToRemove) {
 
-        ChatGroup chatGroup = chatGroupService.removeUsersFromChatGroup(groupId, userEmailsToRemove);
-
-        if (chatGroup != null) {
-            return ResponseEntity.ok(chatGroup);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+       return chatGroupService.removeUsersFromChatGroup(groupId, userEmailsToRemove);
     }
 
     @DeleteMapping("/{groupId}/remove-trainees")
-    public ResponseEntity<ChatGroup> removeTraineesFromChatGroup(
+    public String removeTraineesFromChatGroup(
             @PathVariable("groupId") Long groupId,
             @RequestBody List<String> traineeEmailsToRemove) {
 
-        ChatGroup chatGroup = chatGroupService.removeTraineesFromChatGroup(groupId, traineeEmailsToRemove);
+        return chatGroupService.removeTraineesFromChatGroup(groupId, traineeEmailsToRemove);
+    }
 
-        if (chatGroup != null) {
-            return ResponseEntity.ok(chatGroup);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/get/users/email")
+    public List<GroupUsersResponse> getUsersByTraineeEmail(@RequestHeader("Authorization") String jwt){
+        return chatGroupService.getUsersByTraineeEmail(jwt);
     }
 }

@@ -5,9 +5,11 @@ import com.Eonline.Education.Request.MeetingRequest;
 import com.Eonline.Education.exceptions.MandatoryFieldMissingException;
 import com.Eonline.Education.modals.ChatGroup;
 import com.Eonline.Education.modals.Meeting;
+import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.ChatGroupRepository;
 import com.Eonline.Education.repository.MeetingRepository;
+import com.Eonline.Education.repository.TraineeRepository;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.ApiResponse;
 import com.Eonline.Education.response.MeetingResponse;
@@ -15,6 +17,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +30,8 @@ public class MeetingServiceImpl implements MeetingService{
     ChatGroupRepository chatGroupRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    TraineeRepository traineeRepository;
     @Autowired
     JwtTokenProvider jwtTokenProvider;
     @Override
@@ -92,5 +97,61 @@ public class MeetingServiceImpl implements MeetingService{
     public  ApiResponse getAll() {
         List<Meeting> meetings=meetingRepository.findAll();
         return new ApiResponse(mapToMeetingResponseList(meetings));
+    }
+
+    public List<String> getGroupNamesByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+        List<ChatGroup> allGroups = chatGroupRepository.findAll();
+        return allGroups.stream()
+                .filter(group -> group.getMembers().contains(user))
+                .map(ChatGroup::getName)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ApiResponse getAllTraineeMeetings(String jwt) {
+        String traineeEmail = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        TraineeCredentialGenerator trainee = traineeRepository.findByEmail(traineeEmail);
+        List<ChatGroup> allGroups = chatGroupRepository.findAll();
+        List<String> groups= allGroups.stream()
+                .filter(group -> group.getTrainees().contains(trainee))
+                .map(ChatGroup::getName)
+                .toList();
+        List<ChatGroup> chatGroups = chatGroupRepository.findByNameInIgnoreCase(groups);
+        if (chatGroups.isEmpty()) {
+            return new ApiResponse("No groups found for the provided names");
+        }
+        List<MeetingResponse> responseList = new ArrayList<>();
+        for (ChatGroup chatGroup : chatGroups) {
+            List<Meeting> meetings = meetingRepository.findAllByGroupId(chatGroup.getId());
+            if (!meetings.isEmpty()) {
+                responseList.addAll(mapToMeetingResponseList(meetings));
+            }
+        }
+        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse(responseList);
+    }
+
+    @Override
+    public ApiResponse getAllUserMeetings(String jwt) {
+        String userEmail = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        User user = userRepository.findByEmail(userEmail);
+        List<ChatGroup> allGroups = chatGroupRepository.findAll();
+        List<String> groups= allGroups.stream()
+                .filter(group -> group.getMembers().contains(user))
+                .map(ChatGroup::getName)
+                .toList();
+        List<ChatGroup> chatGroups = chatGroupRepository.findByNameInIgnoreCase(groups);
+        if (chatGroups.isEmpty()) {
+            return new ApiResponse("No groups found for the provided names");
+        }
+        List<MeetingResponse> responseList = new ArrayList<>();
+        for (ChatGroup chatGroup : chatGroups) {
+            List<Meeting> meetings = meetingRepository.findAllByGroupId(chatGroup.getId());
+            if (!meetings.isEmpty()) {
+                responseList.addAll(mapToMeetingResponseList(meetings));
+            }
+        }
+        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse(responseList);
     }
 }

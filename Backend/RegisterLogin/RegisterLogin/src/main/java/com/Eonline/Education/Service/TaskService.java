@@ -2,6 +2,7 @@ package com.Eonline.Education.Service;
 
 
 import com.Eonline.Education.modals.Task;
+import com.Eonline.Education.modals.TraineeTask;
 import com.Eonline.Education.response.ApiResponse;
 import com.Eonline.Education.response.TaskResponse;
 import com.Eonline.Education.user.TaskStatus;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 public interface TaskService {
 
-    public List<Task> saveFile(MultipartFile file, List<String> Email, String taskName) throws IOException;
+    public List<Task> saveFile(String jwt,MultipartFile file, List<String> Email, String taskName) throws IOException;
 
     public Task getFile(Long taskId);
 
@@ -22,4 +23,10 @@ public interface TaskService {
     List<TaskResponse> getAll();
 
     List<TaskResponse> getAllTaskByUser(String email);
+
+    List<TaskResponse> getTaskListForUser(String jwt);
+
+    TaskResponse uploadUserFile(String jwt, MultipartFile file,  String description,Long taskId) throws IOException;
+
+    List<TaskResponse> getTaskListForTrainee(String jwt);
 }

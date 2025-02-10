@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/meeting")
+@RequestMapping("/api/meeting")
 public class MeetingController {
     @Autowired
     MeetingService meetingService;
@@ -27,6 +27,20 @@ public class MeetingController {
     public ApiResponse getAll() {
         return meetingService.getAll();
     }
+    @GetMapping("/getAll/user/meetings")
+    public ApiResponse getAllUserMeetings(@RequestHeader("Authorization") String jwt) {
+        return meetingService.getAllUserMeetings(jwt);
+    }
+    @GetMapping("/getAll/trainee/meetings")
+    public ApiResponse getAllTraineeMeetings(@RequestHeader("Authorization") String jwt) {
+        return meetingService.getAllTraineeMeetings(jwt);
+    }
+    @GetMapping("/getAll/groups/{userId}")
+    public List<String> getGroupNamesByUserId(@PathVariable Long userId){
+        return meetingService.getGroupNamesByUserId(userId);
+
+    }
+
 
 
 }

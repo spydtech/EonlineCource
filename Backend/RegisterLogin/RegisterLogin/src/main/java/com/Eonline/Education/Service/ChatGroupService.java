@@ -1,22 +1,26 @@
 package com.Eonline.Education.Service;
 
+import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.ChatGroupRequest;
 import com.Eonline.Education.modals.ChatGroup;
+import com.Eonline.Education.modals.Payment;
 import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.ChatGroupRepository;
+import com.Eonline.Education.repository.PaymentRepository;
 import com.Eonline.Education.repository.TraineeRepository;
 import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.ChatGroupResponse;
+import com.Eonline.Education.response.GroupUsersResponse;
 import com.Eonline.Education.response.UserResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,14 +34,18 @@ public class ChatGroupService {
 
     @Autowired
     private TraineeRepository traineeRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
     public ChatGroupResponse createChatGroup(ChatGroupRequest chatGroup) {
-        ChatGroup group=new ChatGroup();
+        ChatGroup group = new ChatGroup();
         Optional<ChatGroup> optionalGroup = chatGroupRepository.findByNameIgnoreCase(chatGroup.getGroupName());
-        if(optionalGroup.isEmpty()) {
+        if (optionalGroup.isEmpty()) {
             group.setName(chatGroup.getGroupName());
             List<User> usersList = new ArrayList<>();
-            if(chatGroup.getUsers() != null && !chatGroup.getUsers().isEmpty()) {
+            if (chatGroup.getUsers() != null && !chatGroup.getUsers().isEmpty()) {
                 for (String email : chatGroup.getUsers()) {
                     User user = userRepository.findByEmail(email);
                     if (user != null) {
@@ -46,11 +54,11 @@ public class ChatGroupService {
                 }
 
                 group.setMembers(usersList);
-            }else {
+            } else {
                 group.setMembers(new ArrayList<>());
             }
             List<TraineeCredentialGenerator> traineeList = new ArrayList<>();
-            if(chatGroup.getTrainees() != null && !chatGroup.getTrainees().isEmpty()) {
+            if (chatGroup.getTrainees() != null && !chatGroup.getTrainees().isEmpty()) {
                 for (String email : chatGroup.getTrainees()) {
                     TraineeCredentialGenerator trainee = traineeRepository.findByEmail(email);
                     if (trainee != null) {
@@ -58,16 +66,16 @@ public class ChatGroupService {
                     }
                 }
                 group.setTrainees(traineeList);
-            }else {
+            } else {
                 group.setTrainees(new ArrayList<>());
             }
             chatGroupRepository.save(group);
             return generateUserResponse(group);
-        }else{
-            ChatGroup groupChart=optionalGroup.get();
+        } else {
+            ChatGroup groupChart = optionalGroup.get();
             groupChart.setName(chatGroup.getGroupName());
             List<User> usersList = new ArrayList<>();
-            if(chatGroup.getUsers() != null && !chatGroup.getUsers().isEmpty()) {
+            if (chatGroup.getUsers() != null && !chatGroup.getUsers().isEmpty()) {
                 for (String email : chatGroup.getUsers()) {
                     User user = userRepository.findByEmail(email);
                     if (user != null) {
@@ -77,14 +85,14 @@ public class ChatGroupService {
                 groupChart.setMembers(usersList);
             }
             List<TraineeCredentialGenerator> traineeList = new ArrayList<>();
-            if(chatGroup.getTrainees() != null && !chatGroup.getTrainees().isEmpty()) {
-            for (String email : chatGroup.getTrainees()) {
-                TraineeCredentialGenerator trainee = traineeRepository.findByEmail(email);
-                if (trainee != null) {
-                    traineeList.add(trainee);
+            if (chatGroup.getTrainees() != null && !chatGroup.getTrainees().isEmpty()) {
+                for (String email : chatGroup.getTrainees()) {
+                    TraineeCredentialGenerator trainee = traineeRepository.findByEmail(email);
+                    if (trainee != null) {
+                        traineeList.add(trainee);
+                    }
                 }
-            }
-            groupChart.setTrainees(traineeList);
+                groupChart.setTrainees(traineeList);
             }
             chatGroupRepository.save(groupChart);
             return generateUserResponse(groupChart);
@@ -107,10 +115,10 @@ public class ChatGroupService {
             for (User member : chatGroup.getMembers()) {
                 UserResponse userResponse = new UserResponse();
                 userResponse.setUserId(member.getId());
-                if(member.getLastName()!=null){
+                if (member.getLastName() != null) {
                     userResponse.setFullName(member.getFirstName() + " " + member.getLastName());
-                }else{
-                    userResponse.setFullName(member.getFirstName() );
+                } else {
+                    userResponse.setFullName(member.getFirstName());
                 }
                 userResponse.setEmail(member.getEmail());
                 userResponse.setCreatedAt(member.getCreatedAt());
@@ -121,10 +129,10 @@ public class ChatGroupService {
             List<UserResponse> traineeResponses = new ArrayList<>();
             for (TraineeCredentialGenerator trainee : chatGroup.getTrainees()) {
                 UserResponse traineeResponse = new UserResponse();
-                if(trainee.getLastName()!=null){
+                if (trainee.getLastName() != null) {
                     traineeResponse.setFullName(trainee.getFirstName() + " " + trainee.getLastName());
-                }else{
-                    traineeResponse.setFullName(trainee.getFirstName() );
+                } else {
+                    traineeResponse.setFullName(trainee.getFirstName());
                 }
                 traineeResponse.setEmail(trainee.getEmail());
                 traineeResponses.add(traineeResponse);
@@ -141,12 +149,13 @@ public class ChatGroupService {
         return chatGroupRepository.findById(id);
     }
 
-    public ChatGroup updateChatGroup(Long id, ChatGroup updatedChatGroup) {
+    public ChatGroupResponse updateChatGroup(Long id, ChatGroupRequest updatedChatGroup) {
         Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(id);
         if (optionalChatGroup.isPresent()) {
             ChatGroup chatGroup = optionalChatGroup.get();
-            chatGroup.setName(updatedChatGroup.getName());
-            return chatGroupRepository.save(chatGroup);
+            chatGroup.setName(updatedChatGroup.getGroupName());
+            chatGroupRepository.save(chatGroup);
+            return generateUserResponse(chatGroup);
         } else {
             return null;
         }
@@ -177,7 +186,7 @@ public class ChatGroupService {
         }
     }
 
-    private ChatGroupResponse returnChatGroupForUsers(ChatGroup chatGroup){
+    private ChatGroupResponse returnChatGroupForUsers(ChatGroup chatGroup) {
         ChatGroupResponse response = new ChatGroupResponse();
         response.setId(chatGroup.getId());
         response.setGroupName(chatGroup.getName());
@@ -185,10 +194,10 @@ public class ChatGroupService {
         for (User member : chatGroup.getMembers()) {
             UserResponse userResponse = new UserResponse();
             userResponse.setUserId(member.getId());
-            if(member.getLastName()!=null){
+            if (member.getLastName() != null) {
                 userResponse.setFullName(member.getFirstName() + " " + member.getLastName());
-            }else{
-                userResponse.setFullName(member.getFirstName() );
+            } else {
+                userResponse.setFullName(member.getFirstName());
             }
             userResponse.setEmail(member.getEmail());
             userResponse.setCreatedAt(member.getCreatedAt());
@@ -199,14 +208,15 @@ public class ChatGroupService {
     }
 
 
-    public ChatGroupResponse getUsersByGroupName(String groupName) {
+    public ChatGroupResponse usersAndTraineeListByGroupName(String groupName) {
         Optional<ChatGroup> chatGroup = chatGroupRepository.findByName(groupName);
         if (chatGroup.isPresent()) {
             return generateUserResponse(chatGroup.get());
         } else {
-            throw new EntityNotFoundException("Chat group with name " + groupName + " not found.");
+            throw new EntityNotFoundException(groupName + " not found.");
         }
     }
+
     private ChatGroupResponse generateUserResponse(ChatGroup chatGroup) {
         ChatGroupResponse response = new ChatGroupResponse();
         response.setId(chatGroup.getId());
@@ -216,10 +226,10 @@ public class ChatGroupService {
         for (User member : chatGroup.getMembers()) {
             UserResponse userResponse = new UserResponse();
             userResponse.setUserId(member.getId());
-            if(member.getLastName()!=null){
+            if (member.getLastName() != null) {
                 userResponse.setFullName(member.getFirstName() + " " + member.getLastName());
-            }else{
-                userResponse.setFullName(member.getFirstName() );
+            } else {
+                userResponse.setFullName(member.getFirstName());
             }
             userResponse.setEmail(member.getEmail());
             userResponse.setCreatedAt(member.getCreatedAt());
@@ -230,10 +240,10 @@ public class ChatGroupService {
         List<UserResponse> traineeResponses = new ArrayList<>();
         for (TraineeCredentialGenerator trainee : chatGroup.getTrainees()) {
             UserResponse traineeResponse = new UserResponse();
-            if(trainee.getLastName()!=null){
+            if (trainee.getLastName() != null) {
                 traineeResponse.setFullName(trainee.getFirstName() + " " + trainee.getLastName());
-            }else{
-                traineeResponse.setFullName(trainee.getFirstName() );
+            } else {
+                traineeResponse.setFullName(trainee.getFirstName());
             }
             traineeResponse.setEmail(trainee.getEmail());
             traineeResponses.add(traineeResponse);
@@ -241,8 +251,6 @@ public class ChatGroupService {
         response.setTrainees(traineeResponses);
         return response;
     }
-
-
 
 
     public ChatGroupResponse addTraineesToChatGroup(Long id, List<String> traineeEmails) {
@@ -262,17 +270,17 @@ public class ChatGroupService {
         }
     }
 
-    private ChatGroupResponse returnChatGroupForTrainees(ChatGroup chatGroup){
+    private ChatGroupResponse returnChatGroupForTrainees(ChatGroup chatGroup) {
         ChatGroupResponse response = new ChatGroupResponse();
         response.setId(chatGroup.getId());
         response.setGroupName(chatGroup.getName());
         List<UserResponse> traineeResponses = new ArrayList<>();
         for (TraineeCredentialGenerator trainee : chatGroup.getTrainees()) {
             UserResponse traineeResponse = new UserResponse();
-            if(trainee.getLastName()!=null){
+            if (trainee.getLastName() != null) {
                 traineeResponse.setFullName(trainee.getFirstName() + " " + trainee.getLastName());
-            }else{
-                traineeResponse.setFullName(trainee.getFirstName() );
+            } else {
+                traineeResponse.setFullName(trainee.getFirstName());
             }
             traineeResponse.setEmail(trainee.getEmail());
             traineeResponses.add(traineeResponse);
@@ -281,7 +289,7 @@ public class ChatGroupService {
         return response;
     }
 
-    public ChatGroup removeUsersFromChatGroup(Long groupId, List<String> userEmailsToRemove) {
+    public String removeUsersFromChatGroup(Long groupId, List<String> userEmailsToRemove) {
         Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(groupId);
         if (optionalChatGroup.isPresent()) {
             ChatGroup chatGroup = optionalChatGroup.get();
@@ -289,12 +297,13 @@ public class ChatGroupService {
                     .filter(user -> userEmailsToRemove.contains(user.getEmail()))
                     .toList();
             chatGroup.getMembers().removeAll(usersToRemove);
-            return chatGroupRepository.save(chatGroup);
+            chatGroupRepository.save(chatGroup);
+            return "User remove successfully from " + chatGroup.getName() + " Group";
         }
-        return null;
+        return "Group Not Found";
     }
 
-    public ChatGroup removeTraineesFromChatGroup(Long groupId, List<String> traineeEmailsToRemove) {
+    public String removeTraineesFromChatGroup(Long groupId, List<String> traineeEmailsToRemove) {
         Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(groupId);
         if (optionalChatGroup.isPresent()) {
             ChatGroup chatGroup = optionalChatGroup.get();
@@ -302,8 +311,78 @@ public class ChatGroupService {
                     .filter(trainee -> traineeEmailsToRemove.contains(trainee.getEmail()))
                     .toList();
             chatGroup.getTrainees().removeAll(traineesToRemove);
-            return chatGroupRepository.save(chatGroup);
+            chatGroupRepository.save(chatGroup);
+            return "Trainee remove successfully from " + chatGroup.getName() + " Group";
         }
-        return null;
+        return "Group Not Found";
     }
+
+    public List<GroupUsersResponse> getUsersByTraineeEmail(String jwt) {
+        String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        TraineeCredentialGenerator trainee = traineeRepository.findByEmail(email);
+        if (trainee == null) {
+            throw new RuntimeException("Trainee not found with email: " + email);
+        }
+        List<ChatGroup> chatGroups = chatGroupRepository.findByTrainees_Id(trainee.getId());
+        if (chatGroups == null || chatGroups.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        return chatGroups.stream()
+                .filter(Objects::nonNull)
+                .flatMap(chatGroup -> Optional.ofNullable(chatGroup.getMembers())
+                        .orElse(Collections.emptyList())
+                        .stream()
+                        .map(user -> {
+                            if (user == null) {
+                                return new GroupUsersResponse(null, null, null, null, null, null, null,null,null);
+                            }
+                            String firstName = user.getFirstName();
+                            String lastName = user.getLastName();
+                            String fullName = (firstName == null && lastName == null)
+                                    ? null
+                                    : (lastName == null || lastName.isEmpty())
+                                    ? firstName
+                                    : firstName + " " + lastName;
+                            String traineeFirstName = trainee.getFirstName();
+                            String traineeLastName = trainee.getLastName();
+                            String traineeFullName = (traineeFirstName == null && traineeLastName == null)
+                                    ? null
+                                    : (traineeLastName == null || traineeLastName.isEmpty())
+                                    ? traineeFirstName
+                                    : traineeFirstName + " " + traineeLastName;
+
+                            Payment payment = paymentRepository.findByUserEmail(user.getEmail());
+
+                            Map<String, Object> courseDetails = null;
+                            if (payment != null && payment.getCourseDetails() != null) {
+                                try {
+                                    courseDetails = objectMapper.readValue(payment.getCourseDetails(), Map.class);
+                                } catch (JsonProcessingException e) {
+                                    System.err.println("Error parsing course details: " + e.getMessage());
+                                }
+                            }
+
+                            LocalDate joiningDate = (payment != null) ? payment.getJoiningDate() : null;
+                            LocalDate expiryDate = (payment != null) ? payment.getExpiryDate() : null;
+
+                            return new GroupUsersResponse(
+                                    chatGroup.getName() != null ? chatGroup.getName() : null,
+                                    fullName,
+                                    user.getEmail() != null ? user.getEmail() : null,
+                                    user.getStatus() != null ? user.getStatus() : null,
+                                    courseDetails,
+                                    joiningDate,
+                                    expiryDate,
+                                    traineeFullName,
+                                    email
+
+                            );
+                        })
+                )
+                .collect(Collectors.toList());
+    }
+
 }
