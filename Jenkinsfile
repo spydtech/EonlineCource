@@ -65,7 +65,7 @@ pipeline {
                 echo 'Cleaning up old images and pulling the latest image...'
                 sh '''
                 docker rmi $DOCKER_REPO:$TAG || true
-                docker system prune -af || true
+               // docker system prune -af || true
                 docker pull $DOCKER_REPO:$TAG
                 '''
             }
