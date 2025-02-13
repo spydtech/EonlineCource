@@ -73,7 +73,7 @@ pipeline {
         stage('Deploy New Container') {
             steps {
                 echo 'Creating a new Docker container...'
-                sh 'docker run -d --name $CONTAINER_NAME_N -p 8082:80 $DOCKER_REPO:$TAG'
+                sh 'docker run -d --name $CONTAINER_NAME_N -p 8082:81 $DOCKER_REPO:$TAG'
             }
         }
     }
