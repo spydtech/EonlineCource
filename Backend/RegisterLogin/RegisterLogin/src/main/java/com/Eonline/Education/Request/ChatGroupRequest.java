@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatGroupRequest {
-    private Long id;
     private String groupName;
     private LocalDate courseEndDate;
     private List<String> users;

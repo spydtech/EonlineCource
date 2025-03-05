@@ -146,23 +146,27 @@ public class ChatGroupService {
         return chatGroupRepository.findById(id);
     }
 
-    public ChatGroupResponse updateChatGroup(String jwt,Long id, ChatGroupRequest updatedChatGroup) {
+    public ChatGroupResponse updateChatGroup(String jwt, Long id, ChatGroupRequest updatedChatGroup) {
         String loginEmail = jwtTokenProvider.getEmailFromJwtToken(jwt);
         Optional<ChatGroup> optionalChatGroup = chatGroupRepository.findById(id);
         if (optionalChatGroup.isPresent()) {
             ChatGroup chatGroup = optionalChatGroup.get();
-            if(updatedChatGroup.getGroupName()!=null) {
+            if (updatedChatGroup.getGroupName() != null) {
+                Optional<ChatGroup> existingGroupWithSameName = chatGroupRepository.findByNameIgnoreCase(updatedChatGroup.getGroupName());
+                if (existingGroupWithSameName.isPresent() && !existingGroupWithSameName.get().getId().equals(id)) {
+                    throw new RuntimeException("Group name already exists");
+                }
                 chatGroup.setName(updatedChatGroup.getGroupName());
             }
-            if(updatedChatGroup.getCourseEndDate()!=null) {
+            if (updatedChatGroup.getCourseEndDate() != null) {
                 chatGroup.setCourseEndDate(updatedChatGroup.getCourseEndDate());
             }
-            if(chatGroup.getTrainees()!=null) {
+            if (chatGroup.getTrainees() != null) {
                 Optional<TraineeCredentialGenerator> optional = traineeRepository.findById(chatGroup.getTrainees().getId());
                 optional.ifPresent(chatGroup::setTrainees);
             }
             chatGroupRepository.save(chatGroup);
-            notificationService.createNotification(loginEmail," Group updated  successfully");
+            notificationService.createNotification(loginEmail, "Group updated successfully");
             return generateUserResponse(chatGroup);
         } else {
             return null;
