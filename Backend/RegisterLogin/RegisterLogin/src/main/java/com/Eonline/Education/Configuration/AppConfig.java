@@ -50,13 +50,15 @@ public class AppConfig {
                     "http://localhost:5173",
                     "http://localhost:5174",
                     "http://localhost:5175",
-                    "http://13.232.22.193:3000",
-                    "http://13.232.22.193:3001",
-                    "http://13.232.22.193:4200",
-                    "http://13.232.22.193:4201",
-                    "http://13.232.22.193:5173",
-                    "http://13.232.22.193:5174",
-                    "http://13.232.22.193:5175"
+                    "http://localhost:8082",
+                    "http://13.126.181.47:8082",
+                    "http://13.126.181.47:3000",
+                    "http://13.126.181.47:3001",
+                    "http://13.126.181.47:4200",
+                    "http://13.126.181.47:4201",
+                    "http://13.126.181.47:5173",
+                    "http://13.126.181.47:5174",
+                    "http://13.126.181.47:5175"
             ));
             cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cfg.setAllowCredentials(true);
