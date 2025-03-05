@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -13,23 +17,20 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
-
-    private String type;
-
-    private String description;
-    private Long traineeId;
-
+    private String assignmentDescription;
+    private LocalDate assignmentDate;
+    private LocalDate dueDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_group_id")
+    private ChatGroup chatGroup;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskUser> users = new ArrayList<>();
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] file;
-    @Enumerated(EnumType.STRING)
-    private TaskStatus taskStatus;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
+    private String name;
+    private String type;
+    private String traineeEmail;
 
 
 

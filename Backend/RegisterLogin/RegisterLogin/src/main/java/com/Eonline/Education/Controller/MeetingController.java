@@ -23,10 +23,7 @@ public class MeetingController {
     public  ApiResponse getMeetings(@PathVariable Long groupId) {
         return meetingService.getMeetings(groupId);
     }
-    @GetMapping("/getAll")
-    public ApiResponse getAll() {
-        return meetingService.getAll();
-    }
+
     @GetMapping("/getAll/user/meetings")
     public ApiResponse getAllUserMeetings(@RequestHeader("Authorization") String jwt) {
         return meetingService.getAllUserMeetings(jwt);
@@ -41,6 +38,16 @@ public class MeetingController {
 
     }
 
+    // trainer side dashboard
 
+    @GetMapping("/getAll/upcoming/meetings")
+    public ApiResponse getAllUpComingMeetings(@RequestHeader("Authorization") String jwt) {
+        return meetingService.getAllUpComingMeetings(jwt);
+    }
+    // admin side dashboard
+    @GetMapping("/getAll")
+    public ApiResponse getAll() {
+        return meetingService.getAll();
+    }
 
 }

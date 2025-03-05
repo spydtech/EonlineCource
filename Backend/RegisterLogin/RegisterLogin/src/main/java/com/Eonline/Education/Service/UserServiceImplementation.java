@@ -1,29 +1,23 @@
 package com.Eonline.Education.Service;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
-import com.Eonline.Education.exceptions.UserException;
+import com.Eonline.Education.exceptions.AuthenticationBasedException;
 import com.Eonline.Education.modals.*;
 import com.Eonline.Education.repository.AccountRepository;
 import com.Eonline.Education.repository.EducationRepository;
-import com.Eonline.Education.repository.ReportRepository;
 import com.Eonline.Education.repository.UserRepository;
-import com.Eonline.Education.response.AccountResponse;
-import com.Eonline.Education.response.AdminProfileResponse;
-import com.Eonline.Education.response.EducationResponse;
-import com.Eonline.Education.response.MessageResponse;
+import com.Eonline.Education.response.*;
+import com.Eonline.Education.user.UserStatus;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -48,17 +42,17 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserById(Long userId) throws UserException {
+    public User findUserById(Long userId) throws AuthenticationBasedException {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserException("User not found with id " + userId));
+                .orElseThrow(() -> new AuthenticationBasedException("User not found with id " + userId));
     }
 
     @Override
-    public User findUserProfileByJwt(String jwt) throws UserException {
+    public User findUserProfileByJwt(String jwt) throws AuthenticationBasedException {
         String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UserException("User not exist with email " + email);
+            throw new AuthenticationBasedException("User not exist with email " + email);
         }
         return user;
     }
@@ -327,6 +321,25 @@ public class UserServiceImplementation implements UserService {
             return ResponseEntity.ok(userToAdminDetails(user, file));
     }
 
+    @Override
+    public UserProfileResponse findUserProfile(String jwt) {
+        String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        User user = userRepository.findByEmail(email);
+        return userToProfileResponse(user);
+    }
+
+    private UserProfileResponse userToProfileResponse(User user) {
+        return new UserProfileResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole(),
+                user.getProfilePhoto(),
+                user.getStatus()
+        );
+    }
+
     private AdminProfileResponse userToAdminDetails(User user,MultipartFile file){
         AdminProfileResponse ad=new AdminProfileResponse();
         ad.setEmail(user.getEmail());
@@ -340,6 +353,14 @@ public class UserServiceImplementation implements UserService {
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+    public Map<String,Long> activeInactiveCount() {
+        Map<String,Long> map=new HashMap<>();
+        long activeUserCount=userRepository.findAllByStatus(UserStatus.ACTIVE).size();
+        long inActiveUserCount=userRepository.findAllByStatus(UserStatus.ACTIVE).size();
+      map.put("activeUserCount",activeUserCount);
+      map.put("inActiveUserCount",inActiveUserCount);
+      return map;
     }
 
 

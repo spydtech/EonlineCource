@@ -87,7 +87,6 @@ public class PostController {
 	) {
 		try {
 			Post createdPost;
-			String notificationMessage = "Your post has been created successfully!";
 
 			if (file == null) {
 				createdPost = postService.saveTextPost(jwt, name, content, postedBY, tags);
@@ -99,11 +98,10 @@ public class PostController {
 				}
 				createdPost = postService.savePost(jwt, file, name, content, postedBY, tags);
 			}
-			notificationService.sendNotification(postedBY, notificationMessage);
+//			notificationService.sendNotification(postedBY, notificationMessage);
 			Map<String, Object> response = new HashMap<>();
 			response.put("message", "Post created successfully");
 			response.put("postId", createdPost.getId());
-			response.put("notification", notificationMessage);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,9 +202,9 @@ public class PostController {
 
 	// Like a Post
 	@PutMapping("/{postId}/like")
-	public ResponseEntity<?> likePost(@PathVariable long postId) {
+	public ResponseEntity<?> likePost(@RequestHeader("Authorization") String jwt,@PathVariable long postId) {
 		try {
-			postService.likePost(postId);
+			postService.likePost(jwt,postId);
 			return ResponseEntity.ok(new String[] { "Post liked successfully" });
 		} catch (EntityNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

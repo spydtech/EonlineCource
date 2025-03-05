@@ -17,5 +17,6 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String report;
+    private String reportDate;
     private String email;
 }

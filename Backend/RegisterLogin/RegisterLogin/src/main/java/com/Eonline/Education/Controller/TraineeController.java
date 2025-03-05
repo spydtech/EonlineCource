@@ -157,4 +157,10 @@ public class TraineeController {
         return traineeService.delete(email);
 
     }
+//admin side dashboard
+    @GetMapping("/count")
+    public Map<String,Long> countOfTrainers(@RequestHeader("Authorization") String jwt){
+     return traineeService.countOfTrainers(jwt);
+    }
+
 }

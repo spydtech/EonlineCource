@@ -3,8 +3,8 @@ package com.Eonline.Education.Controller;
 import com.Eonline.Education.Request.ChatGroupRequest;
 import com.Eonline.Education.Service.ChatGroupService;
 import com.Eonline.Education.modals.ChatGroup;
+import com.Eonline.Education.response.ApiResponse;
 import com.Eonline.Education.response.ChatGroupResponse;
-import com.Eonline.Education.response.GroupUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/chat-groups")
+@RequestMapping("/api/groups")
 public class ChatGroupController {
 
     @Autowired
@@ -32,13 +32,13 @@ public class ChatGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<ChatGroupResponse> createChatGroup(@RequestBody ChatGroupRequest chatGroupRequest) {
-        return ResponseEntity.ok(chatGroupService.createChatGroup(chatGroupRequest));
+    public ApiResponse createChatGroup(@RequestHeader("Authorization") String jwt,@RequestBody ChatGroupRequest chatGroupRequest) {
+        return chatGroupService.createChatGroup(jwt,chatGroupRequest);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChatGroupResponse> updateChatGroup(@PathVariable Long id, @RequestBody ChatGroupRequest updatedChatGroup) {
-        ChatGroupResponse chatGroup = chatGroupService.updateChatGroup(id, updatedChatGroup);
+    public ResponseEntity<ChatGroupResponse> updateChatGroup(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody ChatGroupRequest updatedChatGroup) {
+        ChatGroupResponse chatGroup = chatGroupService.updateChatGroup(jwt,id, updatedChatGroup);
         if (chatGroup != null) {
             return ResponseEntity.ok(chatGroup);
         } else {
@@ -58,7 +58,7 @@ public class ChatGroupController {
     }
 
     @PostMapping("/{id}/add-trainees")
-    public ResponseEntity<ChatGroupResponse> addTraineesToChatGroup(@PathVariable Long id, @RequestBody List<String> traineeEmails) {
+    public ResponseEntity<ChatGroupResponse> addTraineesToChatGroup(@PathVariable Long id, @RequestBody String traineeEmails) {
        return ResponseEntity.ok( chatGroupService.addTraineesToChatGroup(id, traineeEmails));
     }
     @GetMapping("/get/user/trainee/{groupName}")
@@ -74,16 +74,30 @@ public class ChatGroupController {
        return chatGroupService.removeUsersFromChatGroup(groupId, userEmailsToRemove);
     }
 
-    @DeleteMapping("/{groupId}/remove-trainees")
-    public String removeTraineesFromChatGroup(
-            @PathVariable("groupId") Long groupId,
-            @RequestBody List<String> traineeEmailsToRemove) {
-
-        return chatGroupService.removeTraineesFromChatGroup(groupId, traineeEmailsToRemove);
+    @GetMapping("/get/users/email")
+    public List<ChatGroupResponse> getUsersByTraineeEmail(@RequestHeader("Authorization") String jwt){
+        return chatGroupService.getUsersByTraineeEmail(jwt);
+    }
+    @GetMapping("/get/chatGroup/by-user")
+    public ApiResponse getUserChatGroupDetails(@RequestHeader("Authorization") String token,@RequestParam String groupName){
+        return chatGroupService.getUserChatGroupDetails(token,groupName);
     }
 
-    @GetMapping("/get/users/email")
-    public List<GroupUsersResponse> getUsersByTraineeEmail(@RequestHeader("Authorization") String jwt){
-        return chatGroupService.getUsersByTraineeEmail(jwt);
+
+
+    //trainer dashboard
+
+
+//users,groups,completed groups count
+    @GetMapping("/get/count")
+    public ApiResponse getCount(@RequestHeader("Authorization") String token){
+        return chatGroupService.getCount(token);
+    }
+
+
+    //admin side dashboard
+    @GetMapping("/get/count/by-admin")
+    public ApiResponse getCountByAdmin(@RequestHeader("Authorization") String token){
+        return chatGroupService.getCountByAdmin(token);
     }
 }

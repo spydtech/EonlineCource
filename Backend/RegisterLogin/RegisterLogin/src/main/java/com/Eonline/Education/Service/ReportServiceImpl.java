@@ -8,12 +8,9 @@ import com.Eonline.Education.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -30,6 +27,7 @@ public class ReportServiceImpl implements ReportService {
         User user = userRepository.findByEmail(email);
         Report message = new Report();
         message.setReport(report.getReport());
+        message.setReportDate(report.getReportDate());
         message.setEmail(user.getEmail());
         reportRepository.save(message);
         return ResponseEntity.ok(message);
@@ -42,6 +40,7 @@ public class ReportServiceImpl implements ReportService {
         if (report.isPresent()) {
             Report report1 = report.get();
             report1.setReport(message.getReport());
+            report1.setReportDate(message.getReportDate());
             reportRepository.save(report1);
             return ResponseEntity.ok(report1);
 

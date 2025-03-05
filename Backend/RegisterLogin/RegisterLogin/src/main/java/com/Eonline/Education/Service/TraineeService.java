@@ -4,6 +4,7 @@ import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import jakarta.mail.MessagingException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TraineeService {
     String createUserId(TraineeCredentialGenerator traineeCredentialGenerator) throws MessagingException;
@@ -20,6 +21,8 @@ public interface TraineeService {
     TraineeCredentialGenerator update(TraineeCredentialGenerator traineeCredentialGenerator);
 
     String delete(String email);
+
+    Map<String, Long> countOfTrainers(String jwt);
 }
 
 

@@ -25,7 +25,7 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(new Date().getTime()+86400000))
                 .claim("userId",auth.getName())
                 .claim("email",auth.getName())
-              //.claim("authorities", authorities)
+                //.claim("authorities", authorities)
                 .signWith(key)
                 .compact();
     }

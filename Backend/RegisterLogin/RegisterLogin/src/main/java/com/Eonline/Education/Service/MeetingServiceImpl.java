@@ -2,7 +2,6 @@ package com.Eonline.Education.Service;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.MeetingRequest;
-import com.Eonline.Education.exceptions.MandatoryFieldMissingException;
 import com.Eonline.Education.modals.ChatGroup;
 import com.Eonline.Education.modals.Meeting;
 import com.Eonline.Education.modals.TraineeCredentialGenerator;
@@ -17,6 +16,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,7 @@ public class MeetingServiceImpl implements MeetingService{
                 meeting.setOrganizer(user.getFirstName());
             }
             meetingRepository.save(meeting);
-           return new ApiResponse(meetingResponse(meeting));
+           return new ApiResponse("meeting save successfully",true,meetingResponse(meeting));
         }else{
             return new ApiResponse("group not found");
         }
@@ -68,7 +69,7 @@ public class MeetingServiceImpl implements MeetingService{
         meetingResponse.setFromDate(request.getFromDate());
         meetingResponse.setToDate(request.getToDate());
         meetingResponse.setFromTime(request.getFromTime());
-        meetingResponse.setToTime(request.getFromTime());
+        meetingResponse.setToTime(request.getToTime());
         meetingResponse.setLink(request.getLink());
         meetingResponse.setPhone(request.getPhone());
         meetingResponse.setOrganizer(request.getOrganizer());
@@ -115,9 +116,10 @@ public class MeetingServiceImpl implements MeetingService{
         TraineeCredentialGenerator trainee = traineeRepository.findByEmail(traineeEmail);
         List<ChatGroup> allGroups = chatGroupRepository.findAll();
         List<String> groups= allGroups.stream()
-                .filter(group -> group.getTrainees().contains(trainee))
+                .filter(group -> group.getTrainees().getEmail().equals(trainee.getEmail()))
                 .map(ChatGroup::getName)
                 .toList();
+        System.out.println("groups"+groups);
         List<ChatGroup> chatGroups = chatGroupRepository.findByNameInIgnoreCase(groups);
         if (chatGroups.isEmpty()) {
             return new ApiResponse("No groups found for the provided names");
@@ -129,8 +131,37 @@ public class MeetingServiceImpl implements MeetingService{
                 responseList.addAll(mapToMeetingResponseList(meetings));
             }
         }
-        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse(responseList);
+        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse("trainer meetings",true,responseList);
     }
+
+    @Override
+    public ApiResponse getAllUpComingMeetings(String jwt) {
+        String traineeEmail = jwtTokenProvider.getEmailFromJwtToken(jwt);
+        TraineeCredentialGenerator trainee = traineeRepository.findByEmail(traineeEmail);
+        List<String> groups = chatGroupRepository.findAll().stream()
+                .filter(group -> group.getTrainees().getEmail().equals(trainee.getEmail()))
+                .map(ChatGroup::getName)
+                .toList();
+        List<ChatGroup> chatGroups = chatGroupRepository.findByNameInIgnoreCase(groups);
+        if (chatGroups.isEmpty()) {
+            return new ApiResponse("No groups found for the provided names");
+        }
+        LocalDate today = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        List<MeetingResponse> responseList = new ArrayList<>();
+        for (ChatGroup chatGroup : chatGroups) {
+            List<Meeting> meetings = meetingRepository.findAllByGroupIdAndFromDateLessThanEqualAndToDateGreaterThanEqualAndToTimeGreaterThan(
+                    chatGroup.getId(), today, today,currentTime);
+            if (!meetings.isEmpty()) {
+                responseList.addAll(mapToMeetingResponseList(meetings));
+            }
+        }
+        if (responseList.isEmpty()) {
+            return new ApiResponse(new ArrayList<>());
+        }
+        return new ApiResponse(responseList.get(0));
+    }
+
 
     @Override
     public ApiResponse getAllUserMeetings(String jwt) {
@@ -152,6 +183,6 @@ public class MeetingServiceImpl implements MeetingService{
                 responseList.addAll(mapToMeetingResponseList(meetings));
             }
         }
-        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse(responseList);
+        return responseList.isEmpty() ? new ApiResponse("No meetings found for the given groups") : new ApiResponse("user meetings",true,responseList);
     }
 }

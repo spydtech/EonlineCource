@@ -32,6 +32,18 @@ public class PaymentController {
             List<Payment> payments = paymentService.getAllPayments();
             return new ResponseEntity<>(payments, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace(); // Log the exact error in the console
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/getAll/paymentHistory")
+    public ResponseEntity<List<Payment>> getUserPaymentHistory(@RequestHeader("Authorization") String jwt) {
+        try {
+            List<Payment> payments = paymentService.getUserPaymentHistory(jwt);
+            return new ResponseEntity<>(payments, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

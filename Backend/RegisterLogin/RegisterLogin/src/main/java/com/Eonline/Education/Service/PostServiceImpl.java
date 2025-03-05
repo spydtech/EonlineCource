@@ -29,6 +29,8 @@ public class PostServiceImpl implements PostService {
 	UserRepository userRepository;
 	@Autowired
 	JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	NotificationService notificationService;
 
 	@Autowired
 	private SaveRepository saveRepository;  // Fix: Inject SaveRepository
@@ -109,16 +111,13 @@ public class PostServiceImpl implements PostService {
 		Post post = new Post();
 		post.setName(name);
 		post.setContent(content);
-		if(user.getLastName()!=null){
-			post.setPostedBY(user.getFirstName()+ " "+user.getLastName());
-		}else{
-			post.setPostedBY(user.getFirstName());
-		}
+		post.setPostedBY(user.getEmail());
 		post.setTags(tags);
 		post.setLikeCount(0);
 		post.setViewCount(0);
 		post.setProfilePicture(user.getProfilePhoto());
 		post.setDateTime(LocalDateTime.now());
+		notificationService.createNotification(user.getEmail()," post created  successfully");
 		return postRepository.save(post);
 	}
 
@@ -145,16 +144,13 @@ public class PostServiceImpl implements PostService {
 
 		post.setName(name);
 		post.setContent(content);
-		if(user.getLastName()!=null){
-			post.setPostedBY(user.getFirstName()+ " "+user.getLastName());
-		}else{
-			post.setPostedBY(user.getFirstName());
-		}
+		post.setPostedBY(user.getEmail());
 		post.setTags(tags);
 		post.setLikeCount(0);
 		post.setViewCount(0);
 		post.setDateTime(LocalDateTime.now());
 		post.setProfilePicture(user.getProfilePhoto());
+		notificationService.createNotification(user.getEmail()," post created  successfully");
 		postRepository.save(post);
 		return post;
 	}
@@ -164,11 +160,7 @@ public class PostServiceImpl implements PostService {
 		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
 		User user = userRepository.findByEmail(email);
 
-		if (user.getLastName() != null) {
-			existingPost.setPostedBY(user.getFirstName() + " " + user.getLastName());
-		} else {
-			existingPost.setPostedBY(user.getFirstName());
-		}
+		existingPost.setPostedBY(user.getEmail());
 
 		existingPost.setProfilePicture(user.getProfilePhoto());
 		existingPost.setDateTime(LocalDateTime.now());
@@ -196,11 +188,7 @@ public class PostServiceImpl implements PostService {
 			throw new IllegalArgumentException("Unsupported media type: " + contentType);
 		}
 
-		if (user.getLastName() != null) {
-			existingPost.setPostedBY(user.getFirstName() + " " + user.getLastName());
-		} else {
-			existingPost.setPostedBY(user.getFirstName());
-		}
+		existingPost.setPostedBY(user.getEmail());
 
 		existingPost.setProfilePicture(user.getProfilePhoto());
 		existingPost.setDateTime(LocalDateTime.now());
@@ -231,18 +219,24 @@ public class PostServiceImpl implements PostService {
 	}
 
 	// Like a post by incrementing the like count
-	public void likePost(Long postId) {
+	public void likePost(String jwt,Long postId) {
+		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
+		User user = userRepository.findByEmail(email);
+		System.out.println(postId);
 		Optional<Post> optional = postRepository.findById(postId);
 		if (optional.isPresent()) {
+			System.out.println(optional.get().getPostedBY());
 			Post post = optional.get();
-			post.setLikeCount(post.getLikeCount() + 1);
+			if(post.getLikeCount()<1) {
+				post.setLikeCount(post.getLikeCount() + 1);
+			}
 			postRepository.save(post);
+			notificationService.createNotification(user.getEmail(),"like the post successfully");
 		} else {
 			throw new EntityNotFoundException("Post not found with id: " + postId);
 		}
 	}
 
-	// Search posts by name (case-insensitive)
 	public List<Post> searchByName(String name) {
 		return postRepository.findByNameContainingIgnoreCase(name);
 	}
@@ -264,7 +258,9 @@ public class PostServiceImpl implements PostService {
 		postResponse.setLikeCount(post.getLikeCount());
 		postResponse.setViewCount(post.getViewCount());
 		postResponse.setTags(post.getTags());
-		postResponse.setProfilePicture(post.getProfilePicture());
+		if(post.getProfilePicture()!=null) {
+			postResponse.setProfilePicture(post.getProfilePicture());
+		}
 		return postResponse;
 	}
 

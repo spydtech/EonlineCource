@@ -2,7 +2,6 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Service.CartItemService;
 import com.Eonline.Education.Service.UserService;
-import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.CartItem;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.response.ApiResponse;

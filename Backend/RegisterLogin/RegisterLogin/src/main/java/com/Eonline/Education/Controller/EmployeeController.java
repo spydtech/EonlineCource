@@ -2,9 +2,8 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.EmployeeLoginRequest;
-import com.Eonline.Education.Request.LoginRequest;
 import com.Eonline.Education.Service.*;
-import com.Eonline.Education.exceptions.UserException;
+import com.Eonline.Education.exceptions.AuthenticationBasedException;
 import com.Eonline.Education.modals.*;
 import com.Eonline.Education.repository.EmployeeRepository;
 import com.Eonline.Education.response.AuthResponse;
@@ -12,17 +11,13 @@ import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth/employee")
@@ -59,7 +54,7 @@ public class EmployeeController {
 
     @PostMapping("/register")
     //@Secured("ADMIN")
-    public ResponseEntity<String> registerUser(@RequestBody EmployeeRegistrationRequest request, Employee employee) throws MessagingException, jakarta.mail.MessagingException, UserException {
+    public ResponseEntity<String> registerUser(@RequestBody EmployeeRegistrationRequest request, Employee employee) throws MessagingException, jakarta.mail.MessagingException, AuthenticationBasedException {
         // Check if the email is already registered
         if (employeeRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email is already registered.");
@@ -92,7 +87,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws UserException, MessagingException {
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws AuthenticationBasedException, MessagingException {
         if(generatedOtp !=null && request.getOtp().equals(generatedOtp)){
             Employee created = new Employee();
             created.setEmployeeId(employeeService.generateUniqueUserId());
@@ -181,5 +176,12 @@ public class EmployeeController {
         }
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
+
+    //admin side dashboard
+
+    @GetMapping("/getEmployeesCount")
+    public ResponseEntity<Long> getEmployeesCount(@RequestHeader("Authorization") String jwt){
+        Long getEmployees=employeeService.getEmployeesCount();
+        return new ResponseEntity<>(getEmployees,HttpStatus.OK);}
 
 }

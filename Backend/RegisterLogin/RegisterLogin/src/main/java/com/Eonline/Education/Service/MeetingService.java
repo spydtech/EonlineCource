@@ -19,4 +19,6 @@ public interface MeetingService {
     List<String> getGroupNamesByUserId(Long userId);
 
     ApiResponse getAllTraineeMeetings(String jwt);
+
+    ApiResponse getAllUpComingMeetings(String jwt);
 }

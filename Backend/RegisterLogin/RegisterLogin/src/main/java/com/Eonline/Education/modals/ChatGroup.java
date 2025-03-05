@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +25,13 @@ public class ChatGroup {
             joinColumns = @JoinColumn(name = "chat_group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> members = new ArrayList<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "chat_group_trainees",
-            joinColumns = @JoinColumn(name = "chat_group_id"),
-            inverseJoinColumns = @JoinColumn(name = "trainee_id"))
-    private List<TraineeCredentialGenerator> trainees = new ArrayList<TraineeCredentialGenerator>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trainer_id", nullable = false)
+    private TraineeCredentialGenerator trainees;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meeting> meetings = new ArrayList<>();
+    private LocalDate courseStartDate;
+    private LocalDate courseEndDate;
 
     // Constructors, getters, and setters
 
@@ -43,14 +43,6 @@ public class ChatGroup {
             this.members.add(user);
         }
     }
-
-
-    public void addTrainee(TraineeCredentialGenerator trainee) {
-        if (!this.trainees.contains(trainee)) {
-            this.trainees.add(trainee);
-        }
-    }
-
     public ChatGroup(String name) {
         this.name = name;
     }

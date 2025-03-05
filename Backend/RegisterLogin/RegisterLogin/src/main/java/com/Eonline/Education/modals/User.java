@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,10 +72,12 @@ public class User {
 
 
 	@Lob
+	@Column(columnDefinition = "LONGBLOB")
 	private byte[] coverPhoto;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Task> task;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<TaskUser> taskUsers = new ArrayList<>();
 
 	@Version
 	private int version;

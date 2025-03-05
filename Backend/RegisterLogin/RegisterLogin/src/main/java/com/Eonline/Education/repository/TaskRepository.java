@@ -2,6 +2,8 @@ package com.Eonline.Education.repository;
 
 
 import com.Eonline.Education.modals.Task;
+import com.Eonline.Education.modals.TaskUser;
+import com.Eonline.Education.modals.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +14,5 @@ import java.util.Optional;
 public interface TaskRepository  extends JpaRepository<Task,Long> {
 
 
-    Task findByUserIdAndDescription(Long id, String taskName);
-    Task findByUserId(Long id);
 
-    List<Task> findAllByUserId(Long id);
 }

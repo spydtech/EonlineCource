@@ -5,7 +5,7 @@ import com.Eonline.Education.Request.LoginRequest;
 import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.OtpService;
-import com.Eonline.Education.exceptions.UserException;
+import com.Eonline.Education.exceptions.AuthenticationBasedException;
 import com.Eonline.Education.modals.OtpVerificationRequest;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.modals.UserRegistrationRequest;
@@ -62,7 +62,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request, User user) throws MessagingException, jakarta.mail.MessagingException, UserException {
+    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request, User user) throws MessagingException, jakarta.mail.MessagingException, AuthenticationBasedException {
         // Check if the email is already registered
         if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email is already registered.");
@@ -87,7 +87,7 @@ public class AuthController {
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws UserException {
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody OtpVerificationRequest request) throws AuthenticationBasedException {
         if (generatedOtp != null && request.getOtp().equals(generatedOtp)) {
             User created = new User();
             created.setFirstName(registeredFirstName);
@@ -119,20 +119,26 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest loginRequest) {
-        String username = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-        System.out.println(username + " ----- " + password);
-        Authentication authentication = authenticate(username, password);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user=userRepository.findByEmail(username);
-        user.setStatus(UserStatus.ACTIVE);
-        String token = jwtTokenProvider.generateToken(authentication);
-        AuthResponse authResponse = new AuthResponse();
-        authResponse.setRole(user.getRole());
-        authResponse.setStatus(true);
-        authResponse.setJwt(token);
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
+    public ResponseEntity<?> signin(@RequestBody LoginRequest loginRequest) {
+        try {
+            String username = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
+            System.out.println(username + " ----- " + password);
+            Authentication authentication = authenticate(username, password);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            User user = userRepository.findByEmail(username);
+            user.setStatus(UserStatus.ACTIVE);
+            userRepository.save(user);
+            String token = jwtTokenProvider.generateToken(authentication);
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setRole(user.getRole());
+            authResponse.setStatus(true);
+            authResponse.setJwt(token);
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid username or password");
+        }
     }
 
     private Authentication authenticate(String username, String password) {
@@ -151,7 +157,7 @@ public class AuthController {
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
     @PostMapping("/forget")
-    public ResponseEntity<String> forgetPassword(@RequestBody User user) throws MessagingException, jakarta.mail.MessagingException, UserException {
+    public ResponseEntity<String> forgetPassword(@RequestBody User user) throws MessagingException, jakarta.mail.MessagingException, AuthenticationBasedException {
         // Check if the email is already registered
         User email = userRepository.findByEmail(user.getEmail());
         if (email != null) {
@@ -170,7 +176,7 @@ public class AuthController {
     }
 
     @PostMapping("/validating-otp")
-    public ResponseEntity<String> validatingOtp(@RequestBody OtpVerificationRequest request) throws UserException {
+    public ResponseEntity<String> validatingOtp(@RequestBody OtpVerificationRequest request) throws AuthenticationBasedException {
         if (generatedOtp != null && request.getOtp().equals(generatedOtp)) {
 
 

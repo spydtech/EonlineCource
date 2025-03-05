@@ -17,7 +17,7 @@ public interface PostService {
 
 	Post getPostById(Long postId);
 
-	void likePost(Long postId);
+	void likePost(String jwt,Long postId);
 
 	List<Post> searchByName(String name);
 

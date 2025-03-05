@@ -5,12 +5,14 @@ import com.Eonline.Education.modals.Education;
 import com.Eonline.Education.modals.PasswordChange;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.response.AdminProfileResponse;
+import com.Eonline.Education.response.UserProfileResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -58,4 +60,9 @@ public interface UserService {
 	ResponseEntity<Account> accountSave(String jwt,Account account);
 
 	ResponseEntity<AdminProfileResponse> adminProfileUpdate(Long id, MultipartFile file, String firstName, String lastName, String email, String mobileNumber) throws IOException;
+
+	UserProfileResponse findUserProfile(String jwt);
+
+
+    Map<String, Long> activeInactiveCount();
 }

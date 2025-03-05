@@ -1,12 +1,11 @@
 package com.Eonline.Education.Service;
 
 
-import com.Eonline.Education.exceptions.CartItemException;
-import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.Cart;
 import com.Eonline.Education.modals.CartItem;
 import com.Eonline.Education.modals.User;
 import com.Eonline.Education.repository.CartItemRepository;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,7 +32,7 @@ public class CartItemServiceImplementation implements CartItemService {
     }
 
     @Override
-    public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws Exception, UserException {
+    public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws Exception, AuthenticationException {
 
         CartItem item=findCartItemById(id);
         User user=userService.findUserById(item.getUserId());
@@ -48,7 +47,7 @@ public class CartItemServiceImplementation implements CartItemService {
 
         }
         else {
-            throw new CartItemException("You can't update  another users cart_item");
+            throw new AuthenticationException("You can't update  another users cart_item");
         }
 
     }
@@ -78,19 +77,19 @@ public class CartItemServiceImplementation implements CartItemService {
             cartItemRepository.deleteById(cartItem.getId());
         }
         else {
-            throw new UserException("you can't remove anothor users item");
+            throw new AuthenticationException("you can't remove anothor users item");
         }
 
     }
 
     @Override
-    public CartItem findCartItemById(Long cartItemId) throws CartItemException {
+    public CartItem findCartItemById(Long cartItemId) throws AuthenticationException {
         Optional<CartItem> opt=cartItemRepository.findById(cartItemId);
 
         if(opt.isPresent()) {
             return opt.get();
         }
-        throw new CartItemException("cartItem not found with id : "+cartItemId);
+        throw new AuthenticationException("cartItem not found with id : "+cartItemId);
     }
 
 }

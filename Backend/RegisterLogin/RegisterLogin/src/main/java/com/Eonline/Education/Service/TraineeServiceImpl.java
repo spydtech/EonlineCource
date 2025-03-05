@@ -1,7 +1,7 @@
 package com.Eonline.Education.Service;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
-import com.Eonline.Education.exceptions.UserException;
+import com.Eonline.Education.exceptions.AuthenticationBasedException;
 import com.Eonline.Education.modals.TraineeCredentialGenerator;
 import com.Eonline.Education.repository.TraineeRepository;
 import jakarta.mail.MessagingException;
@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
@@ -56,11 +58,11 @@ public class TraineeServiceImpl implements TraineeService {
         traineeActivityService.traineeLoggedOut(userId);
     }
     @Override
-    public TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws UserException {
+    public TraineeCredentialGenerator findUserProfileByJwt(String jwt) throws AuthenticationBasedException {
         String userId = jwtTokenProvider.getEmailFromJwtToken(jwt);
         TraineeCredentialGenerator trainee = traineeRepository.findByEmail(userId);
         if (trainee == null) {
-            throw new UserException("User not exist with email " + userId);
+            throw new AuthenticationBasedException("User not exist with email " + userId);
         }
         return trainee;
     }
@@ -93,6 +95,14 @@ public class TraineeServiceImpl implements TraineeService {
            return "trainee deleted successfully";
        }
         return null;
+    }
+
+    @Override
+    public Map<String, Long> countOfTrainers(String jwt) {
+        Map<String,Long> map=new HashMap<>();
+        long trainersCount=traineeRepository.findAll().size();
+        map.put("trainersCount",trainersCount);
+        return map;
     }
 
     public List<TraineeCredentialGenerator> getAllTrainees(){

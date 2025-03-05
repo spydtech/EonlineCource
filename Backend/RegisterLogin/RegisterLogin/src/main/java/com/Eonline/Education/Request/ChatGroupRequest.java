@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChatGroupRequest {
+    private Long id;
     private String groupName;
+    private LocalDate courseEndDate;
     private List<String> users;
-    private List<String> trainees;
+    private String trainees;
 }

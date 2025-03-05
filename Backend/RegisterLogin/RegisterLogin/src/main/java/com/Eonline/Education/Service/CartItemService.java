@@ -1,9 +1,8 @@
 package com.Eonline.Education.Service;
 
-import com.Eonline.Education.exceptions.CartItemException;
-import com.Eonline.Education.exceptions.UserException;
 import com.Eonline.Education.modals.Cart;
 import com.Eonline.Education.modals.CartItem;
+import org.apache.tomcat.websocket.AuthenticationException;
 
 public interface CartItemService {
     public CartItem createCartItem(CartItem cartItem);
@@ -14,5 +13,5 @@ public interface CartItemService {
 
     public void removeCartItem(Long userId,Long cartItemId) throws Exception;
 
-    public CartItem findCartItemById(Long cartItemId) throws CartItemException;
+    public CartItem findCartItemById(Long cartItemId) throws AuthenticationException;
 }
