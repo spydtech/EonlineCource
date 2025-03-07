@@ -26,6 +26,8 @@ public class UserServiceImplementation implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
     private final EducationRepository educationRepository;
+    @Autowired
+    NotificationService notificationService;
 
 
 
@@ -239,6 +241,7 @@ public class UserServiceImplementation implements UserService {
                 if(passwordEncoder.matches(passwordChange.getOldPassword(), user1.getPassword())){
                     user1.setPassword(passwordEncoder.encode(passwordChange.getNewPassword()));
                     userRepository.save(user1);
+                    notificationService.createNotification(user1.getEmail(),"password updated successfully");
                     return "password updated successfully";
                 }else{
                     return "password not matches with the old password";

@@ -35,6 +35,8 @@ public class MeetingServiceImpl implements MeetingService{
     TraineeRepository traineeRepository;
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    NotificationService notificationService;
     @Override
     public ApiResponse meetSave(MeetingRequest meetingRequest,String jwt) {
         String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
@@ -56,6 +58,18 @@ public class MeetingServiceImpl implements MeetingService{
             }else{
                 meeting.setOrganizer(user.getFirstName());
             }
+            String meetingDetails = "You have a  meeting '" + meetingRequest.getTitle() +
+                    "' in the group '" + meetingRequest.getGroupName() +
+                    "' every day from " + meetingRequest.getFromDate() + " to " + meetingRequest.getToDate() +
+                    " at " + meetingRequest.getFromTime() + " to " + meetingRequest.getToTime() + ".";
+            //notification for who are created the meeting
+            notificationService.createNotification(user.getEmail(),"meeting save successfully");
+            //notification for users in the group
+            for(User user1:optional.get().getMembers()) {
+                notificationService.createNotification(user1.getEmail(), meetingDetails);
+            }
+            //notification for trainer in the group
+            notificationService.createNotification(optional.get().getTrainees().getEmail(), meetingDetails);
             meetingRepository.save(meeting);
            return new ApiResponse("meeting save successfully",true,meetingResponse(meeting));
         }else{

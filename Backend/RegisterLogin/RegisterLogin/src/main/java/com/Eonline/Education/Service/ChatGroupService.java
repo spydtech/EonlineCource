@@ -85,8 +85,12 @@ public class ChatGroupService {
         } else {
             return new ApiResponse("Trainee not found for email: " + chatGroup.getTrainees());
         }
-        notificationService.createNotification(loginEmail," Group created  successfully");
         chatGroupRepository.save(group);
+        for (User user : existingUsers) {
+            notificationService.createNotification(user.getEmail(), "You have been added to the group: " + chatGroup.getGroupName());
+        }
+        notificationService.createNotification(chatGroup.getTrainees(), "You have been added as a trainee to the group: " + chatGroup.getGroupName());
+        notificationService.createNotification(loginEmail, chatGroup.getGroupName() + " group created successfully");
         return new ApiResponse  (generateUserResponse(group));
     }
 

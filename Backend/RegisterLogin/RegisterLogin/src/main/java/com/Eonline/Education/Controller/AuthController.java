@@ -4,6 +4,7 @@ import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.LoginRequest;
 import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
+import com.Eonline.Education.Service.NotificationService;
 import com.Eonline.Education.Service.OtpService;
 import com.Eonline.Education.exceptions.AuthenticationBasedException;
 import com.Eonline.Education.modals.OtpVerificationRequest;
@@ -24,6 +25,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/auth")
@@ -50,6 +53,8 @@ public class AuthController {
     private String registeredPassword;
 
     private UserRole registeredRole;
+    @Autowired
+    NotificationService notificationService;
 
 
     public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, CustomUserDetails customUserDetails) {
@@ -140,6 +145,18 @@ public class AuthController {
                     .body("Invalid username or password");
         }
     }
+    @PostMapping("/logout/{email}")
+    public ResponseEntity<String> logoutUser(@PathVariable String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
+        }
+        user.setStatus(UserStatus.INACTIVE);
+        userRepository.save(user);
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("User logged out successfully.");
+    }
+
 
     private Authentication authenticate(String username, String password) {
         UserDetails userDetails = customUserDetails.loadUserByUsername(username);
@@ -207,7 +224,7 @@ public class AuthController {
         existingUser.setPassword(passwordEncoder.encode(password));
         existingUser.setConfirmPassword(passwordEncoder.encode(confirmPassword));
         userRepository.save(existingUser);
-
+        notificationService.createNotification(existingUser.getEmail(),"password updated successfully");
         return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
     }
 }

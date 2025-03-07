@@ -41,4 +41,8 @@ public class NotificationController {
         notificationService.markAsRead(notificationId);
         return ResponseEntity.ok("Notification marked as read");
     }
+    @DeleteMapping("/clear/notifications/{email}")
+    public String clearNotifications(@PathVariable String email){
+        return notificationService.clearNotifications(email);
+    }
 }

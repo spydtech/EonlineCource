@@ -24,7 +24,7 @@ public class PaymentController {
 
     @PostMapping("/store-payment")
     public Payment storePayment(@RequestBody PaymentRequest paymentRequest) {
-       return paymentService.processPayment(paymentRequest);
+        return paymentService.processPayment(paymentRequest);
     }
     @GetMapping("/all")
     public ResponseEntity<List<Payment>> getAllPayments() {

@@ -29,6 +29,8 @@ public class TraineeServiceImpl implements TraineeService {
     private TraineeActivityService traineeActivityService;
     @Autowired
     private final JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    NotificationService notificationService;
 
     public  TraineeServiceImpl(JwtTokenProvider jwtTokenProvider){
         this.jwtTokenProvider=jwtTokenProvider;
@@ -83,6 +85,7 @@ public class TraineeServiceImpl implements TraineeService {
             trainee.setPassword(passwordEncoder.encode(traineeCredentialGenerator.getPassword()));
             trainee.setUserId(traineeCredentialGenerator.getUserId());
             traineeRepository.save(trainee);
+            notificationService.createNotification(trainee.getEmail(),"update details successfully");
         }
         return trainee;
     }

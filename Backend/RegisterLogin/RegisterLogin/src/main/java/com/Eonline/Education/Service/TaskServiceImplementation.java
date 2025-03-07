@@ -37,6 +37,8 @@ public class TaskServiceImplementation implements TaskService {
     PaymentRepository paymentRepository;
     @Autowired
     TaskUserRepository taskUserRepository;
+    @Autowired
+    NotificationService notificationService;
 
 
     //trainer
@@ -68,10 +70,14 @@ public class TaskServiceImplementation implements TaskService {
                     taskUser.setTaskStatus(TaskStatus.PENDING);
                     taskUser.setSubmissionStatus(SubmissionStatus.PENDING);
                     taskUsers.add(taskUser);
+                    // Send notification to each user
+                    notificationService.createNotification(user.getEmail(), "A new task has been assigned to you.");
                 }
             }
         }
         task.setUsers(taskUsers);
+        //notification for  trainer
+notificationService.createNotification(traineeEmail,"task upload successfully");
         taskRepository.save(task);
         return taskToResponse(task);
     }
@@ -141,7 +147,11 @@ public class TaskServiceImplementation implements TaskService {
         }
         return responses;
     }
-
+    private String buildFullName(String firstName, String lastName) {
+        if (firstName == null && lastName == null) return null;
+        if (lastName == null || lastName.isEmpty()) return firstName;
+        return firstName + " " + lastName;
+    }
 
     @Override
     public TaskResponse getById(Long taskId) {
@@ -167,6 +177,10 @@ public class TaskServiceImplementation implements TaskService {
         TaskUser taskUser = task.get();
         taskUser.setTaskStatus(taskStatus);
         taskUserRepository.save(taskUser);
+        //send notification for user
+        notificationService.createNotification(taskUser.getUser().getEmail(),"Task approved  successfully ");
+        //send notification for trainer
+        notificationService.createNotification(trainee.getEmail(),"Task approved  successfully ");
         return new ApiResponse("Task approval  successfully", true, taskToResponse(taskUser.getTask()));
     }
 
@@ -276,6 +290,10 @@ public class TaskServiceImplementation implements TaskService {
         taskUser.setSubmissionStatus(SubmissionStatus.SUBMITTED);
         taskUser.setSubmittedDate(LocalDate.now());
         TaskUser updatedTaskUser = taskUserRepository.save(taskUser);
+        // Send notification for  user
+        notificationService.createNotification(user.getEmail(), "Task submitted Successfully.");
+        // Send notification  for trainer
+        notificationService.createNotification(taskUser.getTask().getTraineeEmail(), "Task submitted Successfully by " + buildFullName(user.getFirstName(),user.getLastName()));
         return new ApiResponse("Task Submitted Successfully", true, taskSubmissionResponse(updatedTaskUser));
     }
 

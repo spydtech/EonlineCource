@@ -21,6 +21,8 @@ public class ChatService {
     ChatMessageRepository chatMessageRepository;
     @Autowired
     PaymentRepository paymentRepository;
+    @Autowired
+    NotificationService notificationService;
     public ChatMessage saveMessage(ChatMessage chatMessage) {
         User sender = userRepository.findByEmail(chatMessage.getSenderEmail());
         if (sender != null) {
@@ -32,6 +34,11 @@ public class ChatService {
             chatMessage.setReceiverName(receiver.getFirstName());
         }
         chatMessage.setTimestamp(LocalDateTime.now());
+        assert sender != null;
+        notificationService.createNotification(sender.getEmail(),"message send successfully");
+        assert receiver != null;
+        notificationService.createNotification(receiver.getEmail(),"message received successfully");
+
         chatMessageRepository.save(chatMessage);
         return chatMessage;
     }
