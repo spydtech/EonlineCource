@@ -59,7 +59,7 @@ public class AppConfig {
                     "http://13.126.181.47:5173",
                     "http://13.126.181.47:5174",
                     "http://13.126.181.47:5175",
-                    ""http://13.126.181.47""
+                    "http://13.126.181.47"
             ));
             cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cfg.setAllowCredentials(true);
