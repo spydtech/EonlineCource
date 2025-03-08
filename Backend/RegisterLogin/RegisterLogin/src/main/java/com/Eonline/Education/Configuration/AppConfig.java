@@ -44,13 +44,19 @@ public class AppConfig {
             CorsConfiguration cfg = new CorsConfiguration();
             cfg.setAllowedOrigins(Arrays.asList(
                     
+                    "http://localhost:5173",
+                    "http://localhost:5174",
+                    "http://localhost:8082",
                     "https://localhost:5173",
                     "https://localhost:5174",
                     "https://localhost:8082",
+                    "http://13.126.181.47:8082",
                     "https://13.126.181.47:8082",
-                    "https://13.126.181.47:3306",
+                    "http://13.126.181.47:5173",
                     "https://13.126.181.47:5173",
+                    "http://13.126.181.47:5174",
                     "https://13.126.181.47:5174",
+                    "http://13.126.181.47:5175",
                     "https://13.126.181.47:5175"
                     
             ));
