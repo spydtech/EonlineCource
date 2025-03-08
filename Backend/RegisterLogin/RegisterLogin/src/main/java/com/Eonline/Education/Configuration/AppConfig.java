@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -25,52 +26,48 @@ public class AppConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**").authenticated()
-                        .anyRequest().permitAll())
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
-                .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .httpBasic()
-                .and()
-                .formLogin();
+                        .requestMatchers("/api/**").authenticated() // Secure API endpoints
+                        .requestMatchers("/manifest.json", "/icon.png", "/static/**").permitAll() // Allow access to static resources
+                        .anyRequest().permitAll()) // Allow all other requests
+                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class) // Add JWT validation filter
+                .csrf().disable() // Disable CSRF for stateless APIs
+                .cors().configurationSource(corsConfigurationSource()); // Enable CORS
 
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        return request -> {
-            CorsConfiguration cfg = new CorsConfiguration();
-            cfg.setAllowedOrigins(Arrays.asList(
-                    
-                    "http://localhost:5173",
-                    "http://localhost:5174",
-                    "http://localhost:8082",
-                    "https://localhost:5173",
-                    "https://localhost:5174",
-                    "https://localhost:8082",
-                    "http://13.126.181.47:8082",
-                    "https://13.126.181.47:8082",
-                    "http://13.126.181.47:5173",
-                    "https://13.126.181.47:5173",
-                    "http://13.126.181.47:5174",
-                    "https://13.126.181.47:5174",
-                    "http://13.126.181.47:5175",
-                    "https://13.126.181.47:5175"
-                    
-            ));
-            cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-            cfg.setAllowCredentials(true);
-            cfg.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-            cfg.setExposedHeaders(Arrays.asList("Authorization"));
-            cfg.setMaxAge(3600L);
-            return cfg;
-        };
+        CorsConfiguration cfg = new CorsConfiguration();
+        cfg.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "http://localhost:8082",
+                "https://localhost:5173",
+                "https://localhost:5174",
+                "https://localhost:8082",
+                "http://13.126.181.47:8082",
+                "https://13.126.181.47:8082",
+                "http://13.126.181.47:5173",
+                "https://13.126.181.47:5173",
+                "http://13.126.181.47:5174",
+                "https://13.126.181.47:5174",
+                "http://13.126.181.47:5175",
+                "https://13.126.181.47:5175"
+        ));
+        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed HTTP methods
+        cfg.setAllowCredentials(true); // Allow credentials (e.g., cookies)
+        cfg.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type")); // Allowed headers
+        cfg.setExposedHeaders(Arrays.asList("Authorization")); // Exposed headers
+        cfg.setMaxAge(3600L); // Max age for CORS preflight requests
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cfg); // Apply CORS configuration to all endpoints
+        return source;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // Use BCrypt for password encoding
     }
 }
