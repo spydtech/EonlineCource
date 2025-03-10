@@ -25,7 +25,7 @@ public class AppConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/").authenticated()
                         .anyRequest().permitAll())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
                 .csrf().disable()
@@ -43,21 +43,20 @@ public class AppConfig {
         return request -> {
             CorsConfiguration cfg = new CorsConfiguration();
             cfg.setAllowedOrigins(Arrays.asList(
-                    "http://localhost:3000",
-                    "http://localhost:3001",
-                    "http://localhost:4200",
-                    "http://localhost:4201",
+                    
                     "http://localhost:5173",
                     "http://localhost:5174",
-                    "http://localhost:5175",
+                    "http://localhost:8082",
                     "http://13.126.181.47:8082",
-                    "https://e-education.in:8082",
-                    "http://15.206.164.0:8082"
-
-
+                    "http://13.126.181.47:3306",
+                    "http://13.126.181.47:5173",
+                    "http://13.126.181.47:5174",
+                    "http://13.126.181.47:5175"
+                    
             ));
             cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cfg.setAllowCredentials(true);
+            cfg.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
             cfg.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
             cfg.setExposedHeaders(Arrays.asList("Authorization"));
             cfg.setMaxAge(3600L);
