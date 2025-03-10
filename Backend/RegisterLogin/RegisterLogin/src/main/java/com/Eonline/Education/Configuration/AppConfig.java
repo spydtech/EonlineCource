@@ -26,6 +26,7 @@ public class AppConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()               
                         .requestMatchers("/api/**").authenticated() // Secure API endpoints
                         .requestMatchers("/manifest.json", "/icon.png", "/static/**").permitAll() // Allow access to static resources
                         .anyRequest().permitAll()) // Allow all other requests
