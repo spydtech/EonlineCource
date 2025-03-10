@@ -26,7 +26,7 @@ public class AppConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()               
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow all OPTIONS requests
                         .requestMatchers("/api/**").authenticated() // Secure API endpoints
                         .requestMatchers("/manifest.json", "/icon.png", "/static/**").permitAll() // Allow access to static resources
                         .anyRequest().permitAll()) // Allow all other requests
@@ -47,7 +47,7 @@ public class AppConfig {
                 "https://localhost:5173",
                 "https://localhost:5174",
                 "https://localhost:8082",
-                 "http://15.206.164.0:8082",
+                "http://15.206.164.0:8082",
                 "http://13.126.181.47",
                 "http://13.126.181.47:8082",
                 "http://13.126.181.47:5173",
