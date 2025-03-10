@@ -22,7 +22,7 @@ COPY --from=build /EonlineCource/Backend/RegisterLogin/RegisterLogin/target/*.ja
  
 # Expose the application port (change if needed)
 EXPOSE 80
-EXPOSE 8083
+EXPOSE 8082
  
 # Command to run the application
 CMD ["java", "-jar", "education.jar"]
