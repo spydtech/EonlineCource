@@ -48,7 +48,7 @@ public class AppConfig {
                 "https://localhost:8082",
                  "https://e-education.in",
                 "http://13.126.181.47",
-                "https://13.126.181.47",
+                "https://13.126.181.47:8083",
                 "http://13.126.181.47:5173",
                 "https://13.126.181.47:5173",
                 "http://13.126.181.47:5174",
