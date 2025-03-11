@@ -42,21 +42,21 @@ public class AppConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         return request -> {
             CorsConfiguration cfg = new CorsConfiguration();
-            cfg.setAllowedOrigins(Arrays.asList(
-                    
+           cfg.setAllowedOrigins(Arrays.asList(
                     "http://localhost:5173",
                     "http://localhost:5174",
                     "http://localhost:8082",
                     "http://13.126.181.47:3000",
                     "http://13.126.181.47:8082",
+                    "https://13.126.181.47:8082", // Added HTTPS backend
                     "http://13.126.181.47:3306",
                     "http://13.126.181.47:5173",
                     "http://13.126.181.47:5174",
                     "http://13.126.181.47:5175",
-                     "https://e-education.in",
-                     "https://e-education.in:8082"
-                    
-            ));
+                    "https://e-education.in",
+                    "https://e-education.in:8082"
+                ));
+
             cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cfg.setAllowCredentials(true);
             cfg.setAllowedHeaders(Arrays.asList("*")); // Allow all headers
