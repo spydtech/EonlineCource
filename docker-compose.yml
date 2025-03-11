@@ -8,7 +8,7 @@ services:
     networks:
       - my-network
     environment:
-      - API_BASE_URL=https://e-education.in/api  # Frontend points to the backend via the domain
+      - API_BASE_URL=http://13.126.181.47:8082  # Frontend points to the backend via the domain
  
   backend:
     image: jagadishspyd/e-education:1.0BE  # Backend image
