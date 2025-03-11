@@ -22,6 +22,7 @@ COPY --from=build /EonlineCource/Backend/RegisterLogin/RegisterLogin/target/*.ja
  
 # Expose the application port (change if needed)
 EXPOSE 80
+EXPOSE 3000
 EXPOSE 8082
  
 # Command to run the application
