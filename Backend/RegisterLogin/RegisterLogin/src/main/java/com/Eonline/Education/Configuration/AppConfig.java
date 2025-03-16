@@ -55,7 +55,9 @@ public class AppConfig {
                     "http://13.126.181.47:5174",
                     "http://13.126.181.47:5175",
                     "https://e-education.in",
-                    "https://e-education.in:8082"
+                    "https://e-education.in:8082",
+                    "http://15.206.164.0",
+                    "http://15.206.164.0:8082"
                 ));
 
             cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
