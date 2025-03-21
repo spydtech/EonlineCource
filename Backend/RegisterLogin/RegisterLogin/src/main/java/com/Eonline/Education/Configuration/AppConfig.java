@@ -56,8 +56,8 @@ public class AppConfig {
                     "http://13.126.181.47:5175",
                     "https://e-education.in",
                     "https://e-education.in:8082",
-                    "http://3.109.30.200",
-                    "http://3.109.30.200:8082",
+                    "http://3.6.36.172",
+                    "http://3.6.36.172:8082",
                     "https://api.e-education.in"
                 ));
 
