@@ -1,3 +1,6 @@
+package com.Eonline.Education.Configuration;
+
+import com.Eonline.Education.Configuration.JwtTokenValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,7 +47,10 @@ public class AppConfig {
         cfg.setAllowedOrigins(Arrays.asList(
             "http://localhost:5173",
             "http://localhost:3000",
-            // "http://13.126.181.47:5173",
+                "http://localhost:8082",
+                "http://13.126.181.47:8082",
+            "http://13.126.181.47:5173",
+                "http://13.126.181.47:3000",
             "https://e-education.in",
             "https://api.e-education.in"
         ));
