@@ -46,7 +46,7 @@ public class AppConfig {
 
         cfg.setAllowedOriginPatterns(List.of( // Allows subdomains dynamically
                 "http://localhost:*",
-                "http://13.126.181.47:*",
+                "http://3.6.36.172:*",
                 "https://*.e-education.in"
         ));
 
