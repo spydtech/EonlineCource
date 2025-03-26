@@ -45,8 +45,17 @@ public class AppConfig {
         CorsConfiguration cfg = new CorsConfiguration();
 
         cfg.setAllowedOriginPatterns(List.of( // Allows subdomains dynamically
-                "http://localhost:*",
-                "http://3.6.36.172:*",
+                "http://localhost:5173",
+                "http://localhost:5174",
+                "http://localhost:8082",
+                "http://localhost:3000",
+                "http://localhost:3306",
+                "http://3.6.36.172:8082",
+                "http://3.6.36.172:3306",
+                "http://3.6.36.172:5173",
+                "http://3.6.36.172:5174",
+                "http://3.6.36.172:3000",
+                "http://3.6.36.172:5175",
                 "https://*.e-education.in"
         ));
 
