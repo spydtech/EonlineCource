@@ -1,7 +1,6 @@
 
 
-e configuration backend lo peti latest build cheyamanu
-------------------------------------------------
+
 package com.Eonline.Education.Configuration;
 
 import org.springframework.context.annotation.Bean;
