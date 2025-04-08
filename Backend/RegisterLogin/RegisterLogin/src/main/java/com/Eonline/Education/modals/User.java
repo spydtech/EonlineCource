@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,26 +23,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@NotBlank(message = "First name is required")
-//	@Column(name = "first_name")
 	private String firstName;
-
-//	@NotBlank(message = "Last name is required")
-//	@Column(name = "last_name")
 	private String lastName;
-
-//	@NotBlank(message = "Password is required")
-//	@Column(name = "password")
 	private String password;
 
-//	@NotBlank(message = "Email is required")
-//	@Email(message = "Email should be valid")
-//	@Column(name = "email", unique = true)
+	@Column(unique = true)
 	private String email;
 
 	@Column(name = "created_at")
 	private Date createdAt = new Date();
-
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -68,15 +56,17 @@ public class User {
 	@JoinColumn(name = "plan_id")
 	private Plan plan;
 
+	// ✅ For Google login (URL)
+	private String profilePicture;
+
+	// ✅ For local uploads (image data)
 	@Lob
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] profilePhoto;
 
-
 	@Lob
 	@Column(columnDefinition = "LONGBLOB")
 	private byte[] coverPhoto;
-
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TaskUser> taskUsers = new ArrayList<>();
@@ -85,16 +75,12 @@ public class User {
 	private int version;
 
 	private String bio;
-
 	private LocalDate dateOfBirth;
-
 	private String gender;
-
 	private String location;
-
 	private String phoneNumber;
-
 	private String website;
+
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 
@@ -103,10 +89,7 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Enrollment> enrollments;
 
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	private List<Payment> payments;
-
-
-
-
+	// Uncomment if needed later
+	// @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private List<Payment> payments;
 }

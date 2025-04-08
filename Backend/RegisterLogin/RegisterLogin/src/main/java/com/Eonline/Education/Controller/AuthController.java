@@ -2,6 +2,7 @@ package com.Eonline.Education.Controller;
 
 import com.Eonline.Education.Configuration.JwtTokenProvider;
 import com.Eonline.Education.Request.LoginRequest;
+import com.Eonline.Education.Request.GoogleAuthRequest;
 import com.Eonline.Education.Service.CustomUserDetails;
 import com.Eonline.Education.Service.EmailService;
 import com.Eonline.Education.Service.NotificationService;
@@ -14,8 +15,13 @@ import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.AuthResponse;
 import com.Eonline.Education.user.UserRole;
 import com.Eonline.Education.user.UserStatus;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,67 +32,47 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenProvider jwtTokenProvider;
-    private CustomUserDetails customUserDetails;
-
-    //    private CartService cartService;
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private OtpService otpService;
-
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private JwtTokenProvider jwtTokenProvider;
+    @Autowired private CustomUserDetails customUserDetails;
+    @Autowired private EmailService emailService;
+    @Autowired private OtpService otpService;
+    @Autowired private NotificationService notificationService;
 
     private String generatedOtp;
     private String email;
     private String registeredFirstName;
     private String registeredLastName;
-
     private String registeredPassword;
-
     private UserRole registeredRole;
-    @Autowired
-    NotificationService notificationService;
 
+    @Value("${google.client-id}")
+    private String googleClientId;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, CustomUserDetails customUserDetails) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.customUserDetails = customUserDetails;
-//        this.cartService = cartService;
-
-    }
-
+    // ========== Registration ==========
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request, User user) throws MessagingException, jakarta.mail.MessagingException, AuthenticationBasedException {
-        // Check if the email is already registered
+    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest request) throws MessagingException, AuthenticationBasedException {
         if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("Email is already registered.");
         }
 
-        // Generate OTP
         generatedOtp = otpService.generateOtp();
-
-        // Send OTP via email
         emailService.sendOtpEmail(request.getEmail(), generatedOtp);
 
-        // Store registered email for OTP verification
         email = request.getEmail();
-
         registeredFirstName = request.getFirstName();
         registeredLastName = request.getLastName();
         registeredPassword = request.getPassword();
         registeredRole = UserRole.CUSTOMER;
-
 
         return ResponseEntity.ok("OTP sent successfully.");
     }
@@ -103,48 +89,57 @@ public class AuthController {
             created.setPassword(passwordEncoder.encode(registeredPassword));
             User savedUser = userRepository.save(created);
 
-//                cartService.createCart(savedUser);
             Authentication authentication = new UsernamePasswordAuthenticationToken(email, registeredPassword);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtTokenProvider.generateToken(authentication);
             AuthResponse authResponse = new AuthResponse(token, true);
-            // Clear stored OTP and registered email after successful registration
+
             generatedOtp = null;
             email = null;
             registeredFirstName = null;
             registeredLastName = null;
-            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
         } else {
-            // OTP verification failed
             return ResponseEntity.badRequest().body(new AuthResponse(null, false, "Invalid OTP. Registration failed."));
         }
     }
 
-
+    // ========== Login ==========
     @PostMapping("/signin")
     public ResponseEntity<?> signin(@RequestBody LoginRequest loginRequest) {
         try {
             String username = loginRequest.getEmail();
             String password = loginRequest.getPassword();
-            System.out.println(username + " ----- " + password);
+
             Authentication authentication = authenticate(username, password);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             User user = userRepository.findByEmail(username);
             user.setStatus(UserStatus.ACTIVE);
             userRepository.save(user);
+
             String token = jwtTokenProvider.generateToken(authentication);
-            AuthResponse authResponse = new AuthResponse();
+            AuthResponse authResponse = new AuthResponse(token, true);
             authResponse.setRole(user.getRole());
-            authResponse.setStatus(true);
-            authResponse.setJwt(token);
-            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
-        }catch (Exception e) {
+
+            return new ResponseEntity<>(authResponse, HttpStatus.OK);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid username or password");
         }
     }
+
+    private Authentication authenticate(String username, String password) {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+        if (userDetails == null || !passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    // ========== Logout ==========
     @PostMapping("/logout/{email}")
     public ResponseEntity<String> logoutUser(@PathVariable String email) {
         User user = userRepository.findByEmail(email);
@@ -157,79 +152,89 @@ public class AuthController {
         return ResponseEntity.ok("User logged out successfully.");
     }
 
-
-    private Authentication authenticate(String username, String password) {
-        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
-
-        System.out.println("sign in userDetails - " + userDetails);
-
-        if (userDetails == null) {
-            System.out.println("sign in userDetails - null " + userDetails);
-            throw new BadCredentialsException("Invalid username or password");
-        }
-        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            System.out.println("sign in userDetails - password not match " + userDetails);
-            throw new BadCredentialsException("Invalid username or password");
-        }
-        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-    }
+    // ========== Forgot Password ==========
     @PostMapping("/forget")
-    public ResponseEntity<String> forgetPassword(@RequestBody User user) throws MessagingException, jakarta.mail.MessagingException, AuthenticationBasedException {
-        // Check if the email is already registered
-        User email = userRepository.findByEmail(user.getEmail());
-        if (email != null) {
-            // Generate OTP
+    public ResponseEntity<String> forgetPassword(@RequestBody User user) throws MessagingException, AuthenticationBasedException {
+        User emailUser = userRepository.findByEmail(user.getEmail());
+        if (emailUser != null) {
             generatedOtp = otpService.generateOtp();
-
-            // Send OTP via email
             emailService.sendOtpEmail(user.getEmail(), generatedOtp);
-
-
             return ResponseEntity.ok("OTP sent successfully.");
-
         } else {
-            return ResponseEntity.badRequest().body("You entered invalid email.");
+            return ResponseEntity.badRequest().body("Invalid email.");
         }
     }
 
     @PostMapping("/validating-otp")
     public ResponseEntity<String> validatingOtp(@RequestBody OtpVerificationRequest request) throws AuthenticationBasedException {
         if (generatedOtp != null && request.getOtp().equals(generatedOtp)) {
-
-
-            return new ResponseEntity<String>("otp verified.", HttpStatus.OK);
-
+            return new ResponseEntity<>("OTP verified.", HttpStatus.OK);
         } else {
-            // OTP verification failed
-            return new ResponseEntity<String>("Invalid otp.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid OTP.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/confirmpwd/{email}")
     public ResponseEntity<String> confirmPassword(@PathVariable String email, @RequestBody User user) {
         String password = user.getPassword();
-        System.out.println(password);
         String confirmPassword = user.getConfirmPassword();
-        System.out.println(confirmPassword);
 
         if (!password.equals(confirmPassword)) {
             return new ResponseEntity<>("Passwords do not match", HttpStatus.BAD_REQUEST);
         }
-        // Find the existing user by email
+
         User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        // Update password
+
         existingUser.setPassword(passwordEncoder.encode(password));
         existingUser.setConfirmPassword(passwordEncoder.encode(confirmPassword));
         userRepository.save(existingUser);
-        notificationService.createNotification(existingUser.getEmail(),"password updated successfully");
+
+        notificationService.createNotification(existingUser.getEmail(), "Password updated successfully");
         return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
     }
+
+    // ========== Google Login ==========
+    @PostMapping("/google")
+    public ResponseEntity<?> googleAuth(@RequestBody GoogleAuthRequest googleAuthRequest) {
+        try {
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                    .setAudience(Collections.singletonList(googleClientId))
+                    .build();
+
+            GoogleIdToken idToken = verifier.verify(googleAuthRequest.getToken());
+            if (idToken != null) {
+                GoogleIdToken.Payload payload = idToken.getPayload();
+
+                String email = payload.getEmail();
+                String name = (String) payload.get("name");
+                String pictureUrl = (String) payload.get("picture");
+
+                User user = userRepository.findByEmail(email);
+                if (user == null) {
+                    user = new User();
+                    user.setEmail(email);
+                    user.setFirstName(name);
+                    user.setRole("CUSTOMER");
+                    user.setStatus(UserStatus.ACTIVE);
+                    user.setProfilePicture(pictureUrl);
+                    userRepository.save(user);
+                }
+
+                Authentication auth = new UsernamePasswordAuthenticationToken(email, null, null);
+                String token = jwtTokenProvider.generateToken(auth);
+
+                AuthResponse authResponse = new AuthResponse(token, true);
+                authResponse.setRole(user.getRole());
+
+                return new ResponseEntity<>(authResponse, HttpStatus.OK);
+            } else {
+                return ResponseEntity.badRequest().body("Invalid Google token");
+            }
+        } catch (GeneralSecurityException | IOException e) {
+            return ResponseEntity.badRequest().body("Google authentication failed");
+        }
+    }
 }
-
-
-
-
-
