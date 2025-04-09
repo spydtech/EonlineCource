@@ -33,7 +33,7 @@ public class DataInitializationComponent implements CommandLineRunner {
     }
 
     private void initializeAdminUser() {
-        String adminUsername = "pa1velagana@gmail.com";
+        String adminUsername = "support@e-education.in";
 
         try {
             if (userRepository.findByEmail(adminUsername) == null) {
