@@ -18,24 +18,26 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true) // Enables method-level security
+@EnableMethodSecurity(prePostEnabled = true)
 public class AppConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenValidator jwtTokenValidator) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Attach CORS config
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for APIs
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/api/auth/**", "/trainee/**", "/auth/signin", "/error").permitAll() // Public endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Restricted to Admins
-                        .requestMatchers("/api/users/profile").authenticated() // Explicitly require auth
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN") // User routes
+                        .requestMatchers(
+                                "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
+                                "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
+                        ).permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/users/profile").authenticated()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class);
-//                .httpBasic(); // Use Basic Auth for API authentication (Remove if using JWT)
+                .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class);
 
         return http.build();
     }
@@ -43,23 +45,25 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOriginPatterns(List.of( // Allows subdomains dynamically
+        cfg.setAllowedOriginPatterns(List.of(
+                "http://localhost",
                 "http://localhost:5173",
                 "http://localhost:5174",
                 "http://localhost:8082",
                 "http://3.6.36.172:5173",
                 "http://3.6.36.172:5174",
-                "http://3.6.36.172:3000",
                 "http://3.6.36.172:5175",
+                "http://3.6.36.172:3000",
                 "https://*.e-education.in",
                 "https://www.e-education.in",
-                "https://api.e-education.in"
+                "https://api.e-education.in",
+                "https://accounts.google.com"
         ));
 
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        cfg.setAllowCredentials(true);
         cfg.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-        cfg.setExposedHeaders(List.of("Authorization")); // Expose only necessary headers
+        cfg.setExposedHeaders(List.of("Authorization"));
+        cfg.setAllowCredentials(true);
         cfg.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -71,10 +75,11 @@ public class AppConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // Register JwtTokenValidator as a Spring-managed bean
+    @Bean
+    public JwtTokenValidator jwtTokenValidator() {
+        return new JwtTokenValidator();
+    }
 }
-
-
-
-
-
 
