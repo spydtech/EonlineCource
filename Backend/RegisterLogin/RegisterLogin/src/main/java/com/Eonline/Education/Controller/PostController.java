@@ -1,294 +1,287 @@
-package com.Eonline.Education.Service;
+package com.Eonline.Education.Controller;
 
-import com.Eonline.Education.Configuration.JwtTokenProvider;
-import com.Eonline.Education.modals.Post;
-import com.Eonline.Education.modals.User;
+import java.io.IOException;
+import java.util.*;
+
+import com.Eonline.Education.Service.NotificationService;
 import com.Eonline.Education.repository.PostRepository;
-import com.Eonline.Education.repository.SaveRepository;
-import com.Eonline.Education.repository.UserRepository;
 import com.Eonline.Education.response.PostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Eonline.Education.Service.PostService;
+import com.Eonline.Education.Service.SaveService;
+import com.Eonline.Education.modals.Post;
+import com.Eonline.Education.modals.SaveEntity;
+
 import jakarta.persistence.EntityNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-@Service
-public class PostServiceImpl implements PostService {
+@RestController
+@RequestMapping("/api/posts")
+public class PostController {
 
 	@Autowired
-	private PostRepository postRepository;
+	private PostService postService;
+
 	@Autowired
-	UserRepository userRepository;
+	SaveService saveService;
 	@Autowired
-	JwtTokenProvider jwtTokenProvider;
+	PostRepository postRepository;
 	@Autowired
 	NotificationService notificationService;
 
-	@Autowired
-	private SaveRepository saveRepository;  // Fix: Inject SaveRepository
+	// Update Profile Picture for a Post
+	@PutMapping("/{id}/profile-picture")
+	public ResponseEntity<String> updateProfilePicture(@PathVariable long id,
+													   @RequestParam("profilePicture") MultipartFile profilePicture) throws IOException {
 
-	// Save profile photo for the user based on email
-	@Override
-	public String saveProfilePhotoByEmail(String email, MultipartFile file) throws IOException {
-		if (file.isEmpty()) {
-			throw new RuntimeException("No file uploaded");
-		}
-
-		// Find the post using the provided email (assuming the email is in the 'postedBY' field)
-		Optional<Post> postOpt = postRepository.findByPostedBY(email);
-
-		if (!postOpt.isPresent()) {
-			throw new RuntimeException("Post not found for the given email: " + email);
-		}
-
-		// Save the profile picture (set the byte[] for the profile photo)
-		Post post = postOpt.get();
-		post.setProfilePicture(file.getBytes());
-		postRepository.save(post);
-
-		return "Profile photo uploaded successfully!";
+		postService.updateProfilePicture(id, profilePicture.getBytes());
+		return new ResponseEntity<>("Profile picture updated successfully!", HttpStatus.OK);
 	}
 
-	// Update the profile picture for the post using the post ID
-	@Override
-	public void updateProfilePicture(long id, byte[] profilePicture) throws IOException {
-		Post post = postRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Post not found"));
-
-		post.setProfilePicture(profilePicture);  // Update the profile picture
-		postRepository.save(post);
-	}
-
-	// Get the profile picture of the post using the post ID
-	@Override
-	public byte[] getProfilePicture(long id) {
-		Post post = postRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Post not found"));
-
-		return post.getProfilePicture();  // Return the profile picture as byte[]
-	}
-
-	@Override
-	public byte[] getImage(Long postId) {
-		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new RuntimeException("Post not found"));
-
-		return post.getImg();
-	}
-
-	@Override
-	public byte[] getVideo(Long postId) {
-		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new RuntimeException("Post not found"));
-
-		return post.getVideo();
-	}
-
-	@Override
-	public List<PostResponse> getUserPost(String jwt) {
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		List<PostResponse> postResponse=new ArrayList<>();
-		List<Post> posts=postRepository.findAllByPostedBY(email);
-		for(Post post:posts){
-			postResponse.add(postTopostResponse(post));
-		}
-		return postResponse;
-	}
-
-	// Save a text-only post
-	@Override
-	public Post saveTextPost(String jwt,String name, String content, String postedBY, List<String> tags) {
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		User user = userRepository.findByEmail(email);
-		Post post = new Post();
-		post.setName(name);
-		post.setContent(content);
-		post.setPostedBY(user.getEmail());
-		post.setTags(tags);
-		post.setLikeCount(0);
-		post.setViewCount(0);
-		post.setProfilePicture(user.getProfilePhoto());
-		post.setDateTime(LocalDateTime.now());
-		notificationService.createNotification(user.getEmail()," post created  successfully");
-		return postRepository.save(post);
-	}
-
-	@Override
-	public Post savePost(String jwt, MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException, SQLException {
-		return null;
-	}
-
-	// Save a post with media (image or video)
-	@Override
-	public Post savePost(
-			String jwt,
-			MultipartFile imageFile,
-			MultipartFile videoFile,
-			String name,
-			String content,
-			String postedBY,
-			List<String> tags
-	) throws IOException {
-		Post post = new Post();
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		User user = userRepository.findByEmail(email);
-
-		// Handle image
-		if (imageFile != null) {
-			post.setImg(imageFile.getBytes());
-			post.setMediaType(imageFile.getContentType());
-			post.setFileName(imageFile.getOriginalFilename());
-		}
-
-		// Handle video
-		if (videoFile != null) {
-			post.setVideo(videoFile.getBytes());
-			post.setMediaType(videoFile.getContentType());
-			post.setFileName(videoFile.getOriginalFilename());
-		}
-
-		post.setName(name);
-		post.setContent(content);
-		post.setPostedBY(user.getEmail());
-		post.setTags(tags);
-		post.setLikeCount(0);
-		post.setViewCount(0);
-		post.setDateTime(LocalDateTime.now());
-		post.setProfilePicture(user.getProfilePhoto());
-		notificationService.createNotification(user.getEmail()," post created  successfully");
-		return postRepository.save(post);
-	}
-
-	@Override
-	public Post updateTextPost(String jwt, Long postId, Post existingPost) {
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		User user = userRepository.findByEmail(email);
-
-		existingPost.setPostedBY(user.getEmail());
-
-		existingPost.setProfilePicture(user.getProfilePhoto());
-		existingPost.setDateTime(LocalDateTime.now());
-		return postRepository.save(existingPost);
-	}
-
-	@Override
-	public Post updatePostWithMedia(String jwt, Long postId, MultipartFile file) throws IOException {
-		Post existingPost = postRepository.findById(postId)
-				.orElseThrow(() -> new IllegalArgumentException("Post not found with ID: " + postId));
-
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		User user = userRepository.findByEmail(email);
-		String contentType = file.getContentType();
-
-		if (contentType.startsWith("image/")) {
-			existingPost.setImg(file.getBytes());
-			existingPost.setMediaType(contentType);
-			existingPost.setFileName(file.getOriginalFilename());
-		} else if (contentType.startsWith("video/")) {
-			existingPost.setVideo(file.getBytes());
-			existingPost.setMediaType(contentType);
-			existingPost.setFileName(file.getOriginalFilename());
-		} else {
-			throw new IllegalArgumentException("Unsupported media type: " + contentType);
-		}
-
-		existingPost.setPostedBY(user.getEmail());
-
-		existingPost.setProfilePicture(user.getProfilePhoto());
-		existingPost.setDateTime(LocalDateTime.now());
-		return postRepository.save(existingPost);
-	}
-
-
-	// Get all posts
-	public List<PostResponse> getAllPost() {
-		List<PostResponse> postResponses=new ArrayList<>();
-		List<Post> posts=postRepository.findAll();
-		for(Post post:posts){
-			postResponses.add(postTopostResponse(post));
-		}
-		return postResponses;
-	}
-
-	// Get a post by ID and increase its view count
-	public Post getPostById(Long postId) {
-		Optional<Post> optional = postRepository.findById(postId);
-		if (optional.isPresent()) {
-			Post post = optional.get();
-			post.setViewCount(post.getViewCount() + 1);
-			return postRepository.save(post);
-		} else {
-			throw new EntityNotFoundException("Post not found");
-		}
-	}
-
-	// Like a post by incrementing the like count
-	public void likePost(String jwt,Long postId) {
-		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
-		User user = userRepository.findByEmail(email);
-		System.out.println(postId);
-		Optional<Post> optional = postRepository.findById(postId);
-		if (optional.isPresent()) {
-			System.out.println(optional.get().getPostedBY());
-			Post post = optional.get();
-			if(post.getLikeCount()<1) {
-				post.setLikeCount(post.getLikeCount() + 1);
-			}
-			postRepository.save(post);
-			notificationService.createNotification(user.getEmail(),"like the post successfully");
-		} else {
-			throw new EntityNotFoundException("Post not found with id: " + postId);
-		}
-	}
-
-	public List<Post> searchByName(String name) {
-		return postRepository.findByNameContainingIgnoreCase(name);
-	}
-
-	private PostResponse postTopostResponse(Post post){
-		PostResponse postResponse=new PostResponse();
-		postResponse.setId(post.getId());
-		postResponse.setName(post.getName());
-		postResponse.setContent(post.getContent());
-		postResponse.setPostedBY(post.getPostedBY());
-		if(post.getVideo()!=null) {
-			postResponse.setVideo(post.getVideo());
-		}
-		if(post.getImg()!=null) {
-			postResponse.setImg(post.getImg());
-		}
-		postResponse.setMediaType(post.getMediaType());
-		postResponse.setDateTime(post.getDateTime());
-		postResponse.setLikeCount(post.getLikeCount());
-		postResponse.setViewCount(post.getViewCount());
-		postResponse.setTags(post.getTags());
-		if(post.getProfilePicture()!=null) {
-			postResponse.setProfilePicture(post.getProfilePicture());
-		}
-		return postResponse;
-	}
-
-	// Delete a post by ID
-	@Override
-	public ResponseEntity<?> deletePostById(long id) {
+	@PostMapping("/{email}/profile-photo")
+	public ResponseEntity<String> uploadProfilePhoto(@PathVariable String email,
+													 @RequestParam("file") MultipartFile file) {
 		try {
-			if (postRepository.existsById(id)) {
-				saveRepository.deleteByPostId(id);  // Fix: Ensure saveRepository is properly injected
-				postRepository.deleteById(id);
-				return ResponseEntity.ok().build();
-			} else {
-				return ResponseEntity.notFound().build();
+
+			if (file.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded.");
 			}
+
+			String responseMessage = postService.saveProfilePhotoByEmail(email, file);
+
+			return ResponseEntity.status(HttpStatus.CREATED).body(responseMessage);
+
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error handling the file: " + e.getMessage());
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Internal Server Error: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Unexpected error occurred: " + e.getMessage());
+		}
+	}
+
+	@GetMapping("/{id}/profile-picture")
+	public ResponseEntity<byte[]> getProfilePicture(@PathVariable long id) {
+		byte[] photo = postService.getProfilePicture(id);
+
+		if (photo != null) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=profile-photo.jpg");
+			return new ResponseEntity<>(photo, headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	// Create Post with Optional Media (Image/Video)
+	@PostMapping("/createPost/media")
+	public ResponseEntity<?> createPostWithOptions(
+			@RequestHeader("Authorization") String jwt,
+			@RequestParam("files") List<MultipartFile> files,
+			@RequestParam String name,
+			@RequestParam String content,
+			@RequestParam String postedBY,
+			@RequestParam(required = false) List<String> tags
+	) {
+		try {
+			Post createdPost;
+
+			if (files == null || files.isEmpty()) {
+				createdPost = postService.saveTextPost(jwt, name, content, postedBY, tags);
+			} else {
+				// Validate files first
+				for (MultipartFile file : files) {
+					String contentType = file.getContentType();
+					if (contentType == null || (!contentType.startsWith("image/") && !contentType.startsWith("video/"))) {
+						return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+								.body("Invalid file type. Supported types are images and videos.");
+					}
+				}
+
+				// Process files - we'll only save the first image and first video
+				MultipartFile imageFile = null;
+				MultipartFile videoFile = null;
+
+				for (MultipartFile file : files) {
+					String contentType = file.getContentType();
+					if (contentType.startsWith("image/") && imageFile == null) {
+						imageFile = file;
+					} else if (contentType.startsWith("video/") && videoFile == null) {
+						videoFile = file;
+					}
+
+					// Break if we have both
+					if (imageFile != null && videoFile != null) {
+						break;
+					}
+				}
+
+				createdPost = postService.savePost(jwt, imageFile, videoFile, name, content, postedBY, tags);
+			}
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("message", "Post created successfully");
+			response.put("postId", createdPost.getId());
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error creating post: " + e.getMessage());
+		}
+	}
+
+	@PutMapping("/updatePost/{postId}")
+	public ResponseEntity<?> updatePost(
+			@RequestHeader("Authorization") String jwt,
+			@PathVariable Long postId,
+			@RequestParam(required = false) MultipartFile file,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String content,
+			@RequestParam(required = false) String postedBY,
+			@RequestParam(required = false) List<String> tags
+	) {
+		try {
+			Post existingPost = postService.getPostById(postId);
+			if (existingPost == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body("Post not found with ID: " + postId);
+			}
+
+			if (name != null) existingPost.setName(name);
+			if (content != null) existingPost.setContent(content);
+			if (postedBY != null) existingPost.setPostedBY(postedBY);
+			if (tags != null) existingPost.setTags(tags);
+
+			if (file != null) {
+				String contentType = file.getContentType();
+				if (contentType == null || (!contentType.startsWith("image/") && !contentType.startsWith("video/"))) {
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+							.body("Invalid file type. Supported types are images and videos.");
+				}
+				existingPost = postService.updatePostWithMedia(jwt, postId, file);
+			} else {
+				existingPost = postService.updateTextPost(jwt, postId, existingPost);
+			}
+
+			Map<String, Object> response = new HashMap<>();
+			response.put("message", "Post updated successfully");
+			response.put("postId", existingPost.getId());
+
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error updating post: " + e.getMessage());
+		}
+	}
+
+
+	// Get All Posts
+	@GetMapping("/getPosts")
+	public ResponseEntity<List<PostResponse>> getAllPost() {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(postService.getAllPost());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	// Get Post by ID
+	@GetMapping("/{postId}/image")
+	public ResponseEntity<byte[]> getImage(@PathVariable Long postId) {
+		byte[] photo = postService.getImage(postId);
+
+		if (photo != null) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=image.jpg");
+			return new ResponseEntity<>(photo, headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/{postId}/video")
+	public ResponseEntity<byte[]> getVideo(@PathVariable Long postId) {
+		byte[] photo = postService.getVideo(postId);
+
+		if (photo != null) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=video.mp4");
+			return new ResponseEntity<>(photo, headers, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	//get post by user
+	@GetMapping("/user/postList")
+	public List<PostResponse> getUserPost(@RequestHeader("Authorization") String jwt) {
+		return postService.getUserPost(jwt);
+	}
+
+
+	// Like a Post
+	@PutMapping("/{postId}/like")
+	public ResponseEntity<?> likePost(@RequestHeader("Authorization") String jwt,@PathVariable long postId) {
+		try {
+			postService.likePost(jwt,postId);
+			return ResponseEntity.ok(new String[] { "Post liked successfully" });
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+	}
+
+	// Search Posts by Name
+	@GetMapping("/search/{name}")
+	public ResponseEntity<?> searchByName(@PathVariable String name) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(postService.searchByName(name));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	// Delete Post by ID
+	@DeleteMapping("/deletePost/{id}")
+	public ResponseEntity<?> deletePostById(@PathVariable long id) {
+		try {
+			return new ResponseEntity<>(postService.deletePostById(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	// Save a Post
+	@GetMapping("/getSavedPost/{id}")
+	public ResponseEntity<String> savingThePost(@PathVariable long id) {
+		try {
+			return new ResponseEntity<>(saveService.savePostById(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	// Get All Saved Posts
+	@GetMapping("getAllSavedPosts")
+	public ResponseEntity<List<SaveEntity>> getAllSavedPost() {
+		try {
+			return new ResponseEntity<>(saveService.getAllSavedPosts(), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	// Delete Saved Post
+	@DeleteMapping("deleteSavePost/{id}")
+	public ResponseEntity<?> deleteSavedPost(@PathVariable int id) {
+		try {
+			return new ResponseEntity<>(saveService.deleteSavedPost(id), HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 }
