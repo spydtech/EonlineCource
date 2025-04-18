@@ -1,15 +1,13 @@
 package com.Eonline.Education.Service;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.rowset.serial.SerialException;
-
 import com.Eonline.Education.modals.Post;
 import com.Eonline.Education.response.PostResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public interface PostService {
 
@@ -42,6 +40,18 @@ public interface PostService {
 	byte[] getVideo(Long postId);
 
 	List<PostResponse> getUserPost(String jwt);
-	public Post updateTextPost(String jwt, Long postId, Post existingPost);
+
+    // Save a post with media (image or video)
+    Post savePost(
+            String jwt,
+            MultipartFile imageFile,
+            MultipartFile videoFile,
+            String name,
+            String content,
+            String postedBY,
+            List<String> tags
+    ) throws IOException;
+
+    public Post updateTextPost(String jwt, Long postId, Post existingPost);
 	public Post updatePostWithMedia(String jwt, Long postId, MultipartFile file) throws IOException;
 }
