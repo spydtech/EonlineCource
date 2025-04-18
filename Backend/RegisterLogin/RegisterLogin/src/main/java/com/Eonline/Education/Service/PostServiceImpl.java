@@ -14,9 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,25 +121,38 @@ public class PostServiceImpl implements PostService {
 		return postRepository.save(post);
 	}
 
+	@Override
+	public Post savePost(String jwt, MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException, SQLException {
+		return null;
+	}
+
 	// Save a post with media (image or video)
 	@Override
-	public Post savePost(String jwt,MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException {
+	public Post savePost(
+			String jwt,
+			MultipartFile imageFile,
+			MultipartFile videoFile,
+			String name,
+			String content,
+			String postedBY,
+			List<String> tags
+	) throws IOException {
 		Post post = new Post();
 		String email = jwtTokenProvider.getEmailFromJwtToken(jwt);
 		User user = userRepository.findByEmail(email);
-		String contentType = file.getContentType();
 
-		// Set the media type based on the file type
-		if (contentType.startsWith("image/")) {
-			post.setImg(file.getBytes());
-			post.setMediaType(contentType);
-			post.setFileName(file.getOriginalFilename());
-		} else if (contentType.startsWith("video/")) {
-			post.setVideo(file.getBytes());
-			post.setMediaType(contentType);
-			post.setFileName(file.getOriginalFilename());
-		} else {
-			throw new IllegalArgumentException("Unsupported media type: " + contentType);
+		// Handle image
+		if (imageFile != null) {
+			post.setImg(imageFile.getBytes());
+			post.setMediaType(imageFile.getContentType());
+			post.setFileName(imageFile.getOriginalFilename());
+		}
+
+		// Handle video
+		if (videoFile != null) {
+			post.setVideo(videoFile.getBytes());
+			post.setMediaType(videoFile.getContentType());
+			post.setFileName(videoFile.getOriginalFilename());
 		}
 
 		post.setName(name);
@@ -151,8 +164,7 @@ public class PostServiceImpl implements PostService {
 		post.setDateTime(LocalDateTime.now());
 		post.setProfilePicture(user.getProfilePhoto());
 		notificationService.createNotification(user.getEmail()," post created  successfully");
-		postRepository.save(post);
-		return post;
+		return postRepository.save(post);
 	}
 
 	@Override
