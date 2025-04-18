@@ -121,10 +121,15 @@ public class PostServiceImpl implements PostService {
 		return postRepository.save(post);
 	}
 
-	// @Override
-	// public Post savePost(String jwt, MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException, SQLException {
-	// 	return null;
-	// }
+	@Override
+	public Post savePost(String jwt, MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException, SQLException {
+		return null;
+	}
+
+//	@Override
+//	public Post savePost(String jwt, MultipartFile file, String name, String content, String postedBY, List<String> tags) throws IOException, SQLException {
+//		return null;
+//	}
 
 	// Save a post with media (image or video)
 	@Override
