@@ -60,20 +60,29 @@ public class AppConfig {
                 "https://accounts.google.com"
         ));
 
-        cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of(
-                "Authorization", "Cache-Control", "Content-Type",
-                "X-Requested-With", "Accept", "Origin"
-        ));
+        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        cfg.setAllowedHeaders(Arrays.asList(
+            "Authorization", 
+            "Cache-Control", 
+            "Content-Type",
+            "X-Requested-With",
+            "Accept",
+            "Origin",
+            "Access-Control-Request-Method",
+            "Access-Control-Request-Headers"
+      ));
+       cfg.setExposedHeaders(Arrays.asList(
+            "Authorization",
+            "Access-Control-Allow-Origin",
+            "Access-Control-Allow-Credentials"
+    ));
+      cfg.setAllowCredentials(true);
+      cfg.setMaxAge(3600L);
 
-        cfg.setExposedHeaders(List.of("Authorization"));
-        cfg.setAllowCredentials(true);
-        cfg.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", cfg);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", cfg);
+    return source;
+}
 
     @Bean
     public PasswordEncoder passwordEncoder() {
