@@ -61,7 +61,7 @@ public class AppConfig {
                 "https://www.e-education.in",
                 "https://e-education.in",
                 "https://*.e-education.in",
-                "https://api.e-education.in/",
+                "https://api.e-education.in",
                 "https://accounts.google.com"
         ));
 
