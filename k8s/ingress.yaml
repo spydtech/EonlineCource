@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:767397874328:certificate/726c7c0a-d4a0-4937-8d46-79127778661d
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/group.name: "e-education-ingress"
-    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/backend-protocol: HTTPS
 spec:
   ingressClassName: alb
   rules:
