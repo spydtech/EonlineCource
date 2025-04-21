@@ -24,27 +24,27 @@ import java.util.Arrays;
 public class AppConfig {
 
     @Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenValidator jwtTokenValidator) throws Exception {
-    http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow all OPTIONS requests
-                    .requestMatchers("/actuator/health").permitAll()               
-                    .requestMatchers(
-                            "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
-                            "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
-                    ).permitAll()
-                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers("/api/users/profile").authenticated()
-                    .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenValidator jwtTokenValidator) throws Exception {
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers(
+                                "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
+                                "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
+                        ).permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/api/users/profile").authenticated()
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class);
 
-    return http.build();
-}
+        return http.build();
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -89,7 +89,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenValida
         return source;
     }
 
-    // Optional: Additional CORS filter for more control
     @Bean
     public CorsFilter corsFilter() {
         return new CorsFilter(corsConfigurationSource());
@@ -105,4 +104,3 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtTokenValida
         return new JwtTokenValidator();
     }
 }
-
