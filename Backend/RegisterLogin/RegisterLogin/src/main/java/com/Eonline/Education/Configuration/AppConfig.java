@@ -61,12 +61,13 @@ public class AppConfig {
         ));
 
         cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-         cfg.setAllowedHeaders(List.of(
-                "X-Requested-With",
-                "Accept",
-                "Origin"
-        ));
+        cfg.setAllowedHeaders(List.of(
+                    "Authorization", "Cache-Control", "Content-Type"
+                ));
+        cfg.setAllowedHeaders(List.of(
+                    "X-Requested-With", "Accept", "Origin"
+                ));
+
         cfg.setExposedHeaders(List.of("Authorization"));
         cfg.setAllowCredentials(true);
         cfg.setMaxAge(3600L);
