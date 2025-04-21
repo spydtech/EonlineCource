@@ -21,14 +21,32 @@ metadata:
           "values":["https://www.e-education.in"]
         }
       }]
+    # Add these new annotations:
+    alb.ingress.kubernetes.io/actions.preflight: |
+      {
+        "type": "fixed-response",
+        "fixedResponseConfig": {
+          "contentType": "text/plain",
+          "statusCode": "204",
+          "messageBody": "Preflight"
+        }
+      }
+    alb.ingress.kubernetes.io/match-path: "*"
 spec:
   ingressClassName: alb
   rules:
     - host: api.e-education.in
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /auth/google
+            pathType: Exact
+            backend:
+              service:
+                name: java-backend-service
+                port:
+                  number: 80
+          - path: /*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: java-backend-service
