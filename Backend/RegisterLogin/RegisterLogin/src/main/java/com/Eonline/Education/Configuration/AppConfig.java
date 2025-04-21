@@ -2,6 +2,7 @@ package com.Eonline.Education.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,8 +14,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
-import java.util.List;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +30,7 @@ public class AppConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow all OPTIONS requests
                         .requestMatchers(
                                 "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
                                 "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
@@ -54,42 +57,48 @@ public class AppConfig {
                 "http://3.6.36.172:5174",
                 "http://3.6.36.172:5175",
                 "http://3.6.36.172:3000",
-                // "https://*.e-education.in",
                 "https://www.e-education.in",
+                "https://e-education.in",
+                "https://*.e-education.in",
                 "https://api.e-education.in",
                 "https://accounts.google.com"
         ));
 
         cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         cfg.setAllowedHeaders(Arrays.asList(
-            "Authorization", 
-            "Cache-Control", 
-            "Content-Type",
-            "X-Requested-With",
-            "Accept",
-            "Origin",
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers"
-      ));
-       cfg.setExposedHeaders(Arrays.asList(
-            "Authorization",
-            "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Credentials"
-    ));
-      cfg.setAllowCredentials(true);
-      cfg.setMaxAge(3600L);
+                "Authorization", 
+                "Cache-Control", 
+                "Content-Type",
+                "X-Requested-With",
+                "Accept",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+        ));
+        cfg.setExposedHeaders(Arrays.asList(
+                "Authorization",
+                "Access-Control-Allow-Origin",
+                "Access-Control-Allow-Credentials"
+        ));
+        cfg.setAllowCredentials(true);
+        cfg.setMaxAge(3600L);
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", cfg);
-    return source;
-}
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cfg);
+        return source;
+    }
+
+    // Optional: Additional CORS filter for more control
+    @Bean
+    public CorsFilter corsFilter() {
+        return new CorsFilter(corsConfigurationSource());
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Register JwtTokenValidator as a Spring-managed bean
     @Bean
     public JwtTokenValidator jwtTokenValidator() {
         return new JwtTokenValidator();
