@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: https://api.e-education.in
+    - host: api.e-education.in
       http:
         paths:
           - path: /
