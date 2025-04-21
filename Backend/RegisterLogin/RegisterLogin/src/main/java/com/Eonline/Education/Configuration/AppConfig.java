@@ -31,6 +31,7 @@ public class AppConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow all OPTIONS requests
+                        .antMatchers("/actuator/health").permitAll()               
                         .requestMatchers(
                                 "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
                                 "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
