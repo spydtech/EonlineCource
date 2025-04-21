@@ -45,7 +45,7 @@ public class AppConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOriginPatterns(List.of(
+        cfg.setAllowedOrigins(List.of(
                 "http://localhost",
                 "http://localhost:5173",
                 "http://localhost:5174",
