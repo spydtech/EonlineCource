@@ -15,43 +15,27 @@ public interface PostService {
 
 	Post getPostById(Long postId);
 
-	void likePost(String jwt,Long postId);
+	void likePost(String jwt, Long postId);
 
 	List<Post> searchByName(String name);
 
 	ResponseEntity<?> deletePostById(long id);
 
-	Post saveTextPost(String jwt,String name, String content, String postedBY, List<String> tags);
+	Post saveTextPost(String jwt, String name, String content, String postedBY, List<String> tags);
 
-	Post savePost(String jwt,MultipartFile file, String name, String content, String postedBY, List<String> tags)
-			throws IOException, SQLException;
+	// Save post with multiple images and videos
+	Post savePost(String jwt, List<MultipartFile> imageFiles, List<MultipartFile> videoFiles,
+				  String name, String content, String postedBY, List<String> tags) throws IOException;
 
 	String saveProfilePhotoByEmail(String email, MultipartFile file) throws IOException;
 
-	// Method to update profile picture for a post
 	void updateProfilePicture(long id, byte[] profilePicture) throws IOException;
 
-	// Method to retrieve profile picture of a post
 	byte[] getProfilePicture(long id);
-
-
-	byte[] getImage(Long postId);
-
-	byte[] getVideo(Long postId);
 
 	List<PostResponse> getUserPost(String jwt);
 
-    // Save a post with media (image or video)
-    Post savePost(
-            String jwt,
-            MultipartFile imageFile,
-            MultipartFile videoFile,
-            String name,
-            String content,
-            String postedBY,
-            List<String> tags
-    ) throws IOException;
+	Post updateTextPost(String jwt, Long postId, Post existingPost);
 
-    public Post updateTextPost(String jwt, Long postId, Post existingPost);
-	public Post updatePostWithMedia(String jwt, Long postId, MultipartFile file) throws IOException;
+	Post updatePostWithMedia(String jwt, Long postId, List<MultipartFile> files) throws IOException;
 }

@@ -3,17 +3,13 @@ package com.Eonline.Education.modals;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
+@Table(name = "post")
 public class Post {
 
 	@Id
@@ -27,28 +23,34 @@ public class Post {
 
 	private String postedBY;
 
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "post_images", joinColumns = @JoinColumn(name = "post_id"))
+	@Column(name = "image")
 	@Lob
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] video;
+	private List<byte[]> img;
 
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "post_videos", joinColumns = @JoinColumn(name = "post_id"))
+	@Column(name = "video")
 	@Lob
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] img;
+	private List<byte[]> video;
 
 	private String mediaType;
 
+	@CreationTimestamp
 	private LocalDateTime dateTime;
 
 	private int likeCount;
 
 	private int viewCount;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"))
+	@Column(name = "tag")
 	private List<String> tags;
 
 	@Lob
-	@Column(columnDefinition = "LONGBLOB")
 	private byte[] profilePicture;
-	private String fileName;
 
+	private String fileName;
 }

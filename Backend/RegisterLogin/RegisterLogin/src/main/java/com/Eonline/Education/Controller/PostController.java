@@ -27,34 +27,24 @@ public class PostController {
 	private PostService postService;
 
 	@Autowired
-	SaveService saveService;
+	private SaveService saveService;
+
 	@Autowired
-	PostRepository postRepository;
+	private PostRepository postRepository;
+
 	@Autowired
-	NotificationService notificationService;
+	private NotificationService notificationService;
 
-	// Update Profile Picture for a Post
-	@PutMapping("/{id}/profile-picture")
-	public ResponseEntity<String> updateProfilePicture(@PathVariable long id,
-													   @RequestParam("profilePicture") MultipartFile profilePicture) throws IOException {
-
-		postService.updateProfilePicture(id, profilePicture.getBytes());
-		return new ResponseEntity<>("Profile picture updated successfully!", HttpStatus.OK);
-	}
-
+	// Upload profile photo
 	@PostMapping("/{email}/profile-photo")
 	public ResponseEntity<String> uploadProfilePhoto(@PathVariable String email,
 													 @RequestParam("file") MultipartFile file) {
 		try {
-
 			if (file.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No file uploaded.");
 			}
-
 			String responseMessage = postService.saveProfilePhotoByEmail(email, file);
-
 			return ResponseEntity.status(HttpStatus.CREATED).body(responseMessage);
-
 		} catch (IOException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error handling the file: " + e.getMessage());
@@ -64,10 +54,10 @@ public class PostController {
 		}
 	}
 
+	// Get profile picture
 	@GetMapping("/{id}/profile-picture")
 	public ResponseEntity<byte[]> getProfilePicture(@PathVariable long id) {
 		byte[] photo = postService.getProfilePicture(id);
-
 		if (photo != null) {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=profile-photo.jpg");
@@ -77,7 +67,15 @@ public class PostController {
 		}
 	}
 
-	// Create Post with Optional Media (Image/Video)
+	// Update Profile Picture
+	@PutMapping("/{id}/profile-picture")
+	public ResponseEntity<String> updateProfilePicture(@PathVariable long id,
+													   @RequestParam("profilePicture") MultipartFile profilePicture) throws IOException {
+		postService.updateProfilePicture(id, profilePicture.getBytes());
+		return new ResponseEntity<>("Profile picture updated successfully!", HttpStatus.OK);
+	}
+
+	// Create post with optional multiple media files
 	@PostMapping("/createPost/media")
 	public ResponseEntity<?> createPostWithOptions(
 			@RequestHeader("Authorization") String jwt,
@@ -93,34 +91,24 @@ public class PostController {
 			if (files == null || files.isEmpty()) {
 				createdPost = postService.saveTextPost(jwt, name, content, postedBY, tags);
 			} else {
-				// Validate files first
-				for (MultipartFile file : files) {
-					String contentType = file.getContentType();
-					if (contentType == null || (!contentType.startsWith("image/") && !contentType.startsWith("video/"))) {
-						return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-								.body("Invalid file type. Supported types are images and videos.");
-					}
-				}
-
-				// Process files - we'll only save the first image and first video
-				MultipartFile imageFile = null;
-				MultipartFile videoFile = null;
+				List<MultipartFile> imageFiles = new ArrayList<>();
+				List<MultipartFile> videoFiles = new ArrayList<>();
 
 				for (MultipartFile file : files) {
 					String contentType = file.getContentType();
-					if (contentType.startsWith("image/") && imageFile == null) {
-						imageFile = file;
-					} else if (contentType.startsWith("video/") && videoFile == null) {
-						videoFile = file;
-					}
-
-					// Break if we have both
-					if (imageFile != null && videoFile != null) {
-						break;
+					if (contentType != null) {
+						if (contentType.startsWith("image/")) {
+							imageFiles.add(file);
+						} else if (contentType.startsWith("video/")) {
+							videoFiles.add(file);
+						} else {
+							return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+									.body("Invalid file type. Supported types are images and videos.");
+						}
 					}
 				}
 
-				createdPost = postService.savePost(jwt, imageFile, videoFile, name, content, postedBY, tags);
+				createdPost = postService.savePost(jwt, imageFiles, videoFiles, name, content, postedBY, tags);
 			}
 
 			Map<String, Object> response = new HashMap<>();
@@ -138,7 +126,7 @@ public class PostController {
 	public ResponseEntity<?> updatePost(
 			@RequestHeader("Authorization") String jwt,
 			@PathVariable Long postId,
-			@RequestParam(required = false) MultipartFile file,
+			@RequestParam(required = false) List<MultipartFile> files,
 			@RequestParam(required = false) String name,
 			@RequestParam(required = false) String content,
 			@RequestParam(required = false) String postedBY,
@@ -156,13 +144,8 @@ public class PostController {
 			if (postedBY != null) existingPost.setPostedBY(postedBY);
 			if (tags != null) existingPost.setTags(tags);
 
-			if (file != null) {
-				String contentType = file.getContentType();
-				if (contentType == null || (!contentType.startsWith("image/") && !contentType.startsWith("video/"))) {
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-							.body("Invalid file type. Supported types are images and videos.");
-				}
-				existingPost = postService.updatePostWithMedia(jwt, postId, file);
+			if (files != null && !files.isEmpty()) {
+				existingPost = postService.updatePostWithMedia(jwt, postId, files);
 			} else {
 				existingPost = postService.updateTextPost(jwt, postId, existingPost);
 			}
@@ -179,8 +162,7 @@ public class PostController {
 		}
 	}
 
-
-	// Get All Posts
+	// Get all posts
 	@GetMapping("/getPosts")
 	public ResponseEntity<List<PostResponse>> getAllPost() {
 		try {
@@ -190,52 +172,24 @@ public class PostController {
 		}
 	}
 
-	// Get Post by ID
-	@GetMapping("/{postId}/image")
-	public ResponseEntity<byte[]> getImage(@PathVariable Long postId) {
-		byte[] photo = postService.getImage(postId);
-
-		if (photo != null) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=image.jpg");
-			return new ResponseEntity<>(photo, headers, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@GetMapping("/{postId}/video")
-	public ResponseEntity<byte[]> getVideo(@PathVariable Long postId) {
-		byte[] photo = postService.getVideo(postId);
-
-		if (photo != null) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=video.mp4");
-			return new ResponseEntity<>(photo, headers, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	//get post by user
+	// Get post by user
 	@GetMapping("/user/postList")
 	public List<PostResponse> getUserPost(@RequestHeader("Authorization") String jwt) {
 		return postService.getUserPost(jwt);
 	}
 
-
-	// Like a Post
+	// Like a post
 	@PutMapping("/{postId}/like")
-	public ResponseEntity<?> likePost(@RequestHeader("Authorization") String jwt,@PathVariable long postId) {
+	public ResponseEntity<?> likePost(@RequestHeader("Authorization") String jwt, @PathVariable long postId) {
 		try {
-			postService.likePost(jwt,postId);
-			return ResponseEntity.ok(new String[] { "Post liked successfully" });
+			postService.likePost(jwt, postId);
+			return ResponseEntity.ok(new String[]{"Post liked successfully"});
 		} catch (EntityNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
 	}
 
-	// Search Posts by Name
+	// Search posts by name
 	@GetMapping("/search/{name}")
 	public ResponseEntity<?> searchByName(@PathVariable String name) {
 		try {
@@ -245,7 +199,7 @@ public class PostController {
 		}
 	}
 
-	// Delete Post by ID
+	// Delete post by ID
 	@DeleteMapping("/deletePost/{id}")
 	public ResponseEntity<?> deletePostById(@PathVariable long id) {
 		try {
@@ -255,7 +209,7 @@ public class PostController {
 		}
 	}
 
-	// Save a Post
+	// Save a post
 	@GetMapping("/getSavedPost/{id}")
 	public ResponseEntity<String> savingThePost(@PathVariable long id) {
 		try {
@@ -265,7 +219,7 @@ public class PostController {
 		}
 	}
 
-	// Get All Saved Posts
+	// Get all saved posts
 	@GetMapping("getAllSavedPosts")
 	public ResponseEntity<List<SaveEntity>> getAllSavedPost() {
 		try {
@@ -275,7 +229,7 @@ public class PostController {
 		}
 	}
 
-	// Delete Saved Post
+	// Delete saved post
 	@DeleteMapping("deleteSavePost/{id}")
 	public ResponseEntity<?> deleteSavedPost(@PathVariable int id) {
 		try {
