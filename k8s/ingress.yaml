@@ -4,8 +4,9 @@ metadata:
   name: java-backend-ingress
   namespace: e-education-backend
   annotations:
+    # AWS ALB specific annotations
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: instance  # Keep as ip since we're using NodePort service
+    alb.ingress.kubernetes.io/target-type: ip  # Changed back to ip for better pod direct routing
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:767397874328:certificate/726c7c0a-d4a0-4937-8d46-79127778661d
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -17,15 +18,15 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "https://www.e-education.in"
-    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
-    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
-    nginx.ingress.kubernetes.io/cors-allow-headers: "Origin, Authorization, Content-Type, Accept"
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
-    # Simplified the conditions
+    # CORS settings for ALB (different from nginx)
+    alb.ingress.kubernetes.io/cors-allow-origin: https://www.e-education.in
+    alb.ingress.kubernetes.io/cors-allow-methods: GET,PUT,POST,DELETE,OPTIONS
+    alb.ingress.kubernetes.io/cors-allow-headers: Origin,Authorization,Content-Type,Accept
+    alb.ingress.kubernetes.io/cors-allow-credentials: 'true'
+    # Remove all nginx.* annotations as they're not applicable
+    # Remove nginx.ingress.kubernetes.io/rewrite-target
+    # Remove nginx.ingress.kubernetes.io/proxy-* timeouts
+    # Header based routing
     alb.ingress.kubernetes.io/conditions.java-backend-service: |
       [{
         "field":"http-header",
@@ -35,7 +36,7 @@ metadata:
         }
       }]
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb  # Changed from nginx to alb
   rules:
     - host: api.e-education.in
       http:
