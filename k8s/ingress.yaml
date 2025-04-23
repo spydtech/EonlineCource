@@ -5,7 +5,7 @@ metadata:
   namespace: e-education-backend
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/target-type: ip  # Keep as ip since we're using NodePort service
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:767397874328:certificate/726c7c0a-d4a0-4937-8d46-79127778661d
     alb.ingress.kubernetes.io/ssl-redirect: '443'
@@ -13,6 +13,7 @@ metadata:
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
     alb.ingress.kubernetes.io/success-codes: '200,302,401'
+    # Simplified the conditions
     alb.ingress.kubernetes.io/conditions.java-backend-service: |
       [{
         "field":"http-header",
@@ -21,17 +22,6 @@ metadata:
           "values":["https://www.e-education.in"]
         }
       }]
-    # Add these new annotations:
-    alb.ingress.kubernetes.io/actions.preflight: |
-      {
-        "type": "fixed-response",
-        "fixedResponseConfig": {
-          "contentType": "text/plain",
-          "statusCode": "204",
-          "messageBody": "Preflight"
-        }
-      }
-    alb.ingress.kubernetes.io/match-path: "*"
 spec:
   ingressClassName: alb
   rules:
@@ -45,8 +35,8 @@ spec:
                 name: java-backend-service
                 port:
                   number: 80
-          - path: /*
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: java-backend-service
