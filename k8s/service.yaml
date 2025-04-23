@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: java-backend-service
   namespace: e-education-backend
-  annotations:
-    alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
 spec:
   selector:
     app: java-backend
