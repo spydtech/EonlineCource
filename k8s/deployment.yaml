@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: java-backend
-          image: spydshasi/e-education:latest
+          image: spydshasi/e-education:1.0
           ports:
             - containerPort: 8082
