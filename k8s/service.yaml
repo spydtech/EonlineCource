@@ -8,7 +8,9 @@ spec:
   selector:
     app: java-backend
   ports:
-    - protocol: TCP
-      port: 80       # External port
-      targetPort: 8082  # Matches container port
-  type: ClusterIP
+     - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8082
+      nodePort: 30080
+  type: NodePort
