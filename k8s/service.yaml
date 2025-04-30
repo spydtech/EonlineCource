@@ -1,3 +1,4 @@
+# backend-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,9 +8,7 @@ spec:
   selector:
     app: java-backend
   ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 8082
-      nodePort: 30080
-  type: NodePort
+    - protocol: TCP
+      port: 80       # External port
+      targetPort: 8082  # Matches container port
+  type: ClusterIP
