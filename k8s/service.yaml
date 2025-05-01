@@ -8,7 +8,7 @@ spec:
   selector:
     app: java-backend
   ports:
-     - name: http
+    - name: http
       protocol: TCP
       port: 80
       targetPort: 8082
