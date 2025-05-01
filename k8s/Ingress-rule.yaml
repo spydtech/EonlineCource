@@ -11,7 +11,7 @@ spec:
   rules:
   - http:                  # Hostless rule (matches all domains)
       paths:
-      - path: /api         # Proper array item syntax (-)
+      - path: /auth/google        # Proper array item syntax (-)
         pathType: Prefix   # Required field in v1
         backend:
           service:
