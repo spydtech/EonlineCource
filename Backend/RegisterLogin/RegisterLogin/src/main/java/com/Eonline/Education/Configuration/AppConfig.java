@@ -32,7 +32,7 @@ public class AppConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()               
                         .requestMatchers(
-                                "/", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
+                                "/", "/api/*", "/auth/**", "/api/auth/**", "/trainee/**", "/trainee/profile",
                                 "/oauth2/**", "/login/oauth2/**", "/auth/google", "/error"
                         ).permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
