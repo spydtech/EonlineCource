@@ -124,7 +124,7 @@ public class AppConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/actuator/health", "/error").permitAll()
+                        .requestMatchers("/health", "/actuator/health", "/error").permitAll()
                         .requestMatchers("/", "/api/*", "/auth/**", "/api/auth/**", "/oauth2/**", "/login/oauth2/**", "/auth/google").permitAll()
                         .requestMatchers("/trainee/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
