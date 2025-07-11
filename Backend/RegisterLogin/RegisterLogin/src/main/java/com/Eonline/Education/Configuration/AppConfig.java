@@ -125,7 +125,7 @@ public class AppConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/health", "/actuator/health", "/error").permitAll()
-                        .requestMatchers("/", "/api/*", "/auth/**", "/api/auth/**", "/oauth2/**", "/login/oauth2/**", "/auth/google").permitAll()
+                        .requestMatchers("/", "/api/*", "/auth/**", "/auth/login", "/auth/signup", "/auth/register", "/api/auth/**", "/oauth2/**", "/login/oauth2/**", "/auth/google").permitAll()
                         .requestMatchers("/trainee/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
