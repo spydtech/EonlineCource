@@ -133,6 +133,7 @@ public class AppConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtTokenValidator, BasicAuthenticationFilter.class);
+                .addFilterAfter(jwtTokenValidator(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
