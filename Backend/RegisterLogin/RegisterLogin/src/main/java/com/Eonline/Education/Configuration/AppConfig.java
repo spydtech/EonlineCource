@@ -152,6 +152,7 @@ public class AppConfig {
                 "http://82.29.161.78:3000",
                 "https://*.e-education.in",
                 "https://www.e-education.in",
+                "https://e-education.in",
                 "https://api.e-education.in",
                 "https://accounts.google.com"
         ));
